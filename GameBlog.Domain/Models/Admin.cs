@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace GameBlog.Domain.Models
 {
-    public class Admin : User
+    public class Admin : BaseModel
     {
+        public User User { get; set; }
+
+        public Guid UserId { get; set; }
     }
 }
