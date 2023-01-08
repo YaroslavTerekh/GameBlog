@@ -1,14 +1,14 @@
 ﻿using GameBlog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using GameBlog.Domain.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using GameBlog.Domain;
 
 namespace GameBlog.BL.DBConnection
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User, ApplicationRole, Guid>
     {
         public DataContext(DbContextOptions<DataContext> opts) : base(opts) { }
-
-        public DbSet<User> Users { get; set; }
 
         public DbSet<Reader> Readers { get; set; }
 
@@ -24,6 +24,8 @@ namespace GameBlog.BL.DBConnection
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new JournalistConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
         }
