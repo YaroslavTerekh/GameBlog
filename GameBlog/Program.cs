@@ -1,10 +1,15 @@
 using GameBlog.BL.DBConnection;
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.BL.Repositories.Realizations;
+using GameBlog.BL.Services.Abstractions;
+using GameBlog.BL.Services.Realizations;
 using GameBlog.Domain;
 using GameBlog.Domain.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +62,28 @@ builder.Services.AddDbContextsCustom(builder.Configuration);
 
 // Add DI
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddTransient<IAuthService, AuthService>();
+
+// Add authorization
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ClockSkew = TimeSpan.Zero,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true
+        };
+    });
 
 var app = builder.Build();
 
@@ -69,6 +96,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

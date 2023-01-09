@@ -35,9 +35,9 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            await _authRepository.LoginUserAsync(loginModel, cancellationToken);
+            var token = await _authRepository.LoginUserAsync(loginModel, cancellationToken);
 
-            return NoContent();
+            return Ok(token);
         }
     }
 }

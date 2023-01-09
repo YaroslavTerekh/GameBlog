@@ -12,6 +12,6 @@ namespace GameBlog.BL.Repositories.Abstractions
     {
         public Task RegisterUserAsync(RegisterModel newUser, CancellationToken cancellationToken);
 
-        public Task LoginUserAsync(LoginModel userCreds, CancellationToken cancellationToken);
+        public Task<string> LoginUserAsync(LoginModel userCreds, CancellationToken cancellationToken);
     }
 }
