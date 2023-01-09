@@ -1,4 +1,5 @@
 ﻿using GameBlog.BL.DBConnection;
+using GameBlog.Domain.Constants;
 using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,7 +36,7 @@ namespace GameBlog.Controllers
             return top.Id;
         }
 
-        [Authorize]
+        [Authorize(Policy = Policies.Admin)]
         [HttpGet]
         public async Task<ActionResult<Topic>> GetAllTopics(Guid id)
         {

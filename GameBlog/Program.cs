@@ -4,6 +4,7 @@ using GameBlog.BL.Repositories.Realizations;
 using GameBlog.BL.Services.Abstractions;
 using GameBlog.BL.Services.Realizations;
 using GameBlog.Domain;
+using GameBlog.Domain.Enums;
 using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -84,6 +85,19 @@ builder.Services.AddAuthentication(options =>
             ValidateLifetime = true
         };
     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole(Role.Admin.ToString());
+    });
+
+    options.AddPolicy("Journalists", policy =>
+    {
+        policy.RequireRole(Role.Admin.ToString(), Role.Journalist.ToString());
+    });
+});
 
 var app = builder.Build();
 
