@@ -1,6 +1,8 @@
 ﻿using GameBlog.BL.DBConnection;
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.Domain.Enums;
+using GameBlog.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,50 @@ namespace GameBlog.BL.Repositories.Realizations
             var user = await _context.Users.FindAsync(userId);
 
             user.Role = role;
+
+            if(role == Role.Journalist)
+            {
+                var existReader = await _context.Readers
+                                    .Where(t => t.UserId == userId)                                   
+                                    .FirstOrDefaultAsync(cancellationToken);
+
+                var journalist = new Journalist
+                {
+                    UserId = userId,
+                };
+
+                if (!await _context.Journalists.AnyAsync(t => t.UserId == userId))
+                {
+                    await _context.Journalists.AddAsync(journalist);
+
+                    if (existReader != null)
+                    {
+                        _context.Readers.Remove(existReader);
+                    }
+                }
+            }
+
+            if(role == Role.User)
+            {
+                var existJournalist = await _context.Journalists
+                                    .Where(t => t.UserId == userId)
+                                    .FirstOrDefaultAsync(cancellationToken);
+
+                var reader = new Reader
+                {
+                    UserId = userId,                    
+                };
+
+                if(!await _context.Readers.AnyAsync(t => t.UserId == userId))
+                {
+                    await _context.Readers.AddAsync(reader);
+
+                    if (existJournalist != null)
+                    {
+                        _context.Journalists.Remove(existJournalist);
+                    }
+                }
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
         }

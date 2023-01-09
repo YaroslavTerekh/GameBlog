@@ -18,10 +18,9 @@ namespace GameBlog.BL.Services.Realizations
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(type: "Id", value: user.Id.ToString()),
-                new Claim(type: "Email", user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim(type: "Role", user.Role.ToString())
+                new Claim(type: ClaimTypes.NameIdentifier, value: user.Id.ToString()),
+                new Claim(type: ClaimTypes.Email, user.Email),
+                new Claim(type: ClaimTypes.Role, user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetSection("AppSettings:Token").Value));

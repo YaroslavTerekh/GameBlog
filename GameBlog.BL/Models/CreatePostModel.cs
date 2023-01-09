@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace GameBlog.Domain.Models
+namespace GameBlog.BL.Models
 {
-    public class GamePost : BaseModel
+    public class CreatePostModel
     {
-        public Journalist Journalist { get; set; }
-
-        public Guid JournalistId { get; set; }
-
-        public Topic Topic { get; set; }
+        [JsonIgnore]
+        public Guid UserId { get; set; }
 
         public Guid TopicId { get; set; }
-
-        public List<Comment> Comments { get; set; }
 
         public string Title { get; set; }
 

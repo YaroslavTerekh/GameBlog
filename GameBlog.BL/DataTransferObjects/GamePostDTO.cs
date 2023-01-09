@@ -1,12 +1,13 @@
-﻿using System;
+﻿using GameBlog.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameBlog.Domain.Models
+namespace GameBlog.BL.DataTransferObjects
 {
-    public class GamePost : BaseModel
+    public class GamePostDTO
     {
         public Journalist Journalist { get; set; }
 
@@ -15,8 +16,6 @@ namespace GameBlog.Domain.Models
         public Topic Topic { get; set; }
 
         public Guid TopicId { get; set; }
-
-        public List<Comment> Comments { get; set; }
 
         public string Title { get; set; }
 

@@ -10,8 +10,6 @@ namespace GameBlog.Domain.Models
     {
         public User User { get; set; }
 
-        public Guid UserId { get; set; }
-
-        public List<Comment> Comments { get; set; } = new();
+        public Guid UserId { get; set; }        
     }
 }

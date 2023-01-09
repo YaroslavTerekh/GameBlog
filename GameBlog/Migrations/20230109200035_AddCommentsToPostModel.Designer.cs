@@ -4,6 +4,7 @@ using GameBlog.BL.DBConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameBlog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230109200035_AddCommentsToPostModel")]
+    partial class AddCommentsToPostModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -372,7 +375,7 @@ namespace GameBlog.Migrations
 
             modelBuilder.Entity("GameBlog.Domain.Models.Comment", b =>
                 {
-                    b.HasOne("GameBlog.Domain.Models.User", "CommentAuthor")
+                    b.HasOne("GameBlog.Domain.Models.Reader", "CommentAuthor")
                         .WithMany("Comments")
                         .HasForeignKey("CommentAuthorId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -502,7 +505,7 @@ namespace GameBlog.Migrations
                     b.Navigation("Posts");
                 });
 
-            modelBuilder.Entity("GameBlog.Domain.Models.User", b =>
+            modelBuilder.Entity("GameBlog.Domain.Models.Reader", b =>
                 {
                     b.Navigation("Comments");
                 });

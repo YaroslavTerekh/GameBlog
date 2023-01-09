@@ -8,7 +8,7 @@ namespace GameBlog.Domain.Models
 {
     public class Comment : BaseModel
     {
-        public Reader CommentAuthor { get; set; }
+        public User CommentAuthor { get; set; }
 
         public Guid CommentAuthorId { get; set; }
 
