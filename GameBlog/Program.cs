@@ -63,6 +63,7 @@ builder.Services.AddDbContextsCustom(builder.Configuration);
 
 // Add DI
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 
 // Add authorization
