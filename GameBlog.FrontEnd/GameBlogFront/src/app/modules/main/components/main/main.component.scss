@@ -1,0 +1,38 @@
+.title {
+    border-top: 1px solid #fff;
+    padding-top: 10px;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+
+.journalists {
+    display: flex;
+    justify-content: space-between;
+
+    .journalist {
+        width: 200px;
+
+        h5 {
+            margin-bottom: 5px;
+            font-size: 22px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+
+            .post {
+
+                .post-title {
+                    font-size: 18px;
+                }
+
+                .post-descr {
+                    color: rgba(255, 255, 255, 0.678);
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+}
