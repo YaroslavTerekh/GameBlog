@@ -31,10 +31,19 @@ namespace GameBlog.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync(
-            CancellationToken cancellationToken = default    
+            CancellationToken cancellationToken = default
         )
         {
             return Ok(await _newsController.GetAllNewsAsync(cancellationToken));
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetPostAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsController.GetSpecifiedNewsAsync(id, cancellationToken));
         }
 
         [HttpPost("comment")]

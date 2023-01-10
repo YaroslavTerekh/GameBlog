@@ -78,5 +78,14 @@ namespace GameBlog.BL.Repositories.Realizations
                     .ThenInclude(t => t.CommentAuthor)
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<GamePost> GetSpecifiedNewsAsync(Guid postId, CancellationToken cancellationToken)
+        {
+            return await _context.GamePosts
+                .AsNoTracking()
+                .Include(t => t.Journalist)
+                .Include(t => t.Topic)
+                .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
+        }
     }
 }
