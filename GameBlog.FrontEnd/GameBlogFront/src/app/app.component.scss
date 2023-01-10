@@ -1,0 +1,29 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    padding-top: 10px;
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;        
+        width: 50%;
+        
+        a {
+            width: fit-content;
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    a {
+        width: 50px;
+        font-size: 20px;
+
+        img {
+            width: inherit;
+            height: inherit;
+        }
+    }
+}
