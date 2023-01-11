@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-journalist',
@@ -6,10 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./journalist.component.scss']
 })
 export class JournalistComponent implements OnInit {
-
-  @Input()
-  text: string = 'HERE';
-
   constructor() { }
 
   ngOnInit(): void {

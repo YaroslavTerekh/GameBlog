@@ -1,3 +1,4 @@
+import { NewsModule } from './../news/news.module';
 import { JournalistsModule } from 'src/app/modules/journalists/journalists.module';
 import { SharedModule } from './../../shared/shared/shared.module';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,7 @@ import { MainComponent } from './components/main/main.component';
   imports: [
     CommonModule,
     JournalistsModule,
+    NewsModule,
     SharedModule
   ]
 })

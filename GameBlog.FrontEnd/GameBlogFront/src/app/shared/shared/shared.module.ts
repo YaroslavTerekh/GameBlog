@@ -1,3 +1,6 @@
+import { JournalistsModule } from 'src/app/modules/journalists/journalists.module';
+import { TopicsModule } from './../../modules/topics/topics.module';
+import { NewsModule } from './../../modules/news/news.module';
 import { AppRoutingModule } from './../../app-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +11,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
   exports: [
-    AppRoutingModule
+    AppRoutingModule,
   ]
 })
 export class SharedModule { }
