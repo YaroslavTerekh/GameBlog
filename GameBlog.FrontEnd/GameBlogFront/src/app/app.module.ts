@@ -1,20 +1,22 @@
+import { MainModule } from 'src/app/modules/main/main.module';
+import { JournalistsModule } from 'src/app/modules/journalists/journalists.module';
+import { SharedModule } from './shared/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from './modules/main/components/main/main.component';
-import { JournalistsComponent } from './modules/journalists/components/journalists/journalists.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
-    JournalistsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    JournalistsModule,
+    MainModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
