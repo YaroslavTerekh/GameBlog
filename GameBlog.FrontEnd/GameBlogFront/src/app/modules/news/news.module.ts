@@ -1,3 +1,4 @@
+import { PostPageComponent } from './components/post-page/post-page.component';
 import { SharedModule } from './../../shared/shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -7,6 +8,7 @@ import { PostComponent } from './components/post/post.component';
 import { PostsComponent } from './components/posts/posts.component';
 import { PostsPageComponent } from './components/posts-page/posts-page.component';
 import { TopPostsComponent } from './components/top-posts/top-posts.component';
+import { PostCommentComponent } from './components/post-comment/post-comment.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { TopPostsComponent } from './components/top-posts/top-posts.component';
     PostComponent,
     PostsComponent,
     PostsPageComponent,
-    TopPostsComponent
+    TopPostsComponent,
+    PostCommentComponent,
+    PostPageComponent
   ],
   imports: [
     CommonModule,
@@ -22,9 +26,11 @@ import { TopPostsComponent } from './components/top-posts/top-posts.component';
     SharedModule
   ],
   exports: [
+    NewsRoutingModule,
     PostComponent,
     PostsComponent,
-    TopPostsComponent
+    TopPostsComponent,
+    PostCommentComponent
   ]
 })
 export class NewsModule { }

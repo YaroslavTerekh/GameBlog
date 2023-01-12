@@ -1,3 +1,4 @@
+import { UserModule } from './modules/user/user.module';
 import { NewsModule } from './modules/news/news.module';
 import { MainModule } from 'src/app/modules/main/main.module';
 import { JournalistsModule } from 'src/app/modules/journalists/journalists.module';
@@ -20,6 +21,7 @@ import { AccountOptionsModalComponent } from './shared/modals/account-options-mo
     JournalistsModule,
     MainModule,
     NewsModule,
+    UserModule,
     SharedModule
   ],
   providers: [],

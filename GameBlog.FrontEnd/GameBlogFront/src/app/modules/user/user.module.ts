@@ -1,3 +1,4 @@
+import { NewsModule } from './../news/news.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +16,13 @@ import { MyAccountComponent } from './components/my-account/my-account.component
   ],
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    NewsModule,
+  ],
+  exports: [
+    MyPostsComponent,
+    MyCommentsComponent,
+    MyAccountComponent
   ]
 })
 export class UserModule { }

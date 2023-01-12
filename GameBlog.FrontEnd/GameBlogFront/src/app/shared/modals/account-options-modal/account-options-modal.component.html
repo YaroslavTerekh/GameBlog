@@ -1,8 +1,8 @@
 <div class="background" (click)="showAccountModal(false)"></div>
 <div class="modal">
-    <a routerLink="/">Мій акаунт</a>
-    <a routerLink="/">Мої коментарі</a>
-    <a routerLink="/">Мої пости</a>
-    <a routerLink="/">Адмін-панель</a>
-    <a class="logout" routerLink="/">Вийти</a>
+    <a routerLink="/myaccount" (click)="showAccountModal(false)">Мій акаунт</a>
+    <a routerLink="/mycomments" (click)="showAccountModal(false)">Мої коментарі</a>
+    <a routerLink="/posts/5" (click)="showAccountModal(false)">Мої пости</a>
+    <a routerLink="/" (click)="showAccountModal(false)">Адмін-панель</a>
+    <a class="logout" routerLink="/" (click)="showAccountModal(false)">Вийти</a>
 </div>
