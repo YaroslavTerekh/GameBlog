@@ -1,6 +1,3 @@
-<div class="topics">
-    <app-topic></app-topic>
-    <app-topic></app-topic>
-    <app-topic></app-topic>
-    <app-topic></app-topic>
+<div class="topics" *ngFor="let topic of topics">
+    <app-topic [topic]="topic"></app-topic>
 </div>

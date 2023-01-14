@@ -1,0 +1,47 @@
+.login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: rgba(124, 124, 124, 0.322);
+    padding: 2vh;
+    width: fit-content;    
+
+    h4 {
+        text-align: center;
+        margin-bottom: .5vh;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        input {
+            padding: 1vh;
+            
+        }
+
+        input[type = text] {
+            border-bottom: 1px solid rgba(168, 168, 168, 0.63);
+            margin-bottom: .5vh;
+        }
+
+        input[type = password] {
+            border-bottom: 1px solid rgba(168, 168, 168, 0.63);
+            margin-bottom: .5vh;
+        }
+
+        input[type = submit] {
+            border: 1px solid rgba(168, 168, 168, 0.63);
+            background-color: none;
+            transition: .2s; 
+            margin-top: 1vh;            
+        }
+
+        input[type = submit]:hover {
+            background-color: rgba(168, 168, 168, 0.63);   
+            transition: .2s; 
+        }
+    }
+}

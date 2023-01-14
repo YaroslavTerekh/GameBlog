@@ -5,7 +5,8 @@
     <a routerLink="/news">Новини</a>
     <a routerLink="/topics">Теми</a>
   </nav>
-  <a (click)="showAccountModal(true)"><img src="../assets/default-avatar.png" alt="user"></a>
+  <a (click)="showAccountModal(true)" (click)="checkLoginModal()"><img src="../assets/default-avatar.png" alt="user"></a>
 </header>
 <router-outlet></router-outlet>
-<app-account-options-modal *ngIf="isOpened"></app-account-options-modal>
+<app-account-options-modal *ngIf="isOpened && !needLogin"></app-account-options-modal>
+<app-account-options-not-logged-in *ngIf="isOpened && needLogin"></app-account-options-not-logged-in>

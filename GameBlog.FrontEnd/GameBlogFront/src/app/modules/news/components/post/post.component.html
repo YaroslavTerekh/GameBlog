@@ -1,8 +1,8 @@
 <div>
-    <a routerLink="/post/1">
+    <a [routerLink]="['/post', post.id]">
         <div class="post">
-            <p class="post-title">post HESASSRE title</p>
-            <p class="post-descr">asdasassasdas asdas</p>
+            <p class="post-title">{{post.title}}</p>
+            <p class="post-descr">{{post.description}}</p>
         </div>
     </a>
 </div>

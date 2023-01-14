@@ -6,6 +6,7 @@ import { MainComponent } from './modules/main/components/main/main.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MyAccountComponent } from './modules/user/components/my-account/my-account.component';
+import { MyPostsComponent } from './modules/user/components/my-posts/my-posts.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'news', component: PostsPageComponent },
   { path: 'topics', component: TopicsPageComponent },
   { path: 'myaccount', component: MyAccountComponent },
-  { path: 'mycomments', component: MyCommentsComponent }
+  { path: 'mycomments', component: MyCommentsComponent },
+  { path: 'myposts', component: MyPostsComponent },
 ];
 
 @NgModule({

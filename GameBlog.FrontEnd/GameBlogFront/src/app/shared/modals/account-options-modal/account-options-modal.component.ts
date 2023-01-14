@@ -18,4 +18,8 @@ export class AccountOptionsModalComponent implements OnInit {
   public showAccountModal(value: boolean): void {
     this.authoricationService.triggerForAccountModal(value);
   }
+
+  public onExit(): void {
+    localStorage.removeItem('Token');
+  }
 }

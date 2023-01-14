@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Topic } from './../../../../shared/models/topic';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-topic',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topic.component.scss']
 })
 export class TopicComponent implements OnInit {
+
+  @Input()
+  public topic!: Topic;
 
   constructor() { }
 

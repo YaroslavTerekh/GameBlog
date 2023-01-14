@@ -1,3 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
+import { NewsService } from './../../../../core/services/news.service';
+import { Post } from './../../../../shared/models/post';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
-  constructor() { }
+  public posts!: Post[];
+  public id: string = this.route.snapshot.params['id'];
 
-  ngOnInit(): void {
+  constructor(
+    private readonly newsService: NewsService,
+    private readonly route: ActivatedRoute
+  ) { }
+
+  ngOnInit(): void {     
+    if(this.id != null) {
+      this.newsService.getTopicPosts(this.id).subscribe(res => {
+        next: this.posts = res;
+      });
+    } else {
+      this.newsService.getAllPosts().subscribe(res => {
+        next: this.posts = res;
+      });
+    }
   }
 
 }

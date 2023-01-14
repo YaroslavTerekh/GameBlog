@@ -2,7 +2,7 @@
 <div class="modal">
     <a routerLink="/myaccount" (click)="showAccountModal(false)">Мій акаунт</a>
     <a routerLink="/mycomments" (click)="showAccountModal(false)">Мої коментарі</a>
-    <a routerLink="/posts/5" (click)="showAccountModal(false)">Мої пости</a>
+    <a routerLink="/myposts" (click)="showAccountModal(false)">Мої пости</a>
     <a routerLink="/" (click)="showAccountModal(false)">Адмін-панель</a>
-    <a class="logout" routerLink="/" (click)="showAccountModal(false)">Вийти</a>
+    <a class="logout" routerLink="/" (click)="showAccountModal(false)" (click)="onExit()">Вийти</a>
 </div>

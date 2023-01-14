@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class PostsPageComponent implements OnInit {
 
-  public needAllPosts: boolean = this.router.url === '/news'
+  public needAllPosts: boolean = this.router.url.includes('news');
 
   constructor(
     private readonly router: Router

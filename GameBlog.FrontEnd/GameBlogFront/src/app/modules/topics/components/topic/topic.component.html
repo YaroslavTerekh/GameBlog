@@ -1,6 +1,6 @@
 <div class="topic">
-    <a routerLink="/posts/1">
-        <p class="topic-title">topic title</p>
-        <p class="topic-descr">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+    <a [routerLink]="['/topic', topic.id]">
+        <p class="topic-title">{{topic.title}}</p>
+        <p class="topic-descr">{{topic.description}}</p>
     </a>
 </div>

@@ -1,1 +1,5 @@
-<p>my-posts works!</p>
+<h2 class="title">Мої пости</h2>
+
+<div class="all-posts" *ngFor="let post of posts">
+    <app-post [post]="post"></app-post>
+</div>

@@ -1,3 +1,4 @@
+import { AuthorizationInterceptor } from './core/authorization.interceptor';
 import { UserModule } from './modules/user/user.module';
 import { NewsModule } from './modules/news/news.module';
 import { MainModule } from 'src/app/modules/main/main.module';
@@ -9,22 +10,32 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountOptionsModalComponent } from './shared/modals/account-options-modal/account-options-modal.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AccountOptionsNotLoggedInComponent } from './shared/modals/account-options-not-logged-in/account-options-not-logged-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountOptionsModalComponent,
+    AccountOptionsNotLoggedInComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     JournalistsModule,
     MainModule,
     NewsModule,
     UserModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: AuthorizationInterceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
