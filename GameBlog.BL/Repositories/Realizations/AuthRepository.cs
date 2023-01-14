@@ -59,7 +59,7 @@ namespace GameBlog.BL.Repositories.Realizations
 
             var mappedUser = new User
             {
-                UserName = String.Concat(newUser.FirstName, newUser.LastName),
+                UserName = newUser.Email.Split('@')[0],
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
                 Email = newUser.Email,

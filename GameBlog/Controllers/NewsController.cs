@@ -1,11 +1,14 @@
 ﻿using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
+using GameBlog.Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace GameBlog.Controllers
 {
+    //[AllowAnonymous]
     [Route("api/posts")]
     [ApiController]
     public class NewsController : ControllerBase
@@ -29,12 +32,15 @@ namespace GameBlog.Controllers
             return NoContent();
         }
 
+        [Authorize(policy: Policies.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync(
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetAllNewsAsync(cancellationToken));
+            var posts = await _newsController.GetAllNewsAsync(cancellationToken);
+
+            return Ok(posts);
         }
 
         [HttpGet("{id:guid}")]
@@ -70,6 +76,23 @@ namespace GameBlog.Controllers
             await _newsController.AddTopicAsync(model, cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpGet("topics")]
+        public async Task<IActionResult> GetAllTopicsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsController.GetAllTopicsAsync(cancellationToken));
+        }
+
+        [HttpGet("topic/{id:guid}/posts")]
+        public async Task<IActionResult> GetAllTopicsAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsController.GetTopicPostsAsync(id, cancellationToken));
         }
     }
 }

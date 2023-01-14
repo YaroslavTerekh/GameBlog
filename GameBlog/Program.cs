@@ -64,6 +64,16 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddDbContextsCustom(builder.Configuration);
 
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.AllowAnyOrigin();
+    });
+});
+
 // Add DI
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -117,6 +127,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

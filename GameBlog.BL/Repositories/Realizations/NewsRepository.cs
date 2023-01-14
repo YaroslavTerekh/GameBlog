@@ -79,6 +79,13 @@ namespace GameBlog.BL.Repositories.Realizations
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<List<Topic>> GetAllTopicsAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Topics
+                .Include(t => t.TopicAuthor)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<GamePost> GetSpecifiedNewsAsync(Guid postId, CancellationToken cancellationToken)
         {
             return await _context.GamePosts
@@ -86,6 +93,16 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Journalist)
                 .Include(t => t.Topic)
                 .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
+        }
+
+        public async Task<List<GamePost>> GetTopicPostsAsync(Guid topicId, CancellationToken cancellationToken)
+        {
+            return await _context.GamePosts
+                .AsNoTracking()
+                .Where(t => t.TopicId == topicId)
+                .Include(t => t.Journalist)
+                .Include(t => t.Topic)
+                .ToListAsync(cancellationToken);
         }
     }
 }

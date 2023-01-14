@@ -14,5 +14,9 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task AddTopicAsync(CreateTopicModel topic, CancellationToken cancellationToken);
 
         public Task<GamePost> GetSpecifiedNewsAsync(Guid postId, CancellationToken cancellationToken);
+
+        public Task<List<Topic>> GetAllTopicsAsync(CancellationToken cancellationToken);
+
+        public Task<List<GamePost>> GetTopicPostsAsync(Guid topicId, CancellationToken cancellationToken);
     }
 }

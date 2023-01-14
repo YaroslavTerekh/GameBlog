@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GameBlog.Controllers
 {
     [AllowAnonymous]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace GameBlog.Controllers
         {
             var token = await _authRepository.LoginUserAsync(loginModel, cancellationToken);
 
-            return Ok(token);
+            return Ok(new {token});
         }
     }
 }
