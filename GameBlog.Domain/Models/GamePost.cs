@@ -16,7 +16,9 @@ namespace GameBlog.Domain.Models
 
         public Guid TopicId { get; set; }
 
-        public List<Comment> Comments { get; set; } 
+        public List<Comment> Comments { get; set; }
+
+        public Image? Image { get; set; }
 
         public string Title { get; set; }
 

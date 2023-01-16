@@ -19,5 +19,7 @@ namespace GameBlog.Domain.Models
         public bool IsBanned { get; set; }
 
         public List<Comment> Comments { get; set; } = new();
+
+        public Image? Avatar { get; set; }
     }
 }
