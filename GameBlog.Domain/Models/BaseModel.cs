@@ -10,6 +10,12 @@ namespace GameBlog.Domain.Models
     {
         public Guid Id { get; set; }
 
-        public BaseModel() => Id = Guid.NewGuid();        
+        public DateTime CreatedTime { get; set; }
+
+        public BaseModel()
+        {
+            Id = Guid.NewGuid();
+            CreatedTime = DateTime.UtcNow;
+        }
     }
 }

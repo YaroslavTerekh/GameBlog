@@ -52,6 +52,14 @@ namespace GameBlog.Controllers
             return Ok(await _newsController.GetSpecifiedNewsAsync(id, cancellationToken));
         }
 
+        [HttpGet("popular")]
+        public async Task<IActionResult> GetPopularPostsAsync(
+            CancellationToken cancellationToken
+        )
+        {
+            return Ok(await _newsController.GetPopularPostsAsync(cancellationToken));
+        }
+
         [HttpPost("comment")]
         public async Task<IActionResult> AddCommentAsync(
             CreateCommentModel model,
@@ -93,6 +101,30 @@ namespace GameBlog.Controllers
         )
         {
             return Ok(await _newsController.GetTopicPostsAsync(id, cancellationToken));
+        }
+
+        [HttpGet("journalists/all")]
+        public async Task<IActionResult> GetAllJournalistsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsController.GetAllJournalistsAsync(cancellationToken));
+        }
+
+        [HttpGet("journalists/popular")]
+        public async Task<IActionResult> GetPopularJournalistsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsController.GetPopularJournalistsAsync(cancellationToken));
+        }
+
+        [HttpGet("mine")]
+        public async Task<IActionResult> GetMinePostsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsController.GetMinePostsAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
         }
     }
 }

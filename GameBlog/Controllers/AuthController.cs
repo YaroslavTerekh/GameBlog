@@ -3,6 +3,7 @@ using GameBlog.BL.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GameBlog.Controllers
 {
@@ -37,7 +38,29 @@ namespace GameBlog.Controllers
         {
             var token = await _authRepository.LoginUserAsync(loginModel, cancellationToken);
 
-            return Ok(new {token});
+            return Ok(new { token });
+        }
+
+        [Authorize]
+        [HttpGet("user/info")]
+        public async Task<IActionResult> GetUserInfoAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _authRepository.GetUserInfoAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
+        }
+
+        [Authorize]
+        [HttpPut("user/info")]
+        public async Task<IActionResult> ModifyUserInfoAsync(
+            ModifyUserInfoModel modifyUserInfoModel,
+            CancellationToken cancellationToken = default
+        )
+        {
+            modifyUserInfoModel.CurrentUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await _authRepository.ModifyUserAsync(modifyUserInfoModel, cancellationToken);
+
+            return Ok();
         }
     }
 }

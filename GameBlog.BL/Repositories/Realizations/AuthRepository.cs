@@ -39,6 +39,13 @@ namespace GameBlog.BL.Repositories.Realizations
             _configuration = configuration;
         }
 
+        public async Task<User> GetUserInfoAsync(Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(t => t.Id == currentUserId, cancellationToken);
+
+            return user;
+        }
+
         public async Task<string> LoginUserAsync(LoginModel userCreds, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(t => t.Email == userCreds.Email, cancellationToken);
@@ -51,6 +58,17 @@ namespace GameBlog.BL.Repositories.Realizations
             }
 
             return _authService.GenerateJWT(user, _configuration);
+        }
+
+        public async Task ModifyUserAsync(ModifyUserInfoModel modifyUserInfoModel, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(t => t.Id == modifyUserInfoModel.CurrentUserId, cancellationToken);
+
+            user.FirstName = modifyUserInfoModel.FirstName;
+            user.LastName = modifyUserInfoModel.LastName;
+            user.Email = modifyUserInfoModel.Email;
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task RegisterUserAsync(RegisterModel newUser, CancellationToken cancellationToken)
@@ -73,5 +91,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 throw new Exception(result.Errors.ToString());
             }
         }
+
+
     }
 }

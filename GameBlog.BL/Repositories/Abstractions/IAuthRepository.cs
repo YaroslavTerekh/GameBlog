@@ -1,5 +1,6 @@
 ﻿using GameBlog.BL.DataTransferObjects;
 using GameBlog.BL.Models;
+using GameBlog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,9 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task RegisterUserAsync(RegisterModel newUser, CancellationToken cancellationToken);
 
         public Task<string> LoginUserAsync(LoginModel userCreds, CancellationToken cancellationToken);
+
+        public Task<User> GetUserInfoAsync(Guid currentUserId, CancellationToken cancellationToken);
+
+        public Task ModifyUserAsync(ModifyUserInfoModel modifyUserInfoModel, CancellationToken cancellationToken);
     }
 }

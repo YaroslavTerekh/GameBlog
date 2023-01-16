@@ -65,6 +65,16 @@ namespace GameBlog.BL.Repositories.Realizations
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<List<Journalist>> GetAllJournalistsAsync(CancellationToken cancellationToken)
+        {
+            var journalists = await _context.Journalists
+                .Include(t => t.User)
+                .Include(t => t.Posts.Take(10))
+                .ToListAsync(cancellationToken);
+
+            return journalists;
+        }
+
         public async Task<List<GamePost>> GetAllNewsAsync(CancellationToken cancellationToken)
         {
             //TODO: Add mapper
@@ -84,6 +94,39 @@ namespace GameBlog.BL.Repositories.Realizations
             return await _context.Topics
                 .Include(t => t.TopicAuthor)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<GamePost>> GetMinePostsAsync(Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var journalistId = await _context.Journalists
+                .Where(t => t.UserId == currentUserId)
+                .Select(t => t.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            var userPosts = await _context.GamePosts
+                .Where(t => t.JournalistId == journalistId)
+                .ToListAsync(cancellationToken);
+
+            return userPosts;
+        }
+
+        public async Task<List<Journalist>> GetPopularJournalistsAsync(CancellationToken cancellationToken)
+        {
+            var journalists = await _context.Journalists
+                    .Include(t => t.User)
+                    .Include(t => t.Posts)
+                    .OrderByDescending(t => t.Posts.Count)
+                    .Take(6)
+                    .ToListAsync(cancellationToken);
+
+            return journalists;
+        }
+
+        public async Task<List<GamePost>> GetPopularPostsAsync(CancellationToken cancellationToken)
+        {
+            return await _context.GamePosts
+                .Where(t => t.CreatedTime > DateTime.UtcNow.AddDays(-3))
+                .ToListAsync(cancellationToken);                 
         }
 
         public async Task<GamePost> GetSpecifiedNewsAsync(Guid postId, CancellationToken cancellationToken)

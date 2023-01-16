@@ -18,5 +18,13 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task<List<Topic>> GetAllTopicsAsync(CancellationToken cancellationToken);
 
         public Task<List<GamePost>> GetTopicPostsAsync(Guid topicId, CancellationToken cancellationToken);
+
+        public Task<List<Journalist>> GetAllJournalistsAsync(CancellationToken cancellationToken);
+
+        public Task<List<GamePost>> GetMinePostsAsync(Guid currentUserId, CancellationToken cancellationToken);
+
+        public Task<List<Journalist>> GetPopularJournalistsAsync(CancellationToken cancellationToken);
+
+        public Task<List<GamePost>> GetPopularPostsAsync(CancellationToken cancellationToken);
     }
 }
