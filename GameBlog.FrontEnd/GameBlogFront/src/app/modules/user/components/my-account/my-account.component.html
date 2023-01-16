@@ -1,6 +1,6 @@
-<div class="account-settings">
-    <input type="text" class="first-name" placeholder="Ваше ім'я...">
-    <input type="text" class="last-name" placeholder="Ваше прізвище...">
-    <input type="text" class="email" placeholder="Ваш email...">    
+<form class="account-settings" action="" [formGroup]="infoGroup" (submit)="modifyUserInfo()">
+    <input type="text" class="first-name" placeholder="Ваше ім'я..." formControlName="firstName">
+    <input type="text" class="last-name" placeholder="Ваше прізвище..." formControlName="lastName">
+    <input type="text" class="email" placeholder="Ваш email..." formControlName="email">    
     <input type="submit" class="submit" value="Зберегти">
-</div>
+</form>

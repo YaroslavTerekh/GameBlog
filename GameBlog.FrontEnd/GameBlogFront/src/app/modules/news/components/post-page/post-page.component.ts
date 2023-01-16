@@ -18,9 +18,12 @@ export class PostPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.newsService.getPost(this.route.snapshot.params['id']).subscribe(res => {
-      next: this.post = res;
-    });
+    this.newsService.getPost(this.route.snapshot.params['id'])
+      .subscribe({
+        next: res => {
+          this.post = res;
+        }
+      });
   }
 
 }

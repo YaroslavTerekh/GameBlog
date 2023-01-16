@@ -35,11 +35,12 @@ export class RegisterComponent implements OnInit {
       password: this.registerGroup.get('Password')?.value,
     };
 
-    this.authorizationService.register(newUser).subscribe( res => {
-      next: {
-        this.router.navigate(['']);
-      }
-    } );
+    this.authorizationService.register(newUser)
+      .subscribe({
+        next: res => {
+          this.router.navigate(['']);
+        }
+      });
   }
 
 }

@@ -1,6 +1,3 @@
-<div class="journalists">
-    <app-journalist></app-journalist>
-    <app-journalist></app-journalist>
-    <app-journalist></app-journalist>
-    <app-journalist></app-journalist>
+<div class="journalists" >
+    <app-journalist *ngFor="let journalist of journalists" [journalist]="journalist"></app-journalist>
 </div>

@@ -9,6 +9,7 @@ import { MyCommentsComponent } from './components/my-comments/my-comments.compon
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AddPostComponent } from './components/add-post/add-post.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { RegisterComponent } from './components/register/register.component';
     MyCommentsComponent,
     MyAccountComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AddPostComponent
   ],
   imports: [
     CommonModule,

@@ -16,8 +16,11 @@ export class TopicsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.newsService.getAllTopics().subscribe(res => {
-      next: this.topics = res;
-    });
+    this.newsService.getAllTopics()
+      .subscribe({
+        next: res => {
+          this.topics = res;
+        }
+      });
   }
 }

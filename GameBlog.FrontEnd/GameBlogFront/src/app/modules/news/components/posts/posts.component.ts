@@ -20,13 +20,19 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {     
     if(this.id != null) {
-      this.newsService.getTopicPosts(this.id).subscribe(res => {
-        next: this.posts = res;
-      });
+      this.newsService.getTopicPosts(this.id)
+        .subscribe({
+          next: res => {
+            this.posts = res;
+          }
+        });
     } else {
-      this.newsService.getAllPosts().subscribe(res => {
-        next: this.posts = res;
-      });
+      this.newsService.getAllPosts()
+        .subscribe({
+          next: res => {
+            this.posts = res;
+          }
+        });
     }
   }
 

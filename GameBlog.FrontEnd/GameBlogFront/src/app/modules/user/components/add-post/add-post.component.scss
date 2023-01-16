@@ -1,0 +1,41 @@
+.add-post {
+    margin-top: 1vh;
+
+    div {
+        margin-bottom: 2vh;
+
+        h5 {
+            margin-bottom: .2vh;
+            font-size: 20px;
+        }
+    }
+
+    input {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        color: #fff;
+        padding: .5vh;
+    }
+
+    input[type="submit"] {
+        padding: 1vh;
+        border-radius: 3px;
+        background-color: rgba(27, 170, 22, 0.678);
+        color: #fff;
+    }
+
+    textarea {
+        background-color: rgba(255, 255, 255, 0.2);
+        width: 60%;
+        height: 50vh;
+        border-radius: 5px;
+        
+        padding: .5vh;
+        color: #fff;
+        resize: none;        
+    }
+
+    textarea:focus {
+        outline:  none !important;
+    }
+}

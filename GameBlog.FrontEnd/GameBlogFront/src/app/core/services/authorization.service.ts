@@ -13,6 +13,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthorizationService implements OnInit {
   public accountModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public loginModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isJournalistSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private helper: JwtHelperService = new JwtHelperService();
 
   constructor(

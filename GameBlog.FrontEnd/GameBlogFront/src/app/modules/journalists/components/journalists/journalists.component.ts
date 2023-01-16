@@ -1,3 +1,5 @@
+import { Journalist } from './../../../../shared/models/journalist';
+import { NewsService } from 'src/app/core/services/news.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JournalistsComponent implements OnInit {
 
-  constructor() { }
+  public journalists!: Journalist[];
+
+  constructor(
+    private readonly newsService: NewsService
+  ) { }
 
   ngOnInit(): void {
+    this.newsService.getAllJournalists()
+      .subscribe({
+        next: res => {
+          this.journalists = res; 
+        }
+      });
   }
 
 }

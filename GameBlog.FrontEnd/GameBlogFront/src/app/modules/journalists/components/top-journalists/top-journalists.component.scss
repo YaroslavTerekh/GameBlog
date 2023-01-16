@@ -1,4 +1,9 @@
 .journalists {
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;   
+    width: fit-content; 
+
+    .journalist {
+        margin-right: .5vh;
+    }
 }

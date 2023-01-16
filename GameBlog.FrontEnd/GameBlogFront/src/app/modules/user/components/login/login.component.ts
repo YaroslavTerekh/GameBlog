@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { Login } from '../../../../core/interfaces/login';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
     password: this.fb.control('', [Validators.required])
   });
   private token!: string;
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(
     private readonly authorizationService: AuthorizationService,
@@ -33,14 +35,23 @@ export class LoginComponent implements OnInit {
     };
 
     this.authorizationService.logIn(userCreds)
-      .subscribe(res => {
-        next: {
+      .subscribe({
+        next: res => {
           this.token = res.token;
           localStorage.setItem('Token', `bearer ${this.token}`);
+          if(this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Admin') {            
+            this.authorizationService.isAdminSubject.next(true);
+            this.authorizationService.isJournalistSubject.next(false);
+          }
+          if(this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Journalist') {            
+            this.authorizationService.isAdminSubject.next(false);
+            this.authorizationService.isJournalistSubject.next(true);
+          }
+          if(this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {            
+            this.authorizationService.isAdminSubject.next(false);
+            this.authorizationService.isJournalistSubject.next(false);
+          }
           this.router.navigate(['']);
-        };      
-        error: {
-          console.log("ERROR");          
         }
       });
   }

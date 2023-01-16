@@ -2,7 +2,7 @@
 <div class="modal">
     <a routerLink="/myaccount" (click)="showAccountModal(false)">Мій акаунт</a>
     <a routerLink="/mycomments" (click)="showAccountModal(false)">Мої коментарі</a>
-    <a routerLink="/myposts" (click)="showAccountModal(false)">Мої пости</a>
-    <a routerLink="/" (click)="showAccountModal(false)">Адмін-панель</a>
+    <a routerLink="/myposts" (click)="showAccountModal(false)" *ngIf="isJournalist">Мої пости</a>
+    <a routerLink="/" (click)="showAccountModal(false)" *ngIf="isAdmin">Адмін-панель</a>
     <a class="logout" routerLink="/" (click)="showAccountModal(false)" (click)="onExit()">Вийти</a>
 </div>

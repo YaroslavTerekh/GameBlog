@@ -4,23 +4,23 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    background-color: #04f0f0;
+    background-color: #69696967;
     padding: 2vh;
 
     display: flex;
     flex-direction: column;
 
     input {
-        background-color: #fff;
+        background-color: #99999967;
         margin-top: .5vh;
 
         padding: 2vh;
         border-radius: .2vh;
-        color: #000;
+        color: rgb(255, 255, 255);
     }
 
     .submit {
-        background-color: rgb(51, 148, 42);
+        background-color: rgba(70, 136, 16, 0.555);
         color: #fff;
     }
 

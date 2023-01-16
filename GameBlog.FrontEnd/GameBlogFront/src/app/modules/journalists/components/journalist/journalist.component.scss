@@ -5,4 +5,10 @@
         margin-bottom: 5px;
         font-size: 22px;
     }    
+
+    .posts {
+        display: flex;
+        flex-direction: column;
+        
+    }
 }

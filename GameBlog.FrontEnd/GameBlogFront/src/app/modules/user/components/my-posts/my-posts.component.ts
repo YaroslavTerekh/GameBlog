@@ -16,7 +16,12 @@ export class MyPostsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // todo: GET USER POSTS
+    this.newsService.getMinePosts()
+      .subscribe({
+        next: res => {
+          this.posts = res;
+        }
+      });
   }
 
 }
