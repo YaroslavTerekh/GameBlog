@@ -126,6 +126,7 @@ namespace GameBlog.BL.Repositories.Realizations
         public async Task<List<GamePost>> GetPopularPostsAsync(CancellationToken cancellationToken)
         {
             return await _context.GamePosts
+                .Include(t => t.Image)
                 .Where(t => t.CreatedTime > DateTime.UtcNow.AddDays(-3))
                 .ToListAsync(cancellationToken);                 
         }
@@ -135,8 +136,11 @@ namespace GameBlog.BL.Repositories.Realizations
             var post = await _context.GamePosts
                 .AsNoTracking()
                 .Include(t => t.Journalist)
+                    .ThenInclude(t => t.User)
                 .Include(t => t.Topic)
                 .Include(t => t.Image)
+                .Include(t => t.Comments)
+                    .ThenInclude(t => t.CommentAuthor)
                 .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
 
             return post;
@@ -149,6 +153,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Where(t => t.TopicId == topicId)
                 .Include(t => t.Journalist)
                 .Include(t => t.Topic)
+                .Include(t => t.Image)
                 .ToListAsync(cancellationToken);
         }
 
@@ -188,6 +193,19 @@ namespace GameBlog.BL.Repositories.Realizations
                 .FirstOrDefaultAsync(t => t.Id == id, token);
 
             return file;
+        }
+
+        public async Task<List<GamePost>> GetPostsWithMyComments(Guid currentUserId, CancellationToken token = default)
+        {
+            var allPosts = await _context.GamePosts
+                .Include(t => t.Comments)
+                .ToListAsync(token);
+
+            var posts = allPosts
+                .Where(t => t.Comments.Select(t => t.CommentAuthorId).ToList().Contains(currentUserId))
+                .ToList();
+
+            return posts;
         }
     }
 }

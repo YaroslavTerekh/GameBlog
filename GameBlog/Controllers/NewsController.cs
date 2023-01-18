@@ -146,5 +146,11 @@ namespace GameBlog.Controllers
 
             return PhysicalFile(image.Path, "image/png");
         }
+
+        [HttpGet("mycomments")]
+        public async Task<IActionResult> GetMyCommentsAsync(CancellationToken token = default)
+        {
+            return Ok(await _newsController.GetPostsWithMyComments(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token));
+        }
     }
 }
