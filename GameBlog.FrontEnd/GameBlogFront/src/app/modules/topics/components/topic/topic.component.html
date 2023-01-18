@@ -1,4 +1,4 @@
-<div class="topic">
+<div class="topic" [routerLink]="['/topic', topic.id]">
     <a [routerLink]="['/topic', topic.id]">
         <p class="topic-title">{{topic.title}}</p>
         <p class="topic-descr">{{topic.description}}</p>

@@ -1,14 +1,14 @@
-.topic {    
-    border-bottom: 1px solid rgba(255, 255, 255, 0.459);
-    margin-bottom: 5vh;
-    margin-right: 2vh;
+.topic {
+    padding: 2vh;
+    border-radius: 3px;
+    margin-right: 1vh;
+    background-color: rgb(212, 212, 212);
+    border-radius: 4px;
+    margin-bottom: 2vh;
+    box-shadow: 10px 5px 10px rgb(184, 184, 184);
+    cursor: pointer;
 
     a {
-        color: #fff;
-        
-        .topic-descr {      
-            margin-bottom: 1vh;      
-            margin-top: 2vh;
-        }
+        color: #000;
     }
 }

@@ -1,8 +1,11 @@
-<div>
+<div class="post">
     <a [routerLink]="['/post', post.id]">
-        <div class="post">
+        <div class="post-img">
+            <img [src]="postImage" alt="">
+        </div>
+        <div class="post-details">            
             <p class="post-title">{{post.title}}</p>            
-            <p class="post-descr">{{post.description | trimTextForPost: 60}}</p>
+            <p class="post-descr">{{post.description | trimTextForPost: 40}}</p>
         </div>
     </a>
 </div>

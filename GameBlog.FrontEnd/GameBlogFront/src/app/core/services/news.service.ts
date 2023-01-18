@@ -1,3 +1,4 @@
+import { addComment } from './../interfaces/addComment';
 import { AddPost } from './../interfaces/addPost';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from "@angular/common/http";
@@ -16,6 +17,10 @@ export class NewsService {
     private readonly http: HttpClient
   ) { }
 
+  public addComment(data: addComment): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/posts/comment`, data);
+  }
+
   public addImage(data: any): Observable<string> {
     return this.http.post<string>(`${environment.apiAddress}/posts/add/image`, data);
   }
@@ -24,6 +29,10 @@ export class NewsService {
     return this.http.get(`${environment.apiAddress}/posts/image/${id}`, {
       responseType: 'blob',
     });
+  }
+
+  public getComments(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.apiAddress}/posts/mycomments`);
   }
 
   public addPost(post: AddPost, id: string): Observable<any> {
