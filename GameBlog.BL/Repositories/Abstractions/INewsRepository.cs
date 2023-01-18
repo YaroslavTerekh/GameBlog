@@ -1,11 +1,12 @@
 ﻿using GameBlog.BL.Models;
 using GameBlog.Domain.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace GameBlog.BL.Repositories.Abstractions
 {
     public interface INewsRepository
     {
-        public Task CreateNewsAsync(CreatePostModel newPost, CancellationToken cancellationToken);
+        public Task CreateNewsAsync(CreatePostModel newPost, Guid imgId, CancellationToken cancellationToken);
 
         public Task<List<GamePost>> GetAllNewsAsync(CancellationToken cancellationToken);
 
@@ -26,5 +27,9 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task<List<Journalist>> GetPopularJournalistsAsync(CancellationToken cancellationToken);
 
         public Task<List<GamePost>> GetPopularPostsAsync(CancellationToken cancellationToken);
+
+        public Task<Guid> AddImageAsync(HttpContext context, string root, string path, CancellationToken token);
+
+        public Task<Image> GetImageAsync(Guid id, CancellationToken token);
     }
 }

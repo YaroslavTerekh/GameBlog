@@ -6,6 +6,28 @@
     font-size: 32px;
 }
 
+.content {
+    display: flex;
+    justify-content: space-between;     
+    
+    .post-text {
+        width: 100vw;
+    }
+}
+
+div.img {
+    width: 100vw;
+    height: 50vh;    
+    overflow:hidden;
+    position:relative;
+    margin-right: 2vh;
+    
+    img {
+        position:absolute;
+        
+    }
+}
+
 h2 {
     border-top: 1px solid #fff;
     padding-top: .5vh;

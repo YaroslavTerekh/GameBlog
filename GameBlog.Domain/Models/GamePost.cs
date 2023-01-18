@@ -20,6 +20,8 @@ namespace GameBlog.Domain.Models
 
         public Image? Image { get; set; }
 
+        public Guid? ImageId { get; set; }
+
         public string Title { get; set; }
 
         public string Description { get; set; }

@@ -2,6 +2,7 @@
 using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.Domain.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace GameBlog.BL.Repositories.Realizations
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task CreateNewsAsync(CreatePostModel newPost, CancellationToken cancellationToken = default)
+        public async Task CreateNewsAsync(CreatePostModel newPost, Guid imgId, CancellationToken cancellationToken = default)
         {
             var journalistId = await _context.Journalists
                                     .Where(t => t.UserId == newPost.UserId)
@@ -58,7 +59,8 @@ namespace GameBlog.BL.Repositories.Realizations
                 Title = newPost.Title,
                 Description = newPost.Description,
                 JournalistId = journalistId,
-                TopicId = newPost.TopicId
+                TopicId = newPost.TopicId,
+                ImageId = imgId
             };
 
             await _context.GamePosts.AddAsync(mappedPost, cancellationToken);
@@ -77,8 +79,6 @@ namespace GameBlog.BL.Repositories.Realizations
 
         public async Task<List<GamePost>> GetAllNewsAsync(CancellationToken cancellationToken)
         {
-            //TODO: Add mapper
-
             return await _context.GamePosts
                 .AsNoTracking()
                 .Include(t => t.Journalist)
@@ -86,6 +86,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Topic)
                 .Include(t => t.Comments)
                     .ThenInclude(t => t.CommentAuthor)
+                .Include(t => t.Image)
                 .ToListAsync(cancellationToken);
         }
 
@@ -131,11 +132,14 @@ namespace GameBlog.BL.Repositories.Realizations
 
         public async Task<GamePost> GetSpecifiedNewsAsync(Guid postId, CancellationToken cancellationToken)
         {
-            return await _context.GamePosts
+            var post = await _context.GamePosts
                 .AsNoTracking()
                 .Include(t => t.Journalist)
                 .Include(t => t.Topic)
+                .Include(t => t.Image)
                 .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
+
+            return post;
         }
 
         public async Task<List<GamePost>> GetTopicPostsAsync(Guid topicId, CancellationToken cancellationToken)
@@ -146,6 +150,44 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Journalist)
                 .Include(t => t.Topic)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<Guid> AddImageAsync(HttpContext context, string root, string path, CancellationToken token = default)
+        {
+            var file = context.Request.Form.Files[0];
+
+            var fileName = Path.GetFileName(file.FileName);
+            var filePathName = DateTime.Now.Millisecond + fileName;
+            var uploadPath = Path.Combine("", root, path, filePathName);
+
+            var image = new Image
+            {
+                Path = uploadPath,
+            };
+
+            if (file is not null)
+            {
+                try
+                {
+                    using var memoryStream = new MemoryStream();
+                    await file.CopyToAsync(memoryStream, token);
+                    await File.WriteAllBytesAsync(uploadPath, memoryStream.ToArray(), token);
+
+                    await _context.AddAsync(image, token);
+                    await _context.SaveChangesAsync(token);
+                }
+                catch (Exception) { }                
+            }
+
+            return image.Id;
+        }
+
+        public async Task<Image> GetImageAsync(Guid id, CancellationToken token = default)
+        {
+            var file = await _context.Images
+                .FirstOrDefaultAsync(t => t.Id == id, token);
+
+            return file;
         }
     }
 }

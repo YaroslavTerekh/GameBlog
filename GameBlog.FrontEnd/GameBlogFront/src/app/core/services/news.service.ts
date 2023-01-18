@@ -1,3 +1,4 @@
+import { AddPost } from './../interfaces/addPost';
 import { environment } from './../../../environments/environment';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
@@ -14,6 +15,20 @@ export class NewsService {
   constructor(
     private readonly http: HttpClient
   ) { }
+
+  public addImage(data: any): Observable<string> {
+    return this.http.post<string>(`${environment.apiAddress}/posts/add/image`, data);
+  }
+
+  public getImage(id: string): Observable<Blob> {
+    return this.http.get(`${environment.apiAddress}/posts/image/${id}`, {
+      responseType: 'blob',
+    });
+  }
+
+  public addPost(post: AddPost, id: string): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/posts/${id}`, post);
+  }
 
   public getAllPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.apiAddress}/posts`);

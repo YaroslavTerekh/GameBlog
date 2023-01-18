@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PostPageComponent implements OnInit {
 
   public post!: Post;
+  public postImage!: string | ArrayBuffer | null;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -22,8 +23,26 @@ export class PostPageComponent implements OnInit {
       .subscribe({
         next: res => {
           this.post = res;
+
+          this.newsService.getImage(res.image.id)
+            .subscribe({
+              next: (res: Blob) => {
+                this.createImageFromBlob(res);
+              }
+            })
         }
       });
+  }
+
+  createImageFromBlob(image: Blob): void {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.postImage = reader.result;      
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
   }
 
 }

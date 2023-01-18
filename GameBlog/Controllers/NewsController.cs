@@ -14,25 +14,26 @@ namespace GameBlog.Controllers
     public class NewsController : ControllerBase
     {
         private readonly INewsRepository _newsController;
+        private readonly IWebHostEnvironment _env;
 
-        public NewsController(INewsRepository newsController)
+        public NewsController(INewsRepository newsController, IWebHostEnvironment env)
         {
             _newsController = newsController;
+            _env = env;
         }
 
-        [HttpPost]
+        [HttpPost("{imageId:guid}")]
         public async Task<IActionResult> CreateNewPostAsync(
-            [FromBody] CreatePostModel model, 
+            [FromBody] CreatePostModel model,
+            [FromRoute] Guid imageId,
             CancellationToken cancellationToken = default)
         {
             model.UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            await _newsController.CreateNewsAsync(model, cancellationToken);
+            await _newsController.CreateNewsAsync(model, imageId, cancellationToken);
 
             return NoContent();
         }
-
-        [Authorize(policy: Policies.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync(
             CancellationToken cancellationToken = default
@@ -125,6 +126,25 @@ namespace GameBlog.Controllers
         )
         {
             return Ok(await _newsController.GetMinePostsAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
+        }
+
+        [HttpPost("add/image")]
+        public async Task<IActionResult> AddImage(IFormFile file, CancellationToken token = default)
+        {
+            var imgId = await _newsController.AddImageAsync(HttpContext, _env.ContentRootPath, "uploads", token);
+
+            return Ok(imgId);
+        }
+
+        [HttpGet("image/{id:guid}")]
+        public async Task<IActionResult> GetImage(
+            [FromRoute] Guid id, 
+            CancellationToken token = default
+        )
+        {
+            var image = await _newsController.GetImageAsync(id, token);
+
+            return PhysicalFile(image.Path, "image/png");
         }
     }
 }
