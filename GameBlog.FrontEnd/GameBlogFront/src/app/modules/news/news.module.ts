@@ -1,3 +1,4 @@
+import { TrimTextForPostPipe } from './../../core/pipes/trim-text-for-post.pipe';
 import { PostPageComponent } from './components/post-page/post-page.component';
 import { SharedModule } from './../../shared/shared/shared.module';
 import { NgModule } from '@angular/core';
@@ -18,12 +19,14 @@ import { PostCommentComponent } from './components/post-comment/post-comment.com
     PostsPageComponent,
     TopPostsComponent,
     PostCommentComponent,
-    PostPageComponent
+    PostPageComponent,
+    TrimTextForPostPipe
   ],
   imports: [
     CommonModule,
     NewsRoutingModule,
-    SharedModule
+    SharedModule,
+    
   ],
   exports: [
     NewsRoutingModule,

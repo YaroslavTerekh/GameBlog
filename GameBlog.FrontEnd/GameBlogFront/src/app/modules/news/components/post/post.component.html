@@ -2,7 +2,7 @@
     <a [routerLink]="['/post', post.id]">
         <div class="post">
             <p class="post-title">{{post.title}}</p>            
-            <p class="post-descr">{{post.description}}</p>
+            <p class="post-descr">{{post.description | trimTextForPost: 60}}</p>
         </div>
     </a>
 </div>
