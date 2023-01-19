@@ -1,5 +1,6 @@
 .background {
     background-color: rgba(0, 0, 0, 0.233);
+    backdrop-filter: blur(5px);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -8,7 +9,7 @@
 }
 
 .modal {
-    background-color: rgb(122, 69, 44);
+    background-color: rgba(158, 158, 158, 0.678);
     padding: 2vw;
 
     z-index: 1;
@@ -23,7 +24,7 @@
     align-items: center;
 
     a {
-        background-color: rgba(102, 25, 57, 0.432);
+        background-color: rgba(36, 36, 36, 0.63);
         text-decoration: none;
         color: #fff;
         width: 15vh;

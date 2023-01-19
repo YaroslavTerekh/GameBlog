@@ -1,5 +1,5 @@
 import { addComment } from './../../../../core/interfaces/addComment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from './../../../../shared/models/post';
 import { NewsService } from './../../../../core/services/news.service';
 import { Component, OnInit } from '@angular/core';
@@ -24,7 +24,7 @@ export class PostPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.addComment = this.fb.group({
-      text: this.fb.control(''),
+      text: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
     });
 
     this.newsService.getPost(this.route.snapshot.params['id'])
@@ -43,9 +43,6 @@ export class PostPageComponent implements OnInit {
   }
 
   onCommentSend(): void {
-    console.log(this.addComment);
-    
-
     let addCommentReq: addComment = {
       postId: this.post.id,
       description: this.addComment.get('text')?.value

@@ -12,7 +12,7 @@
     <app-post-comment *ngFor="let comment of post.comments" [comment]="comment" ></app-post-comment>
 </div>
 
-<form class="add-comment" action="" formGroupName="addComment" (submit)="onCommentSend()">
+<form class="add-comment" action="" [formGroup]="addComment" (submit)="onCommentSend()">
     <textarea placeholder="Ваш коментар..." name="" id="" formControlName="text"></textarea>
     <input type="submit" value="Опублікувати">
 </form>

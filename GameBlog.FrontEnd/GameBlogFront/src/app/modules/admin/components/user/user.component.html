@@ -1,0 +1,8 @@
+<div class="user">
+    <p>{{user.firstName}} {{user.lastName}}</p>
+
+    <div class="options">
+        <button class="ban" *ngIf="!user.isBanned" (click)="banUser(user.id)">Заблокувати користувача</button>
+        <button class="unban" *ngIf="user.isBanned" (click)="unbanUser(user.id)">Розблокувати користувача</button>
+    </div>
+</div>

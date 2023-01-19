@@ -1,5 +1,5 @@
 .post {
-    width: fit-content;
+    width: 20vw;
     height: fit-content;
     background-color: rgb(212, 212, 212);
     border-radius: 4px;
@@ -26,6 +26,7 @@
 
         .post-details {
             margin: 1vh;
+            width: inherit;
 
             .post-title {
                 margin-top: .5vh;

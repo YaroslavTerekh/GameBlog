@@ -16,19 +16,8 @@ export class AccountOptionsModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authoricationService.isAdminSubject
-      .subscribe({
-        next: res => {
-          this.isAdmin = res;
-        }
-      });
-
-    this.authoricationService.isJournalistSubject
-      .subscribe({
-        next: res => {
-          this.isJournalist = res;
-        }
-      });
+    this.isAdmin = localStorage.getItem('Role') == "Admin";
+    this.isJournalist = localStorage.getItem('Role') == "Journalist";
   }
 
   public showAccountModal(value: boolean): void {
@@ -37,8 +26,5 @@ export class AccountOptionsModalComponent implements OnInit {
 
   public onExit(): void {
     localStorage.removeItem('Token');
-
-    this.authoricationService.isAdminSubject.next(false);
-    this.authoricationService.isJournalistSubject.next(false);
   }
 }

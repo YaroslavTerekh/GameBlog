@@ -1,3 +1,4 @@
+import { AdminModule } from './modules/admin/admin.module';
 import { AuthorizationInterceptor } from './core/authorization.interceptor';
 import { UserModule } from './modules/user/user.module';
 import { NewsModule } from './modules/news/news.module';
@@ -27,6 +28,7 @@ import { AccountOptionsNotLoggedInComponent } from './shared/modals/account-opti
     MainModule,
     NewsModule,
     UserModule,
+    AdminModule,
     SharedModule
   ],
   providers: [

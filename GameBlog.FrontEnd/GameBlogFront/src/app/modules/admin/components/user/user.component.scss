@@ -1,0 +1,28 @@
+.user {
+    width: 100%;
+    height: fit-content;
+    background-color: rgb(212, 212, 212);
+    border-radius: 4px;
+    margin-bottom: 2vh;
+    box-shadow: 10px 5px 10px rgb(184, 184, 184);
+    padding: 2vh;
+    display: flex;
+    justify-content: space-between;
+
+    .options {
+        color: #fff;
+
+        button {
+            padding: 1vh;
+            border-radius: 3px;
+        }
+
+        .ban {
+            background-color: rgba(155, 38, 38, 0.5);
+        }
+
+        .unban {
+            background-color: rgba(38, 126, 26, 0.726)
+        }
+    }
+}

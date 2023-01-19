@@ -22,6 +22,8 @@ export class AuthorizationInterceptor implements HttpInterceptor {
           Authorization: localStorage.getItem("Token")!,
         }
       })
+    } else {
+      localStorage.removeItem("Token");
     }
 
     return next.handle(request);

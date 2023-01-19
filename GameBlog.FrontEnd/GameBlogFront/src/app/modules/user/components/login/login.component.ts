@@ -39,18 +39,7 @@ export class LoginComponent implements OnInit {
         next: res => {
           this.token = res.token;
           localStorage.setItem('Token', `bearer ${this.token}`);
-          if(this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Admin') {            
-            this.authorizationService.isAdminSubject.next(true);
-            this.authorizationService.isJournalistSubject.next(false);
-          }
-          if(this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'Journalist') {            
-            this.authorizationService.isAdminSubject.next(false);
-            this.authorizationService.isJournalistSubject.next(true);
-          }
-          if(this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'User') {            
-            this.authorizationService.isAdminSubject.next(false);
-            this.authorizationService.isJournalistSubject.next(false);
-          }
+          localStorage.setItem('Role', this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
           this.router.navigate(['']);
         }
       });
