@@ -82,6 +82,33 @@ namespace GameBlog.BL.Repositories.Realizations
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Users
+                .Where(t => t.Role != Role.Admin)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<object> GetUsersForChart(CancellationToken cancellationToken)
+        {
+            var last7DaysUsers = await _context.Users
+                .Where(t => t.RegisteredDate > DateTime.UtcNow.AddDays(-7))
+                .ToListAsync(cancellationToken);
+
+            var result = new
+            {
+                day7 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.Day).ToList(),
+                day6 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.AddDays(-1).Day).ToList(),
+                day5 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.AddDays(-2).Day).ToList(),
+                day4 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.AddDays(-3).Day).ToList(),
+                day3 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.AddDays(-4).Day).ToList(),
+                day2 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.AddDays(-5).Day).ToList(),
+                day1 = last7DaysUsers.Where(u => u.RegisteredDate.Day == DateTime.UtcNow.AddDays(-6).Day).ToList(),
+            };
+
+            return result;
+        }
+
         public async Task UnbanUserAsync(Guid userId, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FindAsync(userId);

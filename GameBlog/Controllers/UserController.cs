@@ -19,6 +19,14 @@ namespace GameBlog.Controllers
             _userRepository = userRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsersAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _userRepository.GetAllUsersAsync(cancellationToken));
+        }
+
         [HttpPatch("role")]
         public async Task<IActionResult> ChangeUserRoleAsync(
             Guid userId,
@@ -31,27 +39,35 @@ namespace GameBlog.Controllers
             return NoContent();
         }
 
-        [HttpPatch("ban/{userId:guid}")]
+        [HttpPatch("ban/{id:guid}")]
         public async Task<IActionResult> BanUserAsync(
-            [FromRoute]Guid userId,
+            [FromRoute] Guid id,
             CancellationToken cancellationToken = default
         )
         {
-            await _userRepository.BanUserAsync(userId, cancellationToken);
+            await _userRepository.BanUserAsync(id, cancellationToken);
 
             return NoContent();
         }
 
 
-        [HttpPatch("unban/{userId:guid}")]
+        [HttpPatch("unban/{id:guid}")]
         public async Task<IActionResult> UnbanUserAsync(
-            [FromRoute]Guid userId,
+            [FromRoute] Guid id,
             CancellationToken cancellationToken = default
         )
         {
-            await _userRepository.UnbanUserAsync(userId, cancellationToken);
+            await _userRepository.UnbanUserAsync(id, cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpGet("for-charts")]
+        public async Task<IActionResult> GetUsersForChartsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _userRepository.GetUsersForChart(cancellationToken));
         }
     }
 }

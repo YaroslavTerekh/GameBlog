@@ -21,5 +21,7 @@ namespace GameBlog.Domain.Models
         public List<Comment> Comments { get; set; } = new();
 
         public Image? Avatar { get; set; }
+
+        public DateTime RegisteredDate { get; set; } = DateTime.UtcNow;
     }
 }

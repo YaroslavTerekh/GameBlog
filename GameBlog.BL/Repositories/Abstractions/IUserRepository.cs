@@ -1,4 +1,5 @@
 ﻿using GameBlog.Domain.Enums;
+using GameBlog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,9 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task BanUserAsync(Guid userId, CancellationToken cancellationToken);
 
         public Task UnbanUserAsync(Guid userId, CancellationToken cancellationToken);
+
+        public Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken);
+
+        public Task<object> GetUsersForChart(CancellationToken cancellationToken);
     }
 }

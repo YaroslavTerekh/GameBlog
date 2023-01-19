@@ -106,6 +106,7 @@ namespace GameBlog.BL.Repositories.Realizations
 
             var userPosts = await _context.GamePosts
                 .Where(t => t.JournalistId == journalistId)
+                .Include(t => t.Image)
                 .ToListAsync(cancellationToken);
 
             return userPosts;
@@ -199,6 +200,7 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             var allPosts = await _context.GamePosts
                 .Include(t => t.Comments)
+                .Include(t => t.Image)
                 .ToListAsync(token);
 
             var posts = allPosts
