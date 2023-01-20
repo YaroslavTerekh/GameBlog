@@ -14,6 +14,8 @@ namespace GameBlog.Domain.Models
 
         public string LastName { get; set; }
 
+        public string AboutMe { get; set; }
+
         public Role Role { get; set; }
 
         public bool IsBanned { get; set; }

@@ -22,6 +22,17 @@ namespace GameBlog.Controllers
             _env = env;
         }
 
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeletePostAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        ) 
+        {
+            await _newsController.DeletePostAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+
+            return NoContent();
+        }
+
         [HttpPost("{imageId:guid}")]
         public async Task<IActionResult> CreateNewPostAsync(
             [FromBody] CreatePostModel model,

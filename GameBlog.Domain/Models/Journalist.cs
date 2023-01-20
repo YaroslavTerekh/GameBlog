@@ -12,6 +12,8 @@ namespace GameBlog.Domain.Models
 
         public Guid UserId { get; set; }
 
+        public List<Reader> Subscribers { get; set; }
+
         public List<GamePost> Posts { get; set; } = new();
     }
 }

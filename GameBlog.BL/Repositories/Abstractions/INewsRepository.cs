@@ -33,5 +33,7 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task<Image> GetImageAsync(Guid id, CancellationToken token);
 
         public Task<List<GamePost>> GetPostsWithMyComments(Guid currentUserId, CancellationToken token);
+
+        public Task DeletePostAsync(Guid postId, Guid CurrentUserId, CancellationToken cancellationToken);
     }
 }

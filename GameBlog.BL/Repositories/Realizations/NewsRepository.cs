@@ -1,6 +1,7 @@
 ﻿using GameBlog.BL.DBConnection;
 using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
+using GameBlog.Domain.Enums;
 using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -208,6 +209,22 @@ namespace GameBlog.BL.Repositories.Realizations
                 .ToList();
 
             return posts;
+        }
+
+        public async Task DeletePostAsync(Guid postId, Guid CurrentUserId, CancellationToken cancellationToken)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(t => t.Id == CurrentUserId);
+
+            var post = await _context.GamePosts
+                .Include(t => t.Journalist)
+                .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
+
+            if(user.Role == Role.Admin || post.Journalist.UserId == CurrentUserId)
+            {
+                _context.GamePosts.Remove(post);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
         }
     }
 }
