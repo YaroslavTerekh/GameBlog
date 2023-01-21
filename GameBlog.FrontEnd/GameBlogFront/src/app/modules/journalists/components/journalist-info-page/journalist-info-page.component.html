@@ -1,1 +1,20 @@
-<p>journalist-info-page works!</p>
+<h2 class="title">{{journalist!.user!.firstName}} {{journalist!.user!.lastName}}</h2>
+
+<div class="info">
+    <div class="img">
+        <img [src]="journalistAvatar ? journalistAvatar : '../../../../../assets/default-user.png'" alt="">
+    </div>
+    <p>{{journalist!.user!.aboutMe}}</p>
+</div>
+
+<div class="subs">
+    <button class="subscribe">Підписатися</button>
+    <p>Підписники: {{journalist.subscribers.length}}</p>
+</div>
+
+
+<h2 class="title">Всі пости цього журналіста</h2>
+
+<div class="all-posts">
+    <app-post *ngFor="let post of journalist.posts" [post]="post"></app-post>
+</div>

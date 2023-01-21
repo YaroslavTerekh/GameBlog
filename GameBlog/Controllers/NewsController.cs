@@ -158,6 +158,15 @@ namespace GameBlog.Controllers
             return PhysicalFile(image.Path, "image/png");
         }
 
+        [HttpGet("journalist/{id:guid}")]
+        public async Task<IActionResult> GetJournalist(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _newsRepository.GetJournalistAsync(id, cancellationToken));
+        }
+
         [HttpGet("mycomments")]
         public async Task<IActionResult> GetMyCommentsAsync(CancellationToken token = default)
         {

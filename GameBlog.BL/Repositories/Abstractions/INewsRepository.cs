@@ -35,5 +35,7 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task<List<GamePost>> GetPostsWithMyComments(Guid currentUserId, CancellationToken token);
 
         public Task DeletePostAsync(Guid postId, Guid CurrentUserId, CancellationToken cancellationToken);
+
+        public Task<Journalist> GetJournalistAsync(Guid journalistId, CancellationToken cancellationToken);
     }
 }

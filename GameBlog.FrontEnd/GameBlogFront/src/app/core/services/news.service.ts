@@ -35,6 +35,10 @@ export class NewsService {
     });
   }
 
+  public getJournalist(id: string): Observable<Journalist> {
+    return this.http.get<Journalist>(`${environment.apiAddress}/posts/journalist/${id}`)
+  }
+
   public getComments(): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.apiAddress}/posts/mycomments`);
   }

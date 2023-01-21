@@ -71,6 +71,7 @@ namespace GameBlog.BL.Repositories.Realizations
         public async Task<List<Journalist>> GetAllJournalistsAsync(CancellationToken cancellationToken)
         {
             var journalists = await _context.Journalists
+                .AsNoTracking()
                 .Include(t => t.User)
                     .ThenInclude(t => t.Avatar)
                 .ToListAsync(cancellationToken);
@@ -117,6 +118,7 @@ namespace GameBlog.BL.Repositories.Realizations
         public async Task<List<Journalist>> GetPopularJournalistsAsync(CancellationToken cancellationToken)
         {
             var journalists = await _context.Journalists
+                    .AsNoTracking()
                     .Include(t => t.User)
                         .ThenInclude(t => t.Avatar)
                     .OrderByDescending(t => t.Posts.Count)
@@ -225,6 +227,20 @@ namespace GameBlog.BL.Repositories.Realizations
                 _context.GamePosts.Remove(post);
                 await _context.SaveChangesAsync(cancellationToken);
             }
+        }
+
+        public async Task<Journalist> GetJournalistAsync(Guid journalistId, CancellationToken cancellationToken)
+        {
+            var journalist = await _context.Journalists
+                .AsNoTracking()
+                .Include(t => t.User)
+                    .ThenInclude(t => t.Avatar)
+                .Include(t => t.Subscribers)
+                .Include(t => t.Posts)
+                    .ThenInclude(t => t.Image)
+                .FirstOrDefaultAsync(t => t.Id == journalistId, cancellationToken);
+
+            return journalist;
         }
     }
 }
