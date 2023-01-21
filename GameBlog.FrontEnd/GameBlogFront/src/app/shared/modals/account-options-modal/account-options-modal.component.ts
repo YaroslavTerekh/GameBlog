@@ -26,5 +26,6 @@ export class AccountOptionsModalComponent implements OnInit {
 
   public onExit(): void {
     localStorage.removeItem('Token');
+    localStorage.removeItem('Role');
   }
 }

@@ -19,5 +19,11 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task ModifyUserAsync(ModifyUserInfoModel modifyUserInfoModel, CancellationToken cancellationToken);
 
         public Task AddBiographyAsync(ModifyBio bio, Guid CurrentUserId, CancellationToken cancellationToken);
+
+        public Task SubscribeAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken);
+
+        public Task UnsubscribeAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken);
+
+        public Task<bool> IsSubscribedAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken);
     }
 }

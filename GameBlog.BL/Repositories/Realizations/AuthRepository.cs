@@ -112,6 +112,64 @@ namespace GameBlog.BL.Repositories.Realizations
             }
         }
 
+        public async Task SubscribeAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var journalist = await _context.Journalists
+                .Include(t => t.Subscribers)
+                .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+
+            var reader = await _context.Readers
+                .FirstOrDefaultAsync(t => t.UserId == currentUserId, cancellationToken);
+
+            if(journalist is null || reader is null)
+            {
+                throw new Exception();
+            }
+
+            if (!journalist.Subscribers.Contains(reader))
+            {
+                journalist.Subscribers.Add(reader);
+                await _context.SaveChangesAsync(cancellationToken);
+            }             
+        }
+
+        public async Task UnsubscribeAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var journalist = await _context.Journalists
+                .Include(t => t.Subscribers)
+                .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+
+            var reader = await _context.Readers
+                .FirstOrDefaultAsync(t => t.UserId == currentUserId, cancellationToken);
+
+            if (journalist is null || reader is null)
+            {
+                throw new Exception();
+            }
+
+            if(journalist.Subscribers.Contains(reader))
+            {
+                journalist.Subscribers.Remove(reader);
+                await _context.SaveChangesAsync(cancellationToken);
+            } else
+            {
+                throw new Exception();
+            }
+            
+        }
+
+        public async Task<bool> IsSubscribedAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var journalist = await _context.Journalists
+                .Include(t => t.Subscribers)
+                .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+
+            var reader = await _context.Readers
+                .FirstOrDefaultAsync(t => t.UserId == currentUserId, cancellationToken);
+
+            return journalist.Subscribers.Contains(reader);
+        }
+
         public async Task UploadAvatarAsync(HttpContext context, string root, string path, Guid CurrentUserId, CancellationToken token)
         {
             var file = context.Request.Form.Files[0];

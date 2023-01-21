@@ -35,4 +35,16 @@ export class UserService {
   public modifyUserBio(bio: any): Observable<any> {
     return this.http.patch(`${environment.apiAddress}/auth/bio`, bio);
   }
+
+  public subscribe(id: string): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/auth/subscribe/${id}`, null);
+  }
+  
+  public unsubscribe(id: string): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/auth/unsubscribe/${id}`, null);
+  }
+
+  public isSubs(id: string): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/auth/issubs/${id}`, null);
+  }
 }

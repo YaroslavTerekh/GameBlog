@@ -1,6 +1,7 @@
 ﻿using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.Domain.Constants;
+using GameBlog.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,6 @@ using System.Security.Claims;
 
 namespace GameBlog.Controllers
 {
-    [AllowAnonymous]
     [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -20,6 +20,40 @@ namespace GameBlog.Controllers
         {
             _authRepository = authRepository;
             _env = env;
+        }
+
+        [Authorize]
+        [HttpPost("subscribe/{id:guid}")]
+        public async Task<IActionResult> SubscribeAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        )
+        {
+            await _authRepository.SubscribeAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+
+            return NoContent();
+        }
+
+        [Authorize]
+        [HttpPost("unsubscribe/{id:guid}")]
+        public async Task<IActionResult> UnsubscribeAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        )
+        {
+            await _authRepository.UnsubscribeAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+
+            return NoContent();
+        }
+
+        [Authorize]
+        [HttpPost("issubs/{id:guid}")]
+        public async Task<IActionResult> IsSubscribedAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _authRepository.IsSubscribedAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
         }
 
         [HttpPost("register")]
