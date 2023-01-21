@@ -1,57 +1,64 @@
-.title {
-    border-top: 1px solid #000;
-    padding-top: 10px;
-    margin-top: 40px;
-    margin-bottom: 5px;
-    font-size: 32px;
-}
+.container {
+    backdrop-filter: blur(40px);
+    border: 1px solid rgb(201, 201, 201);
+    padding: 1vh;
+    margin-top: 5vh;
 
-.author {
-    margin-bottom: 15px;
-    color: rgb(112, 112, 112)
-}
+    .title {
+        border-top: 1px solid #000;
+        padding-top: 10px;
+        margin-top: 40px;
+        margin-bottom: 5px;
+        font-size: 32px;
+    }
 
-.content {
-    display: flex;
-    justify-content: space-between;     
-    
-    .post-text {
+    .author {
+        margin-bottom: 15px;
+        color: rgb(112, 112, 112)
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+
+        .post-text {
+            width: 100vw;
+            font-size: 17px;
+        }
+    }
+
+    div.img {
         width: 100vw;
-        font-size: 17px;
-    }
-}
+        height: 50vh;
+        overflow: hidden;
+        position: relative;
+        margin-right: 2vh;
 
-div.img {
-    width: 100vw;
-    height: 50vh;    
-    overflow:hidden;
-    position:relative;
-    margin-right: 2vh;
+        img {
+            position: absolute;
 
-    img {
-        position:absolute;
-        
-    }
-}
-
-h2 {
-    border-top: 1px solid #000;
-    padding-top: .5vh;
-    font-size: 22px;
-    margin-top: 2vh;
-    margin-bottom: 1vh;
-}
-
-.add-comment {
-    background-color: rgb(212, 212, 212);
-    padding: 2vh;
-    box-shadow: 10px 5px 10px rgb(184, 184, 184);
-    
-    :focus {
-        outline: none;
+        }
     }
 
-    textarea {
-        width: 100%;
+    h2 {
+        border-top: 1px solid #000;
+        padding-top: .5vh;
+        font-size: 22px;
+        margin-top: 2vh;
+        margin-bottom: 1vh;
+    }
+
+    .add-comment {
+        background-color: rgb(212, 212, 212);
+        padding: 2vh;
+        box-shadow: 10px 5px 10px rgb(184, 184, 184);
+
+        :focus {
+            outline: none;
+        }
+
+        textarea {
+            width: 100%;
+        }
     }
 }

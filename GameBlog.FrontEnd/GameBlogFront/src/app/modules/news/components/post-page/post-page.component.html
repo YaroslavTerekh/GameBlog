@@ -1,18 +1,22 @@
-<h2 class="title">{{post.title}}</h2>
-<p class="author">Автор: {{post.journalist.user.firstName}} {{post.journalist.user.lastName}}</p>
-<div class="content">
-    <div class="img">
-        <img [src]="postImage" alt="">
+<div class="container">
+    <h2 class="title">{{post.title}}</h2>
+    <p class="author">Автор: {{post.journalist.user.firstName}} {{post.journalist.user.lastName}}</p>
+    <div class="content">
+        <div class="img">
+            <img [src]="postImage" alt="">
+        </div>
+        <p class="post-text">{{post.description}}</p>
     </div>
-    <p class="post-text">{{post.description}}</p>
-</div>
 
-<h2>Коментарі</h2>
-<div class="comments">
-    <app-post-comment *ngFor="let comment of post.comments" [comment]="comment" ></app-post-comment>
-</div>
+    <button class="delete-post" (click)="deletePost(post.id)">Видалити пост</button>
 
-<form class="add-comment" action="" [formGroup]="addComment" (submit)="onCommentSend()">
-    <textarea placeholder="Ваш коментар..." name="" id="" formControlName="text"></textarea>
-    <input type="submit" value="Опублікувати">
-</form>
+    <h2>Коментарі</h2>
+    <div class="comments">
+        <app-post-comment *ngFor="let comment of post.comments" [comment]="comment"></app-post-comment>
+    </div>
+
+    <form class="add-comment" action="" [formGroup]="addComment" (submit)="onCommentSend()">
+        <textarea placeholder="Ваш коментар..." name="" id="" formControlName="text"></textarea>
+        <input type="submit" value="Опублікувати">
+    </form>
+</div>

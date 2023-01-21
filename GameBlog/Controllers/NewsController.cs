@@ -13,12 +13,12 @@ namespace GameBlog.Controllers
     [ApiController]
     public class NewsController : ControllerBase
     {
-        private readonly INewsRepository _newsController;
+        private readonly INewsRepository _newsRepository;
         private readonly IWebHostEnvironment _env;
 
         public NewsController(INewsRepository newsController, IWebHostEnvironment env)
         {
-            _newsController = newsController;
+            _newsRepository = newsController;
             _env = env;
         }
 
@@ -28,7 +28,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         ) 
         {
-            await _newsController.DeletePostAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+            await _newsRepository.DeletePostAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
 
             return NoContent();
         }
@@ -41,7 +41,7 @@ namespace GameBlog.Controllers
         {
             model.UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            await _newsController.CreateNewsAsync(model, imageId, cancellationToken);
+            await _newsRepository.CreateNewsAsync(model, imageId, cancellationToken);
 
             return NoContent();
         }
@@ -50,7 +50,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            var posts = await _newsController.GetAllNewsAsync(cancellationToken);
+            var posts = await _newsRepository.GetAllNewsAsync(cancellationToken);
 
             return Ok(posts);
         }
@@ -61,7 +61,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetSpecifiedNewsAsync(id, cancellationToken));
+            return Ok(await _newsRepository.GetSpecifiedNewsAsync(id, cancellationToken));
         }
 
         [HttpGet("popular")]
@@ -69,7 +69,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken
         )
         {
-            return Ok(await _newsController.GetPopularPostsAsync(cancellationToken));
+            return Ok(await _newsRepository.GetPopularPostsAsync(cancellationToken));
         }
 
         [HttpPost("comment")]
@@ -80,7 +80,7 @@ namespace GameBlog.Controllers
         {
             model.AuthorUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            await _newsController.AddCommentAsync(model, cancellationToken);
+            await _newsRepository.AddCommentAsync(model, cancellationToken);
 
             return NoContent();
         }
@@ -93,7 +93,7 @@ namespace GameBlog.Controllers
         {
             model.AuthorUserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            await _newsController.AddTopicAsync(model, cancellationToken);
+            await _newsRepository.AddTopicAsync(model, cancellationToken);
 
             return NoContent();
         }
@@ -103,7 +103,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetAllTopicsAsync(cancellationToken));
+            return Ok(await _newsRepository.GetAllTopicsAsync(cancellationToken));
         }
 
         [HttpGet("topic/{id:guid}/posts")]
@@ -112,7 +112,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetTopicPostsAsync(id, cancellationToken));
+            return Ok(await _newsRepository.GetTopicPostsAsync(id, cancellationToken));
         }
 
         [HttpGet("journalists/all")]
@@ -120,7 +120,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetAllJournalistsAsync(cancellationToken));
+            return Ok(await _newsRepository.GetAllJournalistsAsync(cancellationToken));
         }
 
         [HttpGet("journalists/popular")]
@@ -128,7 +128,7 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetPopularJournalistsAsync(cancellationToken));
+            return Ok(await _newsRepository.GetPopularJournalistsAsync(cancellationToken));
         }
 
         [HttpGet("mine")]
@@ -136,13 +136,13 @@ namespace GameBlog.Controllers
             CancellationToken cancellationToken = default
         )
         {
-            return Ok(await _newsController.GetMinePostsAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
+            return Ok(await _newsRepository.GetMinePostsAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
         }
 
         [HttpPost("add/image")]
         public async Task<IActionResult> AddImage(IFormFile file, CancellationToken token = default)
         {
-            var imgId = await _newsController.AddImageAsync(HttpContext, _env.ContentRootPath, "uploads", token);
+            var imgId = await _newsRepository.AddImageAsync(HttpContext, _env.ContentRootPath, "uploads", token);
 
             return Ok(imgId);
         }
@@ -153,7 +153,7 @@ namespace GameBlog.Controllers
             CancellationToken token = default
         )
         {
-            var image = await _newsController.GetImageAsync(id, token);
+            var image = await _newsRepository.GetImageAsync(id, token);
 
             return PhysicalFile(image.Path, "image/png");
         }
@@ -161,7 +161,7 @@ namespace GameBlog.Controllers
         [HttpGet("mycomments")]
         public async Task<IActionResult> GetMyCommentsAsync(CancellationToken token = default)
         {
-            return Ok(await _newsController.GetPostsWithMyComments(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token));
+            return Ok(await _newsRepository.GetPostsWithMyComments(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token));
         }
     }
 }

@@ -33,7 +33,8 @@ import { PostCommentComponent } from './components/post-comment/post-comment.com
     PostComponent,
     PostsComponent,
     TopPostsComponent,
-    PostCommentComponent
+    PostCommentComponent,
+    TrimTextForPostPipe
   ]
 })
 export class NewsModule { }

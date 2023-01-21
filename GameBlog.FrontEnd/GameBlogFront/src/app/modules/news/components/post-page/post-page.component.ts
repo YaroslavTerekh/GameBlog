@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from './../../../../shared/models/post';
 import { NewsService } from './../../../../core/services/news.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-page',
@@ -19,7 +19,8 @@ export class PostPageComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly newsService: NewsService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +41,14 @@ export class PostPageComponent implements OnInit {
             })
         }
       });
+  }
+
+  deletePost(id: string): void {
+    this.newsService.deletePost(id).subscribe({
+      next: res => {
+        this.router.navigate(['']);
+      }
+    });
   }
 
   onCommentSend(): void {

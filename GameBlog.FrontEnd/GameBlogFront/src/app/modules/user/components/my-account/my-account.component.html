@@ -1,6 +1,28 @@
+<div class="bg"></div>
+
+<h2 class="title">Ваш акаунт</h2>
+
+<div class="avatar-settings">
+    <div class="avatar">
+        <img [src]="avatar" alt="">
+    </div>
+    
+    <div class="change-avatar">
+        <P>Змінити аватар</P>
+        <input type="file" class="file" (change)="uploadAvatar($event)">
+    </div>    
+</div>
+
+<form action="" [formGroup]="bioGroup" (submit)="modifyUserBio()" class="change-bio">
+    <p>Ваша біографія</p>
+    <textarea name="aboutme" id="" cols="30" rows="10" formControlName="aboutMe"></textarea>
+    <input type="submit" value="Зберегти">
+</form>
+
 <form class="account-settings" action="" [formGroup]="infoGroup" (submit)="modifyUserInfo()">
+    <p>Технічна інформація</p>
     <input type="text" class="first-name" placeholder="Ваше ім'я..." formControlName="firstName">
     <input type="text" class="last-name" placeholder="Ваше прізвище..." formControlName="lastName">
-    <input type="text" class="email" placeholder="Ваш email..." formControlName="email">    
+    <input type="text" class="email" placeholder="Ваш email..." formControlName="email">
     <input type="submit" class="submit" value="Зберегти">
 </form>

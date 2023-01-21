@@ -72,7 +72,7 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             var journalists = await _context.Journalists
                 .Include(t => t.User)
-                .Include(t => t.Posts.Take(10))
+                    .ThenInclude(t => t.Avatar)
                 .ToListAsync(cancellationToken);
 
             return journalists;
@@ -84,6 +84,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .AsNoTracking()
                 .Include(t => t.Journalist)
                     .ThenInclude(t => t.User)
+                    .ThenInclude(t => t.Avatar)
                 .Include(t => t.Topic)
                 .Include(t => t.Comments)
                     .ThenInclude(t => t.CommentAuthor)
@@ -117,9 +118,8 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             var journalists = await _context.Journalists
                     .Include(t => t.User)
-                    .Include(t => t.Posts)
+                        .ThenInclude(t => t.Avatar)
                     .OrderByDescending(t => t.Posts.Count)
-                    .Take(6)
                     .ToListAsync(cancellationToken);
 
             return journalists;

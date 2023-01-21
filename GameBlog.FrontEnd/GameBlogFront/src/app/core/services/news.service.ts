@@ -17,6 +17,10 @@ export class NewsService {
     private readonly http: HttpClient
   ) { }
 
+  public deletePost(id: string): Observable<any> {
+    return this.http.delete(`${environment.apiAddress}/posts/${id}`);
+  }
+
   public addComment(data: addComment): Observable<any> {
     return this.http.post(`${environment.apiAddress}/posts/comment`, data);
   }

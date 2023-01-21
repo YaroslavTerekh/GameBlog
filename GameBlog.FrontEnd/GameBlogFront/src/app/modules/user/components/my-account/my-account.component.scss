@@ -1,30 +1,119 @@
-.account-settings {
+.bg {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 
-    background-color: #69696967;
-    padding: 2vh;
+.title {
+    border-top: 1px solid #000;
+    padding-top: 10px;
+    margin-top: 40px;
+    margin-bottom: 2vh;
+    font-size: 32px;
+}
 
+.change-bio {
     display: flex;
     flex-direction: column;
+    margin-top: 2vh;    
+
+    p {
+        margin-bottom: 2vh;
+        font-size: 18px;
+    }
+
+    textarea {
+        background-color: rgb(160, 160, 160);
+        padding: 1vh;
+        color: #fff;
+        width: 30vw;
+        border-radius: 4px;
+        resize: none;
+    }
+
+    textarea:focus {
+        outline: none;
+    }
+
+    input[type="submit"] {
+        margin-top: .5vh;
+        width: fit-content;
+        background-color: rgb(69, 163, 69);
+        color: #fff;
+        padding: 1vh;
+        border-radius: 4px;
+    }
+}
+
+.avatar-settings {
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+    align-items: flex-end;
+
+    .avatar {
+        margin-right: 1vw;
+        height: 8vw;
+        width: 8vw;
+        overflow: hidden;
+        border-radius: 100px;
+        position: relative;
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .change-avatar {
+
+        p {
+            font-size: 18px;
+        }
+
+        input {
+            background-color: rgb(160, 160, 160);
+            padding: 1vh;
+            border-radius: 4px;
+        }
+    }
+}
+
+.account-settings {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin-top: 1vh;
+
+    p {
+        font-size: 18px;
+    }
 
     input {
-        background-color: #99999967;
-        margin-top: .5vh;
-
-        padding: 2vh;
-        border-radius: .2vh;
-        color: rgb(255, 255, 255);
-    }
-
-    .submit {
-        background-color: rgba(70, 136, 16, 0.555);
+        margin-bottom: .5vh;
+        background-color: rgb(173, 173, 173);
         color: #fff;
+        padding: 1vh;
+        border-radius: 4px;
     }
 
-    :first-child {
-        margin-top: 0vh;
+    input[type="submit"] {
+        margin-top: .5vh;
+        width: fit-content;
+        background-color: rgb(69, 163, 69);
+        color: #fff;
+        padding: 1vh;
+        border-radius: 4px;
     }
 }

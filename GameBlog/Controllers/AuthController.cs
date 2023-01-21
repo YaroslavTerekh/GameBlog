@@ -1,5 +1,6 @@
 ﻿using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
+using GameBlog.Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace GameBlog.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _authRepository;
+        private readonly IWebHostEnvironment _env;
 
-        public AuthController(IAuthRepository authRepository)
+        public AuthController(IAuthRepository authRepository, IWebHostEnvironment env)
         {
             _authRepository = authRepository;
+            _env = env;
         }
 
         [HttpPost("register")]
@@ -42,6 +45,34 @@ namespace GameBlog.Controllers
         }
 
         [Authorize]
+        [HttpPost("avatar")]
+        public async Task<IActionResult> UploadAvatarAsync(
+            IFormFile file,
+            CancellationToken token = default
+        )
+        {
+            await _authRepository.UploadAvatarAsync(HttpContext, _env.ContentRootPath, "uploads", Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token);
+
+            return NoContent();
+        }
+
+        [Authorize]
+        [HttpGet("avatar")]
+        public async Task<IActionResult> GetAvatarAsync(
+            CancellationToken token = default
+        )
+        {
+            var img = await _authRepository.GetAvatarAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token);
+
+            if(img is null)
+            {
+                return NoContent();
+            }
+
+            return PhysicalFile(img.Path, "image/png");
+        }
+
+        [Authorize]
         [HttpGet("user/info")]
         public async Task<IActionResult> GetUserInfoAsync(
             CancellationToken cancellationToken = default
@@ -61,6 +92,18 @@ namespace GameBlog.Controllers
             await _authRepository.ModifyUserAsync(modifyUserInfoModel, cancellationToken);
 
             return Ok();
+        }
+
+        [Authorize(Policy = Policies.Journalists)]
+        [HttpPatch("bio")]
+        public async Task<IActionResult> AddBioToUserAsync(
+            ModifyBio bio,
+            CancellationToken cancellationToken = default
+        )
+        {
+            await _authRepository.AddBiographyAsync(bio, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+
+            return NoContent();
         }
     }
 }

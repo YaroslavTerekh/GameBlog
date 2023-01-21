@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserService } from './../../../../core/services/user.service';
 import { User } from './../../../../shared/models/user';
 import { Component, OnInit } from '@angular/core';
+import { NewsService } from 'src/app/core/services/news.service';
 
 @Component({
   selector: 'app-my-account',
@@ -12,7 +13,15 @@ import { Component, OnInit } from '@angular/core';
 export class MyAccountComponent implements OnInit {
 
   public user!: User;
-  public infoGroup!: FormGroup;
+  public infoGroup: FormGroup = this.fb.group({
+    firstName: this.fb.control(''),
+    lastName: this.fb.control(''),
+    email: this.fb.control(''),
+  });
+  public bioGroup: FormGroup = this.fb.group({
+    aboutMe: this.fb.control('')
+  });
+  public avatar!: any;
 
   constructor(
     private readonly userService: UserService,
@@ -24,14 +33,48 @@ export class MyAccountComponent implements OnInit {
       .subscribe({
         next: res => {
           this.user = res;
-          
-          this.infoGroup= new FormGroup({
+
+          this.infoGroup = new FormGroup({
             firstName: this.fb.control(this.user.firstName),
             lastName: this.fb.control(this.user.lastName),
             email: this.fb.control(this.user.email),
           });
+
+          this.bioGroup = this.fb.group({
+            aboutMe: this.fb.control(this.user.aboutMe)
+          });
         }
       });
+
+    this.userService.getAvatar()
+      .subscribe({
+        next: (res: Blob) => {
+          if (res == null) {
+            this.avatar = null
+          } else {
+            this.createImageFromBlob(res);
+          }
+        }
+      });
+  }
+
+  uploadAvatar(event: any): void {
+    let selectedFile = <File>event.target.files[0];
+    let formData = new FormData();
+    formData.append("file", selectedFile, selectedFile.name);
+
+    this.userService.uploadAvatar(formData).subscribe({});
+  }
+
+  createImageFromBlob(image: Blob): void {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.avatar = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
   }
 
   public modifyUserInfo(): void {
@@ -52,5 +95,13 @@ export class MyAccountComponent implements OnInit {
             });
         }
       });
+  }
+
+  public modifyUserBio(): void {
+    let req:any = {
+      bio: this.bioGroup.get('aboutMe')?.value
+    };
+
+    this.userService.modifyUserBio(req).subscribe({});
   }
 }

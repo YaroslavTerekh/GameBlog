@@ -1,6 +1,10 @@
-<div class="topic" [routerLink]="['/topic', topic.id]">
-    <a [routerLink]="['/topic', topic.id]">
-        <p class="topic-title">{{topic.title}}</p>
-        <p class="topic-descr">{{topic.description}}</p>
-    </a>
+<div class="topic">
+    <div class="img">
+        <img [src]="topicImage ? topicImage : '../../../../../assets/placeholder-612x612.jpg'" alt="">
+    </div>
+    <div class="info">
+        <h5>{{topic.title}}</h5>
+        <p>{{topic.description | trimTextForPost: 900}}</p>
+        <a [routerLink]="['/topic', topic.id]">Переглянути статті, які належать до цієї теми</a>
+    </div>
 </div>

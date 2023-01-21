@@ -4,6 +4,7 @@ using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.BL.Services.Abstractions;
 using GameBlog.Domain.Enums;
 using GameBlog.Domain.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,25 @@ namespace GameBlog.BL.Repositories.Realizations
             _context = context;
             _authService = authService;
             _configuration = configuration;
+        }
+
+        public async Task AddBiographyAsync(ModifyBio bio, Guid CurrentUserId, CancellationToken cancellationToken)
+        {
+            var journalist = await _context.Journalists
+                .Include(t => t.User)
+                .FirstOrDefaultAsync(t => t.UserId == CurrentUserId, cancellationToken);
+
+            journalist.User.AboutMe = bio.Bio;
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<Image> GetAvatarAsync(Guid CurrentUserId, CancellationToken token)
+        {
+            var userImg = await _context.Users
+                .Include(t => t.Avatar)
+                .FirstOrDefaultAsync(t => t.Id == CurrentUserId, token);
+
+            return userImg.Avatar;
         }
 
         public async Task<User> GetUserInfoAsync(Guid currentUserId, CancellationToken cancellationToken)
@@ -92,6 +112,43 @@ namespace GameBlog.BL.Repositories.Realizations
             }
         }
 
+        public async Task UploadAvatarAsync(HttpContext context, string root, string path, Guid CurrentUserId, CancellationToken token)
+        {
+            var file = context.Request.Form.Files[0];
 
+            var fileName = Path.GetFileName(file.FileName);
+            var filePathName = DateTime.Now.Millisecond + fileName;
+            var uploadPath = Path.Combine("", root, path, filePathName);
+
+            var image = new Image
+            {
+                Path = uploadPath,
+            };
+
+            if (file is not null)
+            {
+                try
+                {
+                    using var memoryStream = new MemoryStream();
+                    await file.CopyToAsync(memoryStream, token);
+                    await File.WriteAllBytesAsync(uploadPath, memoryStream.ToArray(), token);
+
+                    await _context.AddAsync(image, token);
+                    await _context.SaveChangesAsync(token);
+
+                    var user = await _context.Users.FirstOrDefaultAsync(t => t.Id == CurrentUserId);
+                    user.Avatar = image;
+
+                    await _context.SaveChangesAsync(token);
+                }
+                catch (Exception) 
+                { 
+                    if(Directory.Exists(uploadPath))
+                    {
+                        File.Delete(uploadPath);
+                    }
+                }
+            }
+        }
     }
 }
