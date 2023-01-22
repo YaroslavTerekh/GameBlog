@@ -1,11 +1,14 @@
-<div class="post">
-    <a [routerLink]="['/post', post.id]">
-        <div class="post-img">
-            <img [src]="postImage" alt="">
-        </div>
-        <div class="post-details">            
-            <p class="post-title">{{post.title}}</p>            
-            <p class="post-descr">{{post.description | trimTextForPost: 80}}</p>
-        </div>
-    </a>
+<div class="post">    
+    <div class="post-img">
+        <div class="topic-name">{{post.topic.title}}</div>
+        <img [src]="postImage" alt="">        
+    </div>
+    <div class="post-details">
+        <p class="post-title">{{post.title}}</p>
+        <p class="post-descr">{{post.description | trimTextForPost: 80}}</p>
+    </div>
+    <p *ngIf="post.journalist">{{post.journalist!.user!.firstName ? post.journalist!.user!.firstName : ''}} {{post.journalist!.user!.lastName ? post.journalist!.user!.lastName : ''}}</p>
+    <div class="buttons">        
+        <a [routerLink]="['/post', post.id]">Читати більше</a>        
+    </div>
 </div>

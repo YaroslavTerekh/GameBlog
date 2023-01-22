@@ -74,6 +74,8 @@ namespace GameBlog.BL.Repositories.Realizations
                 .AsNoTracking()
                 .Include(t => t.User)
                     .ThenInclude(t => t.Avatar)
+                .Include(t => t.Posts)
+                    .ThenInclude(t => t.Topic)  
                 .ToListAsync(cancellationToken);
 
             return journalists;
@@ -110,6 +112,7 @@ namespace GameBlog.BL.Repositories.Realizations
             var userPosts = await _context.GamePosts
                 .Where(t => t.JournalistId == journalistId)
                 .Include(t => t.Image)
+                .Include(t => t.Topic)
                 .ToListAsync(cancellationToken);
 
             return userPosts;
@@ -121,7 +124,10 @@ namespace GameBlog.BL.Repositories.Realizations
                     .AsNoTracking()
                     .Include(t => t.User)
                         .ThenInclude(t => t.Avatar)
-                    .OrderByDescending(t => t.Posts.Count)
+                    .Include(t => t.Posts)
+                        .ThenInclude(t => t.Topic)
+                    .OrderByDescending(t => t.Subscribers.Count)
+                    .Take(6)
                     .ToListAsync(cancellationToken);
 
             return journalists;
@@ -131,6 +137,9 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             return await _context.GamePosts
                 .Include(t => t.Image)
+                .Include(t => t.Topic)
+                .Include(t => t.Journalist)
+                    .ThenInclude(t => t.User)
                 .Where(t => t.CreatedTime > DateTime.UtcNow.AddDays(-3))
                 .ToListAsync(cancellationToken);                 
         }
@@ -156,6 +165,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .AsNoTracking()
                 .Where(t => t.TopicId == topicId)
                 .Include(t => t.Journalist)
+                    .ThenInclude(t => t.User)
                 .Include(t => t.Topic)
                 .Include(t => t.Image)
                 .ToListAsync(cancellationToken);
@@ -204,6 +214,7 @@ namespace GameBlog.BL.Repositories.Realizations
             var allPosts = await _context.GamePosts
                 .Include(t => t.Comments)
                 .Include(t => t.Image)
+                .Include(t => t.Topic)
                 .ToListAsync(token);
 
             var posts = allPosts
@@ -238,6 +249,8 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Subscribers)
                 .Include(t => t.Posts)
                     .ThenInclude(t => t.Image)
+                .Include(t => t.Posts)
+                    .ThenInclude(t => t.Topic)
                 .FirstOrDefaultAsync(t => t.Id == journalistId, cancellationToken);
 
             return journalist;

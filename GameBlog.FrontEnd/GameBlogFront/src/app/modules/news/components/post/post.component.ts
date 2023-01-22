@@ -18,6 +18,8 @@ export class PostComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.post);
+    
     this.newsService.getImage(this.post.image.id)
       .subscribe({
         next: (res: Blob) => {

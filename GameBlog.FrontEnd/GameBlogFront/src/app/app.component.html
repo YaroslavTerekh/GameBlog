@@ -1,12 +1,15 @@
-<header>
-  <nav>
-    <a routerLink="/">Головна</a>
-    <a routerLink="/journalists">Журналісти</a>
-    <a routerLink="/news">Новини</a>
-    <a routerLink="/topics">Теми</a>
-  </nav>
-  <a (click)="showAccountModal(true)" (click)="checkLoginModal()" class="img"><img [src]="avatar ? avatar : '../assets/default-avatar.png'" alt="user"></a>
-</header>
+<div class="bg">
+  <header>
+    <nav>
+      <a *ngIf="!needLogin" routerLink="/">Головна</a>
+      <a *ngIf="needLogin" routerLink="/welcome">Головна</a>
+      <a routerLink="/journalists">Журналісти</a>
+      <a routerLink="/news">Новини</a>
+      <a routerLink="/topics">Теми</a>
+    </nav>
+    <a (click)="showAccountModal(true)" (click)="checkLoginModal()" class="img"><img [src]="avatar ? avatar : '../assets/default-avatar.png'" alt="user"></a>
+  </header>
+</div>
 <router-outlet></router-outlet>
 <app-account-options-modal *ngIf="isOpened && !needLogin"></app-account-options-modal>
 <app-account-options-not-logged-in *ngIf="isOpened && needLogin"></app-account-options-not-logged-in>

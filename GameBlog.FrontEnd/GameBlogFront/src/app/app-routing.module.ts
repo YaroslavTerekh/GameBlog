@@ -1,3 +1,4 @@
+import { WelcomePageComponent } from './modules/main/components/welcome-page/welcome-page.component';
 import { MyCommentsComponent } from './modules/user/components/my-comments/my-comments.component';
 import { TopicsPageComponent } from './modules/topics/components/topics-page/topics-page.component';
 import { PostsPageComponent } from './modules/news/components/posts-page/posts-page.component';
@@ -12,6 +13,7 @@ import { AdminMainPageComponent } from './modules/admin/components/admin-main-pa
 
 const routes: Routes = [
   { path: '', component: MainComponent },
+  { path: 'welcome', component: WelcomePageComponent },
   { path: 'journalists', component: JournalistPageComponent },
   { path: 'news', component: PostsPageComponent },
   { path: 'topics', component: TopicsPageComponent },

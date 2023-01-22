@@ -1,3 +1,4 @@
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { addComment } from './../../../../core/interfaces/addComment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from './../../../../shared/models/post';
@@ -15,15 +16,19 @@ export class PostPageComponent implements OnInit {
   public post!: Post;
   public postImage!: string | ArrayBuffer | null;
   public addComment!: FormGroup;
+  public isAuthorized!: boolean;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly newsService: NewsService,
+    private readonly authService: AuthorizationService,
     private readonly fb: FormBuilder,
     private readonly router: Router
   ) { }
 
   ngOnInit(): void {
+    this.isAuthorized = this.authService.isAuthorized();
+
     this.addComment = this.fb.group({
       text: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
     });

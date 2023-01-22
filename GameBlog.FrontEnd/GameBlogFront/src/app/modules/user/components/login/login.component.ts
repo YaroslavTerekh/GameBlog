@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.token = res.token;
           localStorage.setItem('Token', `bearer ${this.token}`);
           localStorage.setItem('Role', this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+          this.authorizationService.loginModalSubject.next(false);
           this.router.navigate(['']);
         }
       });

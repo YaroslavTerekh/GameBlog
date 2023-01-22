@@ -1,50 +1,83 @@
 .post {
-    width: 20vw;
+    width: 21vw;
     height: fit-content;
-    background-color: rgb(212, 212, 212);
     border-radius: 4px;
     margin-bottom: 2vh;
-    box-shadow: 10px 5px 10px rgb(184, 184, 184);
-    
-    a {
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    padding: 1vh;
+    padding-bottom: 2vh;
+    background-color: rgba(255, 255, 255, 0);
+    transition: .2s;
 
-        .post-img {
-            position: relative;
-            width: 20vw;
-            height: 30vh;
-            overflow: hidden;
-            border-radius: 4px;
+    .post-img {
+        position: relative;
+        width: 20vw;
+        height: 30vh;
+        overflow: hidden;
+        border-radius: 4px;
 
-            img {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                object-fit: cover;
-                object-position: top;
-                display: block;
-                height: 100%;
-                width: 100%;
-            }            
+        .topic-name {
+            z-index: 1;
+            position: absolute;
+            top: 1vh;
+            background-color: rgb(150, 27, 27);
+            padding: 1vh;
+            border-radius: 0 5px 5px 0;
         }
 
-        .post-details {
-            margin: 1vh;
-            width: inherit;
-
-            .post-title {
-                margin-top: .5vh;
-                color: #000;
-                font-weight: bold;
-                font-size: 22px;
-            }
-
-            .post-descr {
-                color: #000;
-                font-size: 18px;
-            }
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            height: 100%;
+            width: 100%;
         }
     }
+
+    .post-details {
+        margin-top: 1vh;
+        width: inherit;
+
+        .post-title {
+            text-transform: uppercase;
+            margin-top: .5vh;
+            color: #fff;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .post-descr {
+            font-weight: 18;
+            color: #fff;
+            font-size: 18px;
+        }
+    }
+
+    p {
+        margin-bottom: 1.5vh;
+        color: rgb(150, 27, 27);
+    }
+
+
+    .buttons {
+        margin-top: .5vh;
+
+        a {
+            color: #fff;
+            background-color: rgb(27, 150, 47);
+            padding: 1vh;
+            border-radius: 4px;
+            width: fit-content;        
+        }
+    }
+}
+
+.post:hover {
+    background-color: rgba(255, 255, 255, 0.048);
+    transition: .2s;
 }

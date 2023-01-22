@@ -4,7 +4,8 @@
     </div>
     <div class="info">
         <h5>{{journalist!.user.firstName}} {{journalist!.user.lastName}}</h5>
-        <p>{{journalist!.user.aboutMe | trimTextForPost: 900}}</p>
+        <p>{{journalist!.user.aboutMe | trimTextForPost: 700}}</p>
+        <p *ngIf="journalist.posts.length > 0" class="last">Останній пост - <legend>{{journalist.posts[0].title}}</legend></p>
         <a [routerLink]="['/journalist', journalist.id]">Переглянути акаунт</a>
     </div>
 </div>

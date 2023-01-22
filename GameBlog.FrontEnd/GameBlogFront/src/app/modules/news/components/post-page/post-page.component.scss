@@ -1,11 +1,9 @@
 .container {
-    backdrop-filter: blur(40px);
-    border: 1px solid rgb(201, 201, 201);
     padding: 1vh;
     margin-top: 5vh;
 
     .title {
-        border-top: 1px solid #000;
+        border-bottom: 3px solid rgb(172, 44, 44);
         padding-top: 10px;
         margin-top: 40px;
         margin-bottom: 5px;
@@ -48,24 +46,33 @@
     }
 
     h2 {
-        border-top: 1px solid #000;
+        border-bottom: 3px solid rgb(172, 44, 44);
         padding-top: .5vh;
+        padding-bottom: .5vh;
         font-size: 22px;
         margin-top: 2vh;
         margin-bottom: 1vh;
     }
 
     .add-comment {
-        background-color: rgb(212, 212, 212);
+        background-color: rgb(0, 24, 59);
         padding: 2vh;
-        box-shadow: 10px 5px 10px rgb(184, 184, 184);
+        box-shadow: 0 0 10px rgb(184, 69, 69);
 
         :focus {
             outline: none;
         }
 
         textarea {
+            resize: none;
             width: 100%;
         }
+    }
+
+    .delete-post {
+        background-color: rgb(172, 44, 44);
+        border-radius: 4px;
+        padding: 1vh;
+        margin-top: 1vh;
     }
 }

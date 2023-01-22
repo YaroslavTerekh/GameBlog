@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UserService } from './core/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from './core/services/authorization.service';
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly authoricationService: AuthorizationService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly router: Router
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +48,10 @@ export class AppComponent implements OnInit {
         }
       }
     )
+
+    if(this.needLogin) {
+      this.router.navigate(['/welcome']);
+    }
   }
 
   public showAccountModal(value: boolean): void {

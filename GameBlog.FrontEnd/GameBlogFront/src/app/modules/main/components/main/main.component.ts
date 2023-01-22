@@ -1,3 +1,5 @@
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  public needLogin!: boolean;
+
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthorizationService
+  ) { }
 
   ngOnInit(): void {
+    this.authService.loginModalSubject
+      .subscribe({
+        next: res => {
+          this.needLogin = res;
+        }
+      });
+
+    if(this.needLogin) {
+      this.router.navigate(['/welcome']);
+    }
   }
 
 }
