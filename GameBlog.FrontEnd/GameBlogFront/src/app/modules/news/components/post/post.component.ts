@@ -23,7 +23,7 @@ export class PostComponent implements OnInit {
       .subscribe({
         next: (res: Blob) => {
           this.createImageFromBlob(res);
-          this.time = "   " + this.post.createdTime.split("T")[0];          
+          this.time = " " + this.post.createdTime.split("T")[0];          
         }
       });
   }

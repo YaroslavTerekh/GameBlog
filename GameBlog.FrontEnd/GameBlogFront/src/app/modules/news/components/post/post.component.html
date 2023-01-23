@@ -10,6 +10,6 @@
     <p *ngIf="post.journalist">{{post.journalist!.user!.firstName ? post.journalist!.user!.firstName : ''}} {{post.journalist!.user!.lastName ? post.journalist!.user!.lastName : ''}}</p>
     <div class="buttons">        
         <a [routerLink]="['/post', post.id]"> Читати більше</a> 
-        <p><i class="fa fa-calendar"> </i>{{time}}</p>       
+        <p><i class="fa fa-calendar"></i>{{time}}</p>       
     </div>
 </div>
