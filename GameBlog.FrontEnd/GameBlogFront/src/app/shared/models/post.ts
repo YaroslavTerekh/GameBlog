@@ -11,4 +11,5 @@ export interface Post {
     topic: Topic;
     comments: PostComment[];
     image: Image;
+    createdTime: string;
 }

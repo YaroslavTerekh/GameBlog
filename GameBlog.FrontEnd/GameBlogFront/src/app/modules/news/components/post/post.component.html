@@ -1,6 +1,6 @@
 <div class="post">    
     <div class="post-img">
-        <div class="topic-name">{{post.topic.title}}</div>
+        <div class="topic-name"><i class="fa fa-caret-right"></i> {{post.topic.title}}</div>
         <img [src]="postImage" alt="">        
     </div>
     <div class="post-details">
@@ -9,6 +9,7 @@
     </div>
     <p *ngIf="post.journalist">{{post.journalist!.user!.firstName ? post.journalist!.user!.firstName : ''}} {{post.journalist!.user!.lastName ? post.journalist!.user!.lastName : ''}}</p>
     <div class="buttons">        
-        <a [routerLink]="['/post', post.id]">Читати більше</a>        
+        <a [routerLink]="['/post', post.id]"> Читати більше</a> 
+        <p><i class="fa fa-calendar"> </i>{{time}}</p>       
     </div>
 </div>

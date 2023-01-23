@@ -9,28 +9,81 @@
     z-index: 2;
 }
 
-.modal {
-    background-color: rgba(158, 158, 158, 0.678);
-    padding: 2vw;
-
-    z-index: 2;
-    position: fixed;
+.login-form {
+    z-index: 3;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: #fff;
+
+    background-color: #181c23;
+    padding: 2vh;
+    width: fit-content;    
 
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 
-    a {
-        background-color: rgba(36, 36, 36, 0.63);
-        text-decoration: none;
-        color: #fff;
-        width: 15vh;
-        padding: 2vh;
-        margin-bottom: 1vh;
-        text-align: center;        
+    .services {
+        p {
+            margin-top: .5vh;
+            font-size: 14px;
+            font-weight: 12;
+            cursor: pointer;
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: .5vh;
+            text-transform: uppercase;
+            margin-bottom: 1vh;
+            font-weight: bold;
+            font-size: 20px;
+            
+            span {
+                color:rgb(156, 33, 33)
+            }
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+    
+            input {
+                padding: 1vh;
+                margin-top: 1vh;
+            }
+    
+            input[type = text] {
+                border: 1px solid rgba(194, 194, 194, 0.185);
+                border-radius: 2px;
+
+                margin-bottom: .5vh;
+            }
+    
+            input[type = password] {
+                border: 1px solid rgba(194, 194, 194, 0.185);
+                border-radius: 2px;
+                margin-bottom: .5vh;
+            }
+    
+            input[type = submit] {
+                text-transform: uppercase;
+                color: rgb(0, 0, 0);
+                background-color: #fff;
+                background-color: none;
+                margin-top: 1vh;            
+            }
+        }
+    }
+
+    .info {
+        width: 10vw;
+        margin-left: 1vh;
+        
+        p {
+            font-weight: 10;
+        }
     }
 }

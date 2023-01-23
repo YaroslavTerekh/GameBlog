@@ -8,7 +8,7 @@
         <p class="post-text">{{post.description}}</p>
     </div>
 
-    <button class="delete-post" (click)="deletePost(post.id)">Видалити пост</button>
+    <button class="delete-post" (click)="deletePost(post.id)" *ngIf="isAuthorized">Видалити пост</button>
 
     <h2>Коментарі</h2>
     <div class="comments">

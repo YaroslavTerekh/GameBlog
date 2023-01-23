@@ -7,10 +7,12 @@
     <p>{{journalist!.user!.aboutMe}}</p>
 </div>
 
-<div class="subs" *ngIf="isReader">
-    <button *ngIf="!issub" class="subscribe" (click)="onSubscribe()">Підписатися</button>
-    <button *ngIf="issub" class="unsubscribe" (click)="onUnsubscribe()">Відписатися</button>
-    <p>Підписники: {{subscribers}}</p>    
+<div class="subs" >
+    <div class="buttons" *ngIf="isReader">
+        <button *ngIf="!issub" class="subscribe" (click)="onSubscribe()">Підписатися</button>
+        <button *ngIf="issub" class="unsubscribe" (click)="onUnsubscribe()">Відписатися</button>
+    </div>
+    <p>Підписники: {{subscribers}}</p>
 </div>
 
 

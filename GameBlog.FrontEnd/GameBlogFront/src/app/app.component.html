@@ -1,11 +1,11 @@
 <div class="bg">
   <header>
     <nav>
-      <a *ngIf="!needLogin" routerLink="/">Головна</a>
-      <a *ngIf="needLogin" routerLink="/welcome">Головна</a>
-      <a routerLink="/journalists">Журналісти</a>
-      <a routerLink="/news">Новини</a>
-      <a routerLink="/topics">Теми</a>
+      <a *ngIf="!needLogin" routerLink="/">Головна <i class="fa fa-plus"></i></a>
+      <a *ngIf="needLogin" routerLink="/welcome">Головна <i class="fa fa-plus"></i></a>
+      <a routerLink="/journalists">Журналісти <i class="fa fa-plus"></i></a>
+      <a routerLink="/news">Новини <i class="fa fa-plus"></i></a>
+      <a routerLink="/topics">Теми <i class="fa fa-plus"></i></a>
     </nav>
     <a (click)="showAccountModal(true)" (click)="checkLoginModal()" class="img"><img [src]="avatar ? avatar : '../assets/default-avatar.png'" alt="user"></a>
   </header>

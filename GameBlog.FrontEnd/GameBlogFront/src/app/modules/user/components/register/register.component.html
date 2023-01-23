@@ -1,10 +1,20 @@
+<div class="background" (click)="showAccountModal(false)"></div>
 <div class="login-form">
-    <h4>Реєстрація</h4>
-    <form action="" [formGroup]="registerGroup" (submit)="register()">
-        <input type="text" placeholder="Ваше ім'я..." formControlName="Firstname">
-        <input type="text" placeholder="Ваше прізвище..." formControlName="Lastname">
-        <input type="text" placeholder="Ваш email..." formControlName="Email">
-        <input type="password" placeholder="Ваш пароль..." formControlName="Password">
-        <input type="submit" placeholder="Увійти">
-    </form>
+    <div class="services">
+        <h4><span>створити</span> акаунт</h4>
+        <form action="" [formGroup]="registerGroup" (submit)="register()">
+            <select name="" id="">
+                <option value="reader">Читач</option>
+                <option value="journalist">Журналіст</option>
+            </select>
+            <input type="text" placeholder="Ваше ім'я..." formControlName="Firstname">
+            <input type="text" placeholder="Ваше прізвище..." formControlName="Lastname">
+            <input type="text" placeholder="Ваш email..." formControlName="Email">
+            <input type="password" placeholder="Ваш пароль..." formControlName="Password">
+            <input type="submit" placeholder="Зареєструватися">
+        </form>
+    </div>
+    <div class="info">
+        <p>Для того, щоб переглядати, або публікувати свої пости, залишати під ними коментарі, спочатку потрібно створити власний акаунт</p>
+    </div>
 </div>

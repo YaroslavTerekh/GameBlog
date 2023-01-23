@@ -27,6 +27,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public showAccountModal(value: boolean): void {
+    this.authorizationService.triggerForAccountModal(value);
+  }
+
   public register(): void {
     let newUser: Register = {
       firstname: this.registerGroup.get('Firstname')?.value,

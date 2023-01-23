@@ -17,8 +17,7 @@ export class JournalistComponent implements OnInit {
     private readonly newsService: NewsService
   ) { }
 
-  ngOnInit(): void {    
-    console.log(this.journalist.user.avatar);
+  ngOnInit(): void {
     
     if(this.journalist.user.avatar != null) {
       this.newsService.getImage(this.journalist.user.avatar.id)

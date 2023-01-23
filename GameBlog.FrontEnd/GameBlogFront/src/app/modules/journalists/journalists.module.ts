@@ -17,7 +17,7 @@ import { JournalistInfoPageComponent } from './components/journalist-info-page/j
     JournalistComponent,
     JournalistPageComponent,
     TopJournalistsComponent,
-    JournalistInfoPageComponent
+    JournalistInfoPageComponent,
   ],
   imports: [
     CommonModule,

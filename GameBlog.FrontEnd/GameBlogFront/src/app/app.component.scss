@@ -4,10 +4,11 @@
     height: 8vh;
     position: fixed;
     left: 0;
-    top: 0;
-    z-index: 2;
+    top: 0;    
+    z-index: 9;
 
-    header {            
+    header {           
+        z-index: 10; 
         max-width: 70vw;
         margin: 0 auto;
         margin-top: .7vh;
@@ -30,6 +31,10 @@
                 width: fit-content;
                 color: #fff;
                 text-decoration: none;
+
+                i {
+                    font-size: 12px;
+                }
             }
         }
     

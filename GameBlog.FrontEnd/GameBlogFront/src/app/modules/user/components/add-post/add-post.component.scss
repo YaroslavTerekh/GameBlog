@@ -1,5 +1,5 @@
 .add-post {
-    margin-top: 1vh;
+    margin-top: 10vh;
 
     div {
         margin-bottom: 2vh;
@@ -11,7 +11,7 @@
     }
 
     input {
-        background-color: rgba(80, 80, 80, 0.678);
+        background-color: #181c23;
         border-radius: 5px;
         color: #fff;
         padding: .5vh;
@@ -20,7 +20,7 @@
     select {
         padding: 1vh;
         border-radius: 3px;
-        background-color: rgba(80, 80, 80, 0.678);
+        background-color: #181c23;
         color: #fff;
     }
 
@@ -31,7 +31,7 @@
     input[type="file"] {
         padding: 1vh;
         border-radius: 3px;
-        background-color: rgba(80, 80, 80, 0.678);
+        background-color: #181c23;
         color: #fff;
     }
 
@@ -43,7 +43,7 @@
     }
 
     textarea {
-        background-color: rgba(80, 80, 80, 0.678);
+        background-color: #181c23;
         width: 60%;
         height: 50vh;
         border-radius: 5px;        

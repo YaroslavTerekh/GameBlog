@@ -12,18 +12,18 @@ export class PostComponent implements OnInit {
   @Input()
   public post!: Post;
   public postImage!: string | ArrayBuffer | null;
+  public time!: string;
 
   constructor(
     private readonly newsService: NewsService
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.post);
-    
+  ngOnInit(): void {  
     this.newsService.getImage(this.post.image.id)
       .subscribe({
         next: (res: Blob) => {
           this.createImageFromBlob(res);
+          this.time = "   " + this.post.createdTime.split("T")[0];          
         }
       });
   }

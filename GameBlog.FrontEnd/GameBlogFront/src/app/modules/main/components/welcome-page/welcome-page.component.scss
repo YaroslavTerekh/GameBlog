@@ -1,7 +1,97 @@
-p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 35px;
+.content {
+    margin-top: 20vh;
+
+    .img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60vw;
+        transform: translate(-50%, -50%);
+        background-color: rgb(0, 0, 0);
+        z-index: -1;
+    
+        img {
+            position: relative;
+            width: inherit;
+            opacity: .5;
+        }
+    }
+
+    .text {
+        h3 {
+            text-align: right;
+            margin-right: 7vw;
+            font-size: 35px;
+            text-transform: uppercase;
+            
+            span {
+                color: rgb(163, 45, 45);
+                font-weight: 40px;
+            }
+        }
+    
+        p {
+            text-align: justify;
+            margin-right: 7vw;
+            margin-left: 37.5vw;
+            width: 25.5vw;
+        }
+    }
+}
+
+.blocks {
+    display: flex;
+    justify-content: center;
+    margin-top: 25vh;
+
+    .block {
+        display: flex;
+        justify-content: center;
+        background-color: #292e38;
+        width: 19vw;
+        padding: 3vh;
+        margin: 2vh;
+        font-size: 20px;
+        border-radius: 4px;
+        font-weight: bold;
+        
+        h2 {
+            color: rgb(255, 255, 255);
+        }
+    }
+}
+
+.latest-post {
+    margin-top: 5vh;
+    
+    h2 {
+        color: rgb(163, 45, 45);
+        font-size: 40px;
+        text-transform: uppercase;
+
+        span {
+            color: rgb(255, 255, 255);
+        }
+    }
+    h2::before {
+        display: inline-block;
+        content: "";
+        border-top: .3rem solid rgb(255, 255, 255);
+        width: 4rem;
+        margin: 0 1rem;
+        transform: translateY(-0.5rem);
+    }
+    
+    h2::after {
+        display: inline-block;
+        content: "";
+        border-top: .3rem solid rgb(255, 255, 255);
+        width: 22.5em;
+        margin: 0 1rem;
+        transform: translateY(-0.5rem);
+    }
+}
+
+.posts {
+    margin: 1vw;
 }

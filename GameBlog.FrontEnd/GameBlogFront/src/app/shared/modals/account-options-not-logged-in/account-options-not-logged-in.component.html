@@ -1,5 +1,36 @@
-<div class="background" (click)="showAccountModal(false)" ></div>
-<div class="modal">
-    <a routerLink="/login" (click)="showAccountModal(false)" >Увійти</a>
-    <a routerLink="/register" (click)="showAccountModal(false)" >Реєстрація</a>
+<div class="background" (click)="showAccountModal(false)"></div>
+<div class="login-form" *ngIf="login">
+    <div class="services">
+        <h4><span>Увійти</span> в акаунт</h4>
+        <form action="" [formGroup]="loginForm" (submit)="onSubmit()">
+            <input type="text" placeholder="Ваш email..." formControlName="email">
+            <input type="password" placeholder="Ваш пароль..." formControlName="password">
+            <input type="submit" value="Увійти">
+        </form>
+        <p (click)="register = true; login = false;">Не маєте акаунту? Зареєструватися</p>
+    </div>
+    <div class="info">
+        <p>Для того, щоб переглядати, або публікувати свої пости, залишати під ними коментарі, спочатку потрібно увійти в свій акаунт</p>
+    </div>
+</div>
+
+<div class="login-form" *ngIf="register">
+    <div class="services">
+        <h4><span>створити</span> акаунт</h4>
+        <form action="" [formGroup]="registerGroup" (submit)="onRegister()">
+            <select name="" id="">
+                <option value="reader">Читач</option>
+                <option value="journalist">Журналіст</option>
+            </select>
+            <input type="text" placeholder="Ваше ім'я..." formControlName="Firstname">
+            <input type="text" placeholder="Ваше прізвище..." formControlName="Lastname">
+            <input type="text" placeholder="Ваш email..." formControlName="Email">
+            <input type="password" placeholder="Ваш пароль..." formControlName="Password">
+            <input type="submit" placeholder="Зареєструватися">
+        </form>
+        <p (click)="register = false; login = true;">Вже маєте акаунт? Увійти</p>
+    </div>
+    <div class="info">
+        <p>Для того, щоб переглядати, або публікувати свої пости, залишати під ними коментарі, спочатку потрібно створити власний акаунт</p>
+    </div>
 </div>

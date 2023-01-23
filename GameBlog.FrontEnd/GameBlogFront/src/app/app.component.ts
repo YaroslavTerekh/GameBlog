@@ -48,10 +48,6 @@ export class AppComponent implements OnInit {
         }
       }
     )
-
-    if(this.needLogin) {
-      this.router.navigate(['/welcome']);
-    }
   }
 
   public showAccountModal(value: boolean): void {

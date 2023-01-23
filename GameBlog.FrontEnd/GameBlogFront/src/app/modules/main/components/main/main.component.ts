@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
         }
       });
 
-    if(this.needLogin) {
+    if(!localStorage.getItem("Token")) {
       this.router.navigate(['/welcome']);
     }
   }

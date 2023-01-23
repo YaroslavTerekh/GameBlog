@@ -5,3 +5,10 @@
     margin-bottom: 5px;
     font-size: 32px;
 }
+
+.posts {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    // width: fit-content;
+}

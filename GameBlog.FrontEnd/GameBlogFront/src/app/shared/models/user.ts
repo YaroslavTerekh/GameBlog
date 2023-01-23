@@ -7,4 +7,5 @@ export interface User {
     lastName: string; 
     isBanned: boolean;
     aboutMe: string;
+    registeredDate: string;
 }

@@ -4,5 +4,5 @@
     <a routerLink="/mycomments" (click)="showAccountModal(false)">Мої коментарі</a>
     <a routerLink="/myposts" (click)="showAccountModal(false)" *ngIf="isJournalist">Мої пости</a>
     <a routerLink="/admin-panel" (click)="showAccountModal(false)" *ngIf="isAdmin">Адмін-панель</a>
-    <a class="logout" routerLink="/" (click)="showAccountModal(false)" (click)="onExit()">Вийти</a>
+    <a class="logout" routerLink="/welcome" (click)="showAccountModal(false)" (click)="onExit()">Вийти</a>
 </div>
