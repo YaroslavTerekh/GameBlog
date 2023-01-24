@@ -7,9 +7,13 @@
       <a routerLink="/news">Новини <i class="fa fa-plus"></i></a>
       <a routerLink="/topics">Теми <i class="fa fa-plus"></i></a>
     </nav>
+    <div class="acc">
+      <i class="fa fa-bell" (click)="showNotificationModal(true)"></i>
+    </div>
     <a (click)="showAccountModal(true)" (click)="checkLoginModal()" class="img"><img [src]="avatar ? avatar : '../assets/default-avatar.png'" alt="user"></a>
   </header>
 </div>
 <router-outlet></router-outlet>
 <app-account-options-modal *ngIf="isOpened && !needLogin"></app-account-options-modal>
 <app-account-options-not-logged-in *ngIf="isOpened && needLogin"></app-account-options-not-logged-in>
+<app-notifications *ngIf="openNotifications"></app-notifications>

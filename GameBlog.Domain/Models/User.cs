@@ -25,5 +25,9 @@ namespace GameBlog.Domain.Models
         public Image? Avatar { get; set; }
 
         public DateTime RegisteredDate { get; set; } = DateTime.UtcNow;
+
+        public List<Notification> ReceivedNotifications { get; set; } = new();
+
+        public List<Notification> SentNotifications { get; set; } = new();
     }
 }

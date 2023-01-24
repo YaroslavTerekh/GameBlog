@@ -1,0 +1,7 @@
+<div class="notification">
+    {{notification.sender.firstName}} {{notification.sender.lastName}} 
+    <p *ngIf="notification.subject == 0" [routerLink]="['/post', notification.post.id]">додав пост {{notification.post.title}}</p>
+    <p *ngIf="notification.subject == 1" [routerLink]="['/post', notification.post.id]">прокоментував пост {{notification.post.title}}</p>
+    <p *ngIf="notification.subject == 2">забанив вас</p>
+    <p *ngIf="notification.subject == 3">розбанив вас</p>
+</div>

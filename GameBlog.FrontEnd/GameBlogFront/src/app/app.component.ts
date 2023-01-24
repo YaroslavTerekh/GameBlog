@@ -1,3 +1,4 @@
+import { SignalrService } from './core/services/signalr.service';
 import { Router } from '@angular/router';
 import { UserService } from './core/services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,14 +15,19 @@ export class AppComponent implements OnInit {
   public avatar: any;
   public isOpened: boolean = false;
   public needLogin: boolean = localStorage.getItem("Token") == null;
+  public openNotifications: boolean = false;
 
   constructor(
     private readonly authoricationService: AuthorizationService,
     private readonly userService: UserService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly signalr: SignalrService
   ) { }
 
   ngOnInit(): void {
+    this.signalr.startConnection();
+    this.signalr.addTransferChartDataListener();
+
     this.userService.getAvatar()
       .subscribe({
         next: (res: Blob) => {
@@ -48,10 +54,20 @@ export class AppComponent implements OnInit {
         }
       }
     )
+
+    this.authoricationService.showNotificationModalSubject.subscribe({
+      next: res => {
+        this.openNotifications = res;
+      }
+    })
   }
 
   public showAccountModal(value: boolean): void {
     this.authoricationService.triggerForAccountModal(value);
+  }
+
+  public showNotificationModal(value: boolean): void {
+    this.authoricationService.triggerForNotificationModal(value);
   }
 
   public checkLoginModal(): void {

@@ -1,6 +1,7 @@
 ﻿using GameBlog.BL.DBConnection;
 using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
+using GameBlog.BL.Services.Abstractions;
 using GameBlog.Domain.Enums;
 using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +17,12 @@ namespace GameBlog.BL.Repositories.Realizations
     public class NewsRepository : INewsRepository
     {
         private readonly DataContext _context;
+        private readonly INotificationsService _notificationService;
 
-        public NewsRepository(DataContext context)
+        public NewsRepository(DataContext context, INotificationsService notificationsService)
         {
             _context = context;
+            _notificationService = notificationsService;
         }
 
         public async Task AddCommentAsync(CreateCommentModel comment, CancellationToken cancellationToken)
@@ -50,21 +53,43 @@ namespace GameBlog.BL.Repositories.Realizations
 
         public async Task CreateNewsAsync(CreatePostModel newPost, Guid imgId, CancellationToken cancellationToken = default)
         {
-            var journalistId = await _context.Journalists
+            var journalist = await _context.Journalists
                                     .Where(t => t.UserId == newPost.UserId)
-                                    .Select(t => t.Id)
+                                    .Include(t => t.User)
+                                    .Include(t => t.Subscribers)
+                                        .ThenInclude(t => t.User)
                                     .FirstOrDefaultAsync(cancellationToken);
 
             var mappedPost = new GamePost
             {
                 Title = newPost.Title,
                 Description = newPost.Description,
-                JournalistId = journalistId,
+                JournalistId = journalist.Id,
                 TopicId = newPost.TopicId,
                 ImageId = imgId
-            };
+            };            
 
             await _context.GamePosts.AddAsync(mappedPost, cancellationToken);
+
+            foreach (var sub in journalist.Subscribers)
+            {
+
+                var notification = new Notification
+                {
+                    ReceiverId = sub.UserId,
+                    Receiver = sub.User,
+                    SenderId = journalist.Id,
+                    Sender = journalist.User,
+                    Subject = Subject.AddedPost,
+                    PostId = mappedPost.Id,
+                    Post = mappedPost
+                };
+
+                var notificationId = await _notificationService.AddNotification(notification, cancellationToken);
+                await _notificationService.SendNotification(notification, cancellationToken);
+
+            }
+
             await _context.SaveChangesAsync(cancellationToken);
         }
 
@@ -75,7 +100,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.User)
                     .ThenInclude(t => t.Avatar)
                 .Include(t => t.Posts)
-                    .ThenInclude(t => t.Topic)  
+                    .ThenInclude(t => t.Topic)
                 .ToListAsync(cancellationToken);
 
             return journalists;
@@ -141,7 +166,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Journalist)
                     .ThenInclude(t => t.User)
                 .Where(t => t.CreatedTime > DateTime.UtcNow.AddDays(-3))
-                .ToListAsync(cancellationToken);                 
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<GamePost> GetSpecifiedNewsAsync(Guid postId, CancellationToken cancellationToken)
@@ -195,7 +220,7 @@ namespace GameBlog.BL.Repositories.Realizations
                     await _context.AddAsync(image, token);
                     await _context.SaveChangesAsync(token);
                 }
-                catch (Exception) { }                
+                catch (Exception) { }
             }
 
             return image.Id;
@@ -233,7 +258,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Journalist)
                 .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
 
-            if(user.Role == Role.Admin || post.Journalist.UserId == CurrentUserId)
+            if (user.Role == Role.Admin || post.Journalist.UserId == CurrentUserId)
             {
                 _context.GamePosts.Remove(post);
                 await _context.SaveChangesAsync(cancellationToken);

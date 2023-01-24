@@ -13,12 +13,16 @@ import { AppComponent } from './app.component';
 import { AccountOptionsModalComponent } from './shared/modals/account-options-modal/account-options-modal.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AccountOptionsNotLoggedInComponent } from './shared/modals/account-options-not-logged-in/account-options-not-logged-in.component';
+import { NotificationsComponent } from './shared/modals/notifications/notifications.component';
+import { NotificationComponent } from './shared/modals/notification/notification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountOptionsModalComponent,
     AccountOptionsNotLoggedInComponent,
+    NotificationsComponent,
+    NotificationComponent,
   ],
   imports: [    
     BrowserModule,

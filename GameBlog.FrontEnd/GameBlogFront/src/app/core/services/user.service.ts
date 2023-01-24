@@ -47,4 +47,8 @@ export class UserService {
   public isSubs(id: string): Observable<any> {
     return this.http.post(`${environment.apiAddress}/auth/issubs/${id}`, null);
   }
+
+  public getNotifications(): Observable<any> {
+    return this.http.get(`${environment.apiAddress}/notifications`);
+  }
 }

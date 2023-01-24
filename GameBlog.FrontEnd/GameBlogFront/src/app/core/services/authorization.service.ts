@@ -15,6 +15,7 @@ export class AuthorizationService implements OnInit {
   public loginModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isJournalistSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public showNotificationModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private helper: JwtHelperService = new JwtHelperService();
 
   constructor(
@@ -47,5 +48,9 @@ export class AuthorizationService implements OnInit {
 
   public triggerForLoginModal(): void {
     this.loginModalSubject.next(localStorage.getItem("Token") == null);
+  }
+
+  public triggerForNotificationModal(value: boolean): void {
+    this.showNotificationModalSubject.next(value);
   }
 }
