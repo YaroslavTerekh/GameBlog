@@ -16,6 +16,7 @@ export class AuthorizationService implements OnInit {
   public isAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isJournalistSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public showNotificationModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public showSendNotificationSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private helper: JwtHelperService = new JwtHelperService();
 
   constructor(

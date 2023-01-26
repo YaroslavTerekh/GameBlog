@@ -1,5 +1,6 @@
 <div class="background" (click)="showNotificationModal(false)"></div>
 <div class="modal">
-    <app-notification *ngFor="let notification of notifications" [notification]="notification"></app-notification>
-    <app-notification *ngFor="let notification of newNotifications" [notification]="notification"></app-notification>
+    <h3>Ваші <span>сповіщення</span></h3>
+    <app-notification (deleteNotification)="deleteNotification($event)" *ngFor="let notification of notifications" [notification]="notification"></app-notification>
+    <app-notification (deleteNotification)="deleteNotification($event)" *ngFor="let notification of newNotifications" [notification]="notification"></app-notification>
 </div>

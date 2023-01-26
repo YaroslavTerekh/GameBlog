@@ -28,6 +28,7 @@ namespace GameBlog.BL.Services.Realizations
         {
             var notificationMap = new NotificationModel
             {
+                Id = notification.Id,
                 Receiver = new UserModel
                 {
                     FirstName = notification.Receiver.FirstName,
@@ -38,10 +39,11 @@ namespace GameBlog.BL.Services.Realizations
                     FirstName = notification.Sender.FirstName,
                     LastName = notification.Sender.LastName
                 },
-                Post = new PostModel
+                Post = notification.Post is not null ? new PostModel
                 {
                     Title = notification.Post.Title
-                }
+                } : null,
+                Subject = notification.Subject
             };
 
             await _hubContext.Clients.User(notification.ReceiverId.ToString()).SendAsync(notification.Subject.ToString(), notificationMap);

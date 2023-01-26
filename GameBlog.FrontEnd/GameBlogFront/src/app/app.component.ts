@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
   public isOpened: boolean = false;
   public needLogin: boolean = localStorage.getItem("Token") == null;
   public openNotifications: boolean = false;
+  public openSendNotifications: boolean = false;
+  public notifications!: any;
 
   constructor(
     private readonly authoricationService: AuthorizationService,
@@ -25,6 +27,13 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userService.getNotifications()
+    .subscribe({
+      next: res => {
+        this.notifications = res;
+      }
+    });
+    
     this.signalr.startConnection();
     this.signalr.addTransferChartDataListener();
 
@@ -43,6 +52,14 @@ export class AppComponent implements OnInit {
       {
         next: {
           this.isOpened = res;
+        }
+      }
+    )  
+
+    this.authoricationService.showSendNotificationSubject.subscribe( res =>
+      {
+        next: {
+          this.openSendNotifications = res;
         }
       }
     )  

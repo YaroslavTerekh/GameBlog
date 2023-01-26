@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr"
 
@@ -7,11 +8,10 @@ import * as signalR from "@microsoft/signalr"
 export class SignalrService {
 
   constructor() { }
-
-  public addedPosts: any = [];
-  public banned: any = [];
-  public unBanned: any = [];
-  public commented: any = [];
+  public addedPostSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public commentedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public bannedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public unBannedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   private hubConnection!: signalR.HubConnection
   public startConnection = () => {
@@ -28,18 +28,17 @@ export class SignalrService {
 
   public addTransferChartDataListener = () => {
     this.hubConnection.on('AddedPost', (data: any) => {
-      this.addedPosts.push(data);
-      console.log(this.addedPosts);
+      this.addedPostSubject.next(data);
       
     });
     this.hubConnection.on('PostCommented', (data: any) => {
-      this.commented.push(data);
+      this.commentedSubject.next(data);
     });
     this.hubConnection.on('YouAreBanned', (data: any) => {
-      this.banned.push(data);
+      this.bannedSubject.next(data);
     });
     this.hubConnection.on('YouAreUnBanned', (data: any) => {
-      this.unBanned.push(data);
+      this.unBannedSubject.next(data);
     });
   }
 }

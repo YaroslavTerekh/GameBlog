@@ -1,9 +1,11 @@
-﻿using GameBlog.BL.Repositories.Abstractions;
+﻿using GameBlog.BL.Models;
+using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.Domain.Constants;
 using GameBlog.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GameBlog.Controllers
 {
@@ -13,10 +15,12 @@ namespace GameBlog.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly INotificationRepository _notificationRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, INotificationRepository notificationRepository)
         {
             _userRepository = userRepository;
+            _notificationRepository = notificationRepository;
         }
 
         [HttpGet]
@@ -68,6 +72,17 @@ namespace GameBlog.Controllers
         )
         {
             return Ok(await _userRepository.GetUsersForChart(cancellationToken));
+        }
+
+        [HttpPost("send-to-all")]
+        public async Task<IActionResult> SendNotificationToAllUsersAsync(
+            AdminSendNotification model,
+            CancellationToken cancellationToken = default
+        )
+        {
+            await _notificationRepository.SendToAllUsers(model, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+
+            return NoContent();
         }
     }
 }

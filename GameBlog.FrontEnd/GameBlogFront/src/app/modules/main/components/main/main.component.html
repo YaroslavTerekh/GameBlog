@@ -2,4 +2,18 @@
 <app-top-journalists></app-top-journalists>
 
 <h2 class="title"><i class="fa  fa-folder-open-o"></i> Нові пости</h2>
+
+<div class="last-posts">
+    <div class="four-posts">        
+        <app-main-post *ngFor="let post of newPosts" [post]="post"></app-main-post>  
+    </div>
+    <div class="last-post" [routerLink]="['/post', lastPost.id]">
+        <div class="img">
+            <img [src]="image" alt="">
+        </div>
+        <h3>{{lastPost.title}}</h3>
+        <p>{{lastPost.description}}</p>
+    </div>
+</div>
+
 <app-top-posts></app-top-posts>

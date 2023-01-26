@@ -1,0 +1,7 @@
+<div class="background" (click)="toggleModal(false)"></div>
+<div class="modal">
+    <form action="" [formGroup]="sendNotificationGroup" (submit)="send()">
+        <textarea name="" id="" cols="30" rows="10" formControlName="message"></textarea>
+        <input type="submit">
+    </form>
+</div>

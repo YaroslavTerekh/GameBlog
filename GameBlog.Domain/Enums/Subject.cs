@@ -12,5 +12,6 @@ namespace GameBlog.Domain.Enums
         PostCommented = 1,
         YouAreBanned  = 2,
         YouAreUnBanned = 3,
+        ToAllUsers = 4,
     }
 }

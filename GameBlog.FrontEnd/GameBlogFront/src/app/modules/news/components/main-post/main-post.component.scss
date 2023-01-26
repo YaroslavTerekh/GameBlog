@@ -1,0 +1,44 @@
+.post {
+    cursor: pointer;
+    display: flex;
+    margin-bottom: .5vh;
+    transition: .2s;
+
+    .img {
+        width: 18vh;
+        height: 13vh;
+        position: relative;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .info {
+        margin-left: 1vh;
+        width: 80%;
+
+        h3 {
+            text-transform: uppercase;
+            margin-bottom: 1vh;
+        }
+        
+        .date {
+            margin-top: .5vh;
+        }
+    }
+}
+
+.post:hover {
+    background-color: rgba(255, 255, 255, 0.01);
+    transition: .2s;
+}

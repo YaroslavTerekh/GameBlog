@@ -25,17 +25,26 @@
     justify-content: space-between;
     align-items: center;
 
-    a {
-        background-color: rgba(158, 158, 158, 0.678);
-        text-decoration: none;
-        color: #fff;
-        width: 15vh;
-        padding: 2vh;
-        margin-bottom: 1vh;
-        text-align: center;        
-    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
 
-    a.logout {
-        background-color: rgba(143, 71, 71, 0.678);
+        textarea {
+            background-color: #181c23;
+            resize: none;
+            padding: .5vh;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        input {
+            margin-top: 1vh;
+            padding: 1vh;
+            border-radius: 4px;
+            background-color: rgb(56, 168, 34);
+        }
     }
 }

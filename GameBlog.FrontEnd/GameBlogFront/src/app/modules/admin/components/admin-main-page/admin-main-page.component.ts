@@ -1,3 +1,4 @@
+import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { AdminService } from './../../../../core/services/admin.service';
 import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
@@ -13,7 +14,8 @@ export class AdminMainPageComponent implements OnInit {
   public allUsers!: User[];
 
   constructor(
-    private readonly adminService: AdminService
+    private readonly adminService: AdminService,
+    private readonly authService: AuthorizationService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,10 @@ export class AdminMainPageComponent implements OnInit {
           this.initDiagram(res);  
         }
       })    
+  }
+
+  toggleModal(value: boolean): void {
+    this.authService.showSendNotificationSubject.next(value);
   }
 
   createDate(num: number): string {

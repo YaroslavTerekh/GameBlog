@@ -6,11 +6,11 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 999;
 }
 
 .login-form {
-    z-index: 3;
+    z-index: 999;
     position: absolute;
     top: 50%;
     left: 50%;

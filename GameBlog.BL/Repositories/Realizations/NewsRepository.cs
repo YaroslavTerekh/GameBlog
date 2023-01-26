@@ -34,8 +34,26 @@ namespace GameBlog.BL.Repositories.Realizations
                 PostId = comment.PostId
             };
 
+            var post = await _context.GamePosts
+                .Include(t => t.Journalist)
+                    .ThenInclude(t => t.User)
+                .FirstOrDefaultAsync(t => t.Id == comment.PostId);
+
+            var author = await _context.Users
+                .FirstOrDefaultAsync(t => t.Id == comment.AuthorUserId, cancellationToken);
+
+            var notification = new Notification
+            {
+                Receiver = post.Journalist.User,
+                Sender = author,
+                Subject = Subject.PostCommented,
+                Post = post
+            };
+
             await _context.Comments.AddAsync(mappedComment, cancellationToken);
+            await _notificationService.AddNotification(notification, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+            await _notificationService.SendNotification(notification, cancellationToken);
         }
 
         public async Task AddTopicAsync(CreateTopicModel topic, CancellationToken cancellationToken)
@@ -99,7 +117,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .AsNoTracking()
                 .Include(t => t.User)
                     .ThenInclude(t => t.Avatar)
-                .Include(t => t.Posts)
+                .Include(t => t.Posts.OrderByDescending(t => t.CreatedTime))
                     .ThenInclude(t => t.Topic)
                 .ToListAsync(cancellationToken);
 
@@ -149,7 +167,7 @@ namespace GameBlog.BL.Repositories.Realizations
                     .AsNoTracking()
                     .Include(t => t.User)
                         .ThenInclude(t => t.Avatar)
-                    .Include(t => t.Posts)
+                    .Include(t => t.Posts.OrderByDescending(t => t.CreatedTime))
                         .ThenInclude(t => t.Topic)
                     .OrderByDescending(t => t.Subscribers.Count)
                     .Take(6)

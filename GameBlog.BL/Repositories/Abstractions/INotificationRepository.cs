@@ -1,4 +1,5 @@
-﻿using GameBlog.Domain.Models;
+﻿using GameBlog.BL.Models;
+using GameBlog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task<List<Notification>> GetAllNotifications(Guid CurrentUserId, CancellationToken token);
 
         public Task DeleteNotificationAsync(Guid id, CancellationToken cancellationToken);
+
+        public Task SendToAllUsers(AdminSendNotification model, Guid currentUserId, CancellationToken cancellationToken);
     }
 }

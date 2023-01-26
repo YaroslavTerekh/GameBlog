@@ -6,6 +6,17 @@
     font-size: 32px;
 }
 
+button {
+    padding: 1vh;
+    background-color: rgba(2, 2, 2, 0.164);
+    border: 1px solid rgba(255, 255, 255, 0.185);
+    margin-bottom: 2vh;
+}
+
+button:focus {
+    outline: none;
+}
+
 #main {
     backdrop-filter: blur(10px);
     border: 1px solid rgb(156, 156, 156);

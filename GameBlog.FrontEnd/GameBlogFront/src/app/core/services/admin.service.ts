@@ -28,4 +28,8 @@ export class AdminService {
   public unbanUsers(id: string): Observable<any> {
     return this.http.patch(`${environment.apiAddress}/admin/users/unban/${id}`, null);
   }
+
+  public sendToAll(message: string): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/admin/users/send-to-all`, {message});
+  }
 }

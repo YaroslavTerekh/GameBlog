@@ -22,5 +22,7 @@ namespace GameBlog.Domain.Models
         public GamePost Post { get; set; }
 
         public Guid PostId { get; set; }
+
+        public string? Message { get; set; }
     }
 }

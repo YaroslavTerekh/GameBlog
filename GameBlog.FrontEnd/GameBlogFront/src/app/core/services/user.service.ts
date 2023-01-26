@@ -51,4 +51,8 @@ export class UserService {
   public getNotifications(): Observable<any> {
     return this.http.get(`${environment.apiAddress}/notifications`);
   }
+
+  public deleteNotification(id: string): Observable<any> {
+    return this.http.delete(`${environment.apiAddress}/notifications/${id}`);
+  }
 }

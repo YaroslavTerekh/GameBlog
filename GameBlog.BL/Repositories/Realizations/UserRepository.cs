@@ -1,5 +1,6 @@
 ﻿using GameBlog.BL.DBConnection;
 using GameBlog.BL.Repositories.Abstractions;
+using GameBlog.BL.Services.Abstractions;
 using GameBlog.Domain.Enums;
 using GameBlog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,15 +15,31 @@ namespace GameBlog.BL.Repositories.Realizations
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
+        private readonly INotificationsService _notificationsService;
 
-        public UserRepository(DataContext context)
+        public UserRepository(DataContext context, INotificationsService notificationsService)
         {
             _context = context;
+            _notificationsService = notificationsService;
         }
 
         public async Task BanUserAsync(Guid userId, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FindAsync(userId);
+
+            var notification = new Notification
+            {
+                Receiver = user,
+                ReceiverId = user.Id,
+                Sender = new User
+                {
+                    FirstName = "Адміністратор",
+                    LastName = " "
+                },
+                Subject = Subject.YouAreBanned
+            };
+
+            await _notificationsService.SendNotification(notification, cancellationToken);
 
             user.IsBanned = true;
 
@@ -113,9 +130,22 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             var user = await _context.Users.FindAsync(userId);
 
+            var notification = new Notification
+            {
+                Receiver = user,
+                ReceiverId = user.Id,
+                Sender = new User
+                {
+                    FirstName = "Адміністратор",
+                    LastName = " "
+                },
+                Subject = Subject.YouAreUnBanned    
+            };       
+
             user.IsBanned = false;
 
             await _context.SaveChangesAsync(cancellationToken);
+            await _notificationsService.SendNotification(notification, cancellationToken);
         }
     }
 }

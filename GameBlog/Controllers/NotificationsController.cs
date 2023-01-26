@@ -24,7 +24,7 @@ namespace GameBlog.Controllers
             return Ok(await _notificationRepository.GetAllNotifications(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteNotificationAsync(Guid id, CancellationToken cancellationToken = default)
         {
             await _notificationRepository.DeleteNotificationAsync(id, cancellationToken);

@@ -1,0 +1,10 @@
+<div class="post"  [routerLink]="['/post', post.id]">
+    <div class="img">
+        <img [src]="image" alt="">
+    </div>
+    <div class="info">
+        <h3>{{post.title}}</h3>
+        <p>{{post.description}}</p>
+        <p class="date"><i class="fa fa-calendar"></i> {{post.createdTime.split("T")[0]}}</p>
+    </div>
+</div>

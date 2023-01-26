@@ -11,7 +11,9 @@
     </div>
     <div>
         <h5>Картинка</h5>
-        <input type="file" (change)="onFileSelected($event)">
+        <div class="file-upload-wrapper" data-text="Додати файл">
+            <input name="file-upload-field" type="file" class="file-upload-field" value="" (change)="onFileSelected($event)">
+        </div>
     </div>
     <div>
         <h5>Опис</h5>

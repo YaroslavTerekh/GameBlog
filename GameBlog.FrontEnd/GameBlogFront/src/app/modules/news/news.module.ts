@@ -10,6 +10,7 @@ import { PostsComponent } from './components/posts/posts.component';
 import { PostsPageComponent } from './components/posts-page/posts-page.component';
 import { TopPostsComponent } from './components/top-posts/top-posts.component';
 import { PostCommentComponent } from './components/post-comment/post-comment.component';
+import { MainPostComponent } from './components/main-post/main-post.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PostCommentComponent } from './components/post-comment/post-comment.com
     TopPostsComponent,
     PostCommentComponent,
     PostPageComponent,
-    TrimTextForPostPipe
+    TrimTextForPostPipe,
+    MainPostComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { PostCommentComponent } from './components/post-comment/post-comment.com
     PostsComponent,
     TopPostsComponent,
     PostCommentComponent,
+    MainPostComponent,
     TrimTextForPostPipe
   ]
 })

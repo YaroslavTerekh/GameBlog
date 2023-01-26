@@ -1,3 +1,20 @@
 .notification {
-    border: 1px solid #fff;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1vh;
+
+    .info {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 1vw;
+        
+        p {
+            margin-left: 3px;
+        }
+    }
+    
+    i {
+        color: rgb(151, 44, 44);
+        cursor: pointer;
+    }
 }

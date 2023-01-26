@@ -15,6 +15,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AccountOptionsNotLoggedInComponent } from './shared/modals/account-options-not-logged-in/account-options-not-logged-in.component';
 import { NotificationsComponent } from './shared/modals/notifications/notifications.component';
 import { NotificationComponent } from './shared/modals/notification/notification.component';
+import { SendNotificationAdminComponent } from './shared/modals/send-notification-admin/send-notification-admin.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NotificationComponent } from './shared/modals/notification/notification
     AccountOptionsNotLoggedInComponent,
     NotificationsComponent,
     NotificationComponent,
+    SendNotificationAdminComponent,
   ],
   imports: [    
     BrowserModule,
