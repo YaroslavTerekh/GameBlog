@@ -7,6 +7,7 @@
             {{notification.post.title}}</p>
         <p *ngIf="notification.subject == 2"> забанив вас</p>
         <p *ngIf="notification.subject == 3"> розбанив вас</p>
+        <p *ngIf="notification.subject == 4"> : {{notification.message}}</p>
     </div>
     <i class="fa fa-times" aria-hidden="true" (click)="deleteNotification.emit(notification.id)"></i>
 </div>

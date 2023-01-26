@@ -106,6 +106,46 @@ namespace GameBlog.BL.Repositories.Realizations
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<object> GetCommentsForChart(CancellationToken cancellationToken)
+        {
+            var last7DaysUsers = await _context.Comments
+                .Where(t => t.CreatedTime > DateTime.UtcNow.AddDays(-7))
+                .ToListAsync(cancellationToken);
+
+            var result = new
+            {
+                day7 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.Day).ToList(),
+                day6 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-1).Day).ToList(),
+                day5 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-2).Day).ToList(),
+                day4 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-3).Day).ToList(),
+                day3 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-4).Day).ToList(),
+                day2 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-5).Day).ToList(),
+                day1 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-6).Day).ToList(),
+            };
+
+            return result;
+        }
+
+        public async Task<object> GetPostsForChart(CancellationToken cancellationToken)
+        {
+            var last7DaysUsers = await _context.GamePosts
+                .Where(t => t.CreatedTime > DateTime.UtcNow.AddDays(-7))
+                .ToListAsync(cancellationToken);
+
+            var result = new
+            {
+                day7 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.Day).ToList(),
+                day6 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-1).Day).ToList(),
+                day5 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-2).Day).ToList(),
+                day4 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-3).Day).ToList(),
+                day3 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-4).Day).ToList(),
+                day2 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-5).Day).ToList(),
+                day1 = last7DaysUsers.Where(u => u.CreatedTime.Day == DateTime.UtcNow.AddDays(-6).Day).ToList(),
+            };
+
+            return result;
+        }
+
         public async Task<object> GetUsersForChart(CancellationToken cancellationToken)
         {
             var last7DaysUsers = await _context.Users

@@ -31,6 +31,8 @@ export class AppComponent implements OnInit {
     .subscribe({
       next: res => {
         this.notifications = res;
+        console.log(res);
+        
       }
     });
     

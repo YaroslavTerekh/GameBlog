@@ -19,9 +19,9 @@ namespace GameBlog.Domain.Models
 
         public User Sender { get; set; }
 
-        public GamePost Post { get; set; }
+        public GamePost? Post { get; set; }
 
-        public Guid PostId { get; set; }
+        public Guid? PostId { get; set; }
 
         public string? Message { get; set; }
     }

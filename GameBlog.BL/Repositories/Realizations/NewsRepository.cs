@@ -111,6 +111,16 @@ namespace GameBlog.BL.Repositories.Realizations
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<List<Comment>> GetLastCommentsAsync(Guid currentUserId, CancellationToken cancellationToken)
+        {
+            return await _context.Comments
+                .Where(t => t.CommentAuthorId == currentUserId)
+                .Include(t => t.CommentAuthor)
+                .OrderByDescending(t => t.CreatedTime)
+                .Take(10)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<List<Journalist>> GetAllJournalistsAsync(CancellationToken cancellationToken)
         {
             var journalists = await _context.Journalists

@@ -131,6 +131,7 @@ namespace GameBlog.Controllers
             return Ok(await _newsRepository.GetPopularJournalistsAsync(cancellationToken));
         }
 
+        [Authorize]
         [HttpGet("mine")]
         public async Task<IActionResult> GetMinePostsAsync(
             CancellationToken cancellationToken = default
@@ -139,6 +140,7 @@ namespace GameBlog.Controllers
             return Ok(await _newsRepository.GetMinePostsAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
         }
 
+        [Authorize]
         [HttpPost("add/image")]
         public async Task<IActionResult> AddImage(IFormFile file, CancellationToken token = default)
         {
@@ -167,10 +169,18 @@ namespace GameBlog.Controllers
             return Ok(await _newsRepository.GetJournalistAsync(id, cancellationToken));
         }
 
+        [Authorize]
         [HttpGet("mycomments")]
         public async Task<IActionResult> GetMyCommentsAsync(CancellationToken token = default)
         {
             return Ok(await _newsRepository.GetPostsWithMyComments(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token));
+        }
+
+        [Authorize]
+        [HttpGet("mylastcomments")]
+        public async Task<IActionResult> GetMyLastCommentsAsync(CancellationToken token = default)
+        {
+            return Ok(await _newsRepository.GetLastCommentsAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token));
         }
     }
 }

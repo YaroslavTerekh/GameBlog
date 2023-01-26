@@ -43,7 +43,8 @@ namespace GameBlog.BL.Services.Realizations
                 {
                     Title = notification.Post.Title
                 } : null,
-                Subject = notification.Subject
+                Subject = notification.Subject,
+                Message = notification.Message
             };
 
             await _hubContext.Clients.User(notification.ReceiverId.ToString()).SendAsync(notification.Subject.ToString(), notificationMap);

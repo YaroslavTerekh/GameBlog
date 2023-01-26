@@ -74,6 +74,22 @@ namespace GameBlog.Controllers
             return Ok(await _userRepository.GetUsersForChart(cancellationToken));
         }
 
+        [HttpGet("for-charts-posts")]
+        public async Task<IActionResult> GetPostsForChartsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _userRepository.GetPostsForChart(cancellationToken));
+        }
+
+        [HttpGet("for-charts-comments")]
+        public async Task<IActionResult> GetCommentsForChartsAsync(
+            CancellationToken cancellationToken = default
+        )
+        {
+            return Ok(await _userRepository.GetCommentsForChart(cancellationToken));
+        }
+
         [HttpPost("send-to-all")]
         public async Task<IActionResult> SendNotificationToAllUsersAsync(
             AdminSendNotification model,

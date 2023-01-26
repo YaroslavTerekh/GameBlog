@@ -6,6 +6,8 @@ namespace GameBlog.BL.Repositories.Abstractions
 {
     public interface INewsRepository
     {
+        public Task<List<Comment>> GetLastCommentsAsync(Guid currentUserId, CancellationToken cancellationToken);
+
         public Task CreateNewsAsync(CreatePostModel newPost, Guid imgId, CancellationToken cancellationToken);
 
         public Task<List<GamePost>> GetAllNewsAsync(CancellationToken cancellationToken);

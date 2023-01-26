@@ -18,5 +18,7 @@ namespace GameBlog.BL.Models
         public PostModel Post { get; set; }
 
         public Subject Subject { get; set; }
+
+        public string Message { get; set; }
     }
 }

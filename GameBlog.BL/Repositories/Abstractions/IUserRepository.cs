@@ -19,5 +19,9 @@ namespace GameBlog.BL.Repositories.Abstractions
         public Task<List<User>> GetAllUsersAsync(CancellationToken cancellationToken);
 
         public Task<object> GetUsersForChart(CancellationToken cancellationToken);
+
+        public Task<object> GetPostsForChart(CancellationToken cancellationToken);
+
+        public Task<object> GetCommentsForChart(CancellationToken cancellationToken);
     }
 }

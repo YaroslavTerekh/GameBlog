@@ -21,6 +21,14 @@ export class AdminService {
     return this.http.get(`${environment.apiAddress}/admin/users/for-charts`);
   }
 
+  public getPostsDataForChart(): Observable<any> {
+    return this.http.get(`${environment.apiAddress}/admin/users/for-charts-posts`);
+  }
+
+  public getCommentsDataForChart(): Observable<any> {
+    return this.http.get(`${environment.apiAddress}/admin/users/for-charts-comments`);
+  }
+
   public banUsers(userId: string): Observable<any> {
     return this.http.patch(`${environment.apiAddress}/admin/users/ban/${userId}`, null);
   }

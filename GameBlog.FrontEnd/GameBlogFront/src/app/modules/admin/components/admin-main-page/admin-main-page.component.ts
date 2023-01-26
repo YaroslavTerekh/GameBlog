@@ -1,37 +1,85 @@
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { AdminService } from './../../../../core/services/admin.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import * as echarts from 'echarts';
 import { User } from 'src/app/shared/models/user';
+import { fromEvent, tap } from 'rxjs';
 
 @Component({
   selector: 'app-admin-main-page',
   templateUrl: './admin-main-page.component.html',
   styleUrls: ['./admin-main-page.component.scss']
 })
-export class AdminMainPageComponent implements OnInit {
+export class AdminMainPageComponent implements OnInit, AfterViewInit {
 
   public allUsers!: User[];
+  public oldUsers!: User[];
+  @ViewChild('input') input!: ElementRef;
 
   constructor(
     private readonly adminService: AdminService,
     private readonly authService: AuthorizationService
   ) { }
 
+  ngAfterViewInit(): void {
+    fromEvent(this.input.nativeElement, 'keyup')
+    .pipe(
+      tap(() => this.search())
+    )
+    .subscribe()
+  }
+
   ngOnInit(): void {
     this.adminService.getAllUsers()
       .subscribe({
         next: res => {
           this.allUsers = res;
+          this.oldUsers = res;
         }
-      });
+      });  
+      
+      this.chartRegisteredUsers();
+  }
 
+  chartRegisteredUsers(): void {
     this.adminService.getDataForChart()
       .subscribe({
         next: res => {
           this.initDiagram(res);  
         }
-      })    
+      })   
+  }
+
+  chartPosts(): void {
+    this.adminService.getPostsDataForChart()
+      .subscribe({
+        next: res => {
+          this.initDiagram(res);  
+        }
+      })  
+  }
+
+  chartComments(): void {
+    this.adminService.getCommentsDataForChart()
+      .subscribe({
+        next: res => {
+          this.initDiagram(res);  
+        }
+      })  
+  }
+
+  search(): void {      
+    if (this.input.nativeElement.value.length > 0) {      
+      this.allUsers = []
+      this.oldUsers.forEach(el => {        
+        let fullName = el.firstName + " " + el.lastName;
+        if (fullName.toLowerCase().search(this.input.nativeElement.value.toLowerCase()) != -1) {
+          this.allUsers.push(el);
+        }
+      });
+    } else {
+      this.ngOnInit();
+    }
   }
 
   toggleModal(value: boolean): void {

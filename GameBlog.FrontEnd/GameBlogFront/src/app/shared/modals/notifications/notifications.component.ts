@@ -49,7 +49,16 @@ export class NotificationsComponent implements OnInit {
         }
       });
 
-    this.signalService.unBannedSubject
+      this.signalService.unBannedSubject
+      .subscribe({
+        next: res => {
+          if (res) {
+            this.newNotifications.push(res);
+          }
+        }
+      });
+
+      this.signalService.toAllUsersSubject
       .subscribe({
         next: res => {
           if (res) {

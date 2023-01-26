@@ -1,4 +1,4 @@
 <div class="comment">
-    <p>{{comment.commentAuthor.firstName}} {{comment.commentAuthor.lastName}}</p>
+    <p>{{comment.commentAuthor.firstName}} {{comment.commentAuthor.lastName}} <span> | {{comment.createdTime.split("T")[0]}}</span></p> 
     <legend>{{comment.commentText}}</legend>
 </div>

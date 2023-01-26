@@ -14,6 +14,6 @@ namespace GameBlog.BL.Repositories.Abstractions
 
         public Task DeleteNotificationAsync(Guid id, CancellationToken cancellationToken);
 
-        public Task SendToAllUsers(AdminSendNotification model, Guid currentUserId, CancellationToken cancellationToken);
+        public Task SendToAllUsers(AdminSendNotification model, Guid currentUserId, CancellationToken cancellationToken);        
     }
 }

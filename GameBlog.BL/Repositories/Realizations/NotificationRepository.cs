@@ -61,6 +61,7 @@ namespace GameBlog.BL.Repositories.Realizations
                     Sender = user,
                     Receiver = userToReceive,
                     Subject = Subject.ToAllUsers,
+                    Message = model.Message
                 };
 
                 notifications.Add(notification);
@@ -73,6 +74,6 @@ namespace GameBlog.BL.Repositories.Realizations
             {
                 await _notificationsService.SendNotification(not, cancellationToken);
             }
-        }
+        }       
     }
 }

@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 import { Post } from "src/app/shared/models/post";
 import { Topic } from 'src/app/shared/models/topic';
 import { Journalist } from 'src/app/shared/models/journalist';
+import { PostComment } from 'src/app/shared/models/postComment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class NewsService {
     private readonly http: HttpClient
   ) { }
 
+  public getLastComments(): Observable<PostComment[]> {
+    return this.http.get<PostComment[]>(`${environment.apiAddress}/posts/mylastcomments`);
+  }
+    
   public deletePost(id: string): Observable<any> {
     return this.http.delete(`${environment.apiAddress}/posts/${id}`);
   }

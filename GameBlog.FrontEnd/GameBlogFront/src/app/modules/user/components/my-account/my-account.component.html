@@ -1,6 +1,6 @@
 <div class="bg"></div>
 
-<h2 class="title">Ваш акаунт</h2>
+<h2 class="title"><i class="fa fa-user"></i> Ваш акаунт</h2>
 
 <div class="logic-parts">
     <div class="avatar-settings">
@@ -29,4 +29,10 @@
         <input type="text" class="email" placeholder="Ваш email..." formControlName="email">
         <input type="submit" class="submit" value="Зберегти">
     </form>
+</div>
+
+<h2 class="title"><i class="fa fa-comments"></i> Ваші останні коментарі</h2>
+
+<div class="comments">
+    <app-post-comment *ngFor="let comment of comments" [comment]="comment"></app-post-comment>
 </div>

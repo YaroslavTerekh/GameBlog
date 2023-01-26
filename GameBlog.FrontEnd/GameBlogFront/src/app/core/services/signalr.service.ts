@@ -12,6 +12,7 @@ export class SignalrService {
   public commentedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public bannedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public unBannedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public toAllUsersSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   private hubConnection!: signalR.HubConnection
   public startConnection = () => {
@@ -39,6 +40,9 @@ export class SignalrService {
     });
     this.hubConnection.on('YouAreUnBanned', (data: any) => {
       this.unBannedSubject.next(data);
+    });
+    this.hubConnection.on('ToAllUsers', (data: any) => {
+      this.toAllUsersSubject.next(data);
     });
   }
 }

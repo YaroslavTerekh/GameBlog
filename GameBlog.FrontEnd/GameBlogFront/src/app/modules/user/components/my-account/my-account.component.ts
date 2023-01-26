@@ -1,3 +1,4 @@
+import { PostComment } from './../../../../shared/models/postComment';
 import { ModifyUser } from './../../../../core/interfaces/modifyUser';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { UserService } from './../../../../core/services/user.service';
@@ -22,13 +23,24 @@ export class MyAccountComponent implements OnInit {
     aboutMe: this.fb.control('')
   });
   public avatar!: any;
+  public comments!: PostComment[];
 
   constructor(
     private readonly userService: UserService,
+    private readonly newsService: NewsService,
     private readonly fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.newsService.getLastComments()
+      .subscribe({
+        next: res => {
+          this.comments = res;
+          console.log(res);
+          
+        }
+      });
+
     this.userService.getUserInfo()
       .subscribe({
         next: res => {

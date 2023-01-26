@@ -1,15 +1,27 @@
 <h5 class="title">
-    Адмін-панель
+    <i class="fa fa-shield"></i> Адмін-панель
 </h5>
 
-<button (click)="toggleModal(true)">Надіслати сповіщення усім користувачам</button>
+<button class="send" (click)="toggleModal(true)">Надіслати сповіщення усім користувачам</button>
 
+<div class="chart-buttons">
+    <p>Відобразити на графіку:</p>
+    <button class="chart-button" (click)="chartRegisteredUsers()">Зареєстровані користувачі</button>
+    <button class="chart-button" (click)="chartPosts()">Додані пости</button>
+    <button class="chart-button" (click)="chartComments()">Написані коментарі</button>
+</div>
 <div id="main" style="width: 70vw; height: 60vh;"></div>
 
 <h5 class="title">
-    Всі користувачі
+    <i class="fa fa-users"></i> Всі користувачі
 </h5>
 
+<div class="search">
+    <input type="text" placeholder="Пошук..." #input>
+</div>
+<div class="not-found" *ngIf="allUsers.length < 1">
+    <p>На жаль, за таким запитом нікого не знайдено.</p>
+</div>
 <div class="users">
     <app-user *ngFor="let user of allUsers" [user]="user"></app-user>
 </div>
