@@ -26,6 +26,8 @@ namespace GameBlog.BL.DBConnection
 
         public DbSet<Notification> Notification { get; set; }
 
+        public DbSet<YouTubeLink> YouTubeLinks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

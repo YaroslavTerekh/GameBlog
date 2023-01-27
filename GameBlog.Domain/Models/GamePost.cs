@@ -25,5 +25,7 @@ namespace GameBlog.Domain.Models
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public List<YouTubeLink> YouTubeUrls { get; set; }
     }
 }
