@@ -18,11 +18,13 @@ namespace GameBlog.BL.Repositories.Realizations
     {
         private readonly DataContext _context;
         private readonly INotificationsService _notificationService;
+        private readonly IEmailSender _emailSender;
 
-        public NewsRepository(DataContext context, INotificationsService notificationsService)
+        public NewsRepository(DataContext context, INotificationsService notificationsService, IEmailSender emailSender)
         {
             _context = context;
             _notificationService = notificationsService;
+            _emailSender = emailSender;
         }
 
         public async Task AddCommentAsync(CreateCommentModel comment, CancellationToken cancellationToken)
@@ -110,9 +112,11 @@ namespace GameBlog.BL.Repositories.Realizations
                 };
 
                 var notificationId = await _notificationService.AddNotification(notification, cancellationToken);
-                await _notificationService.SendNotification(notification, cancellationToken);
-
+                await _notificationService.SendNotification(notification, cancellationToken);                
             }
+
+            var message = new Message(journalist.Subscribers.Select(t => t.User.Email).ToList(), "Опубліковано новий пост", "Журналіст " + journalist.User.FirstName + " " + journalist.User.LastName + " додав пост " + mappedPost.Title);
+            _emailSender.SendEmail(message, "Опубліковано новий пост");
 
             await _context.SaveChangesAsync(cancellationToken);
         }

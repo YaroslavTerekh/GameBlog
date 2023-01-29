@@ -86,6 +86,7 @@ builder.Services.AddTransient<INotificationRepository, NotificationRepository>()
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<INotificationsService, NotificationsService>();
 builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Add authorization
 builder.Services.AddAuthentication(options =>
@@ -134,6 +135,12 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole(Role.Admin.ToString(), Role.Journalist.ToString());
     });
 });
+
+var emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
 
 var app = builder.Build();
 

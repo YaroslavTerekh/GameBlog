@@ -117,6 +117,39 @@ namespace GameBlog.BL.Repositories.Realizations
             {
                 throw new Exception(result.Errors.ToString());
             }
+
+            var newRoleUser = newUser.Role switch
+            {
+                Role.User => new Reader { 
+                    UserId = mappedUser.Id
+                },                
+                Role.Admin => new Reader {
+                    UserId = mappedUser.Id
+                },
+                _ => new Reader {
+                    UserId = mappedUser.Id
+                }
+            };
+            
+            if(newRoleUser is not null)
+            {
+                await _context.Readers.AddAsync(newRoleUser, cancellationToken);
+            }
+
+            if (newUser.Role == Role.Journalist)
+            {
+                var newRoleUser1 = new Journalist
+                {
+                    UserId = mappedUser.Id,
+                };
+
+                if (newRoleUser1 is not null)
+                {
+                    await _context.Journalists.AddAsync(newRoleUser1, cancellationToken);
+                }
+            }
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task SubscribeAsync(Guid id, Guid currentUserId, CancellationToken cancellationToken)

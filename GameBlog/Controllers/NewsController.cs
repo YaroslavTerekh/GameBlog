@@ -1,6 +1,7 @@
 ﻿using GameBlog.BL.Models;
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.Domain.Constants;
+using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,23 @@ namespace GameBlog.Controllers
     {
         private readonly INewsRepository _newsRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly IEmailSender _emailSender;
 
-        public NewsController(INewsRepository newsController, IWebHostEnvironment env)
+        public NewsController(INewsRepository newsController, IWebHostEnvironment env, IEmailSender emailSender)
         {
             _newsRepository = newsController;
             _env = env;
+            _emailSender = emailSender;
+        }
+
+        [AllowAnonymous]
+        [HttpGet("email")]
+        public async Task<IActionResult> GetEmailTest()
+        {
+            var message = new Message(new string[] { "yarolslavterekh@gmail.com" }, "Test email", "This is the content from our email.");
+            _emailSender.SendEmail(message, "Новий пост");
+
+            return NoContent();
         }
 
         [HttpDelete("{id:guid}")]
