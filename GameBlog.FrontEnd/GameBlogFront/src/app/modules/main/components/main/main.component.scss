@@ -13,8 +13,10 @@
     justify-content: space-between;
 
     .last-post {
-        width: 50%;
+        max-width: 50%;
+        width: 100%;
         cursor: pointer;
+        margin-left: 1vw;
 
         .img {
             width: 100%;

@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
     Lastname: this.fb.control('', Validators.required),
     Email: this.fb.control('', Validators.required),
     Password: this.fb.control('', Validators.required),
+    Role: this.fb.control('', Validators.required),
   });
 
   constructor(
@@ -37,6 +38,7 @@ export class RegisterComponent implements OnInit {
       lastname: this.registerGroup.get('Lastname')?.value,
       email: this.registerGroup.get('Email')?.value,
       password: this.registerGroup.get('Password')?.value,
+      role: this.registerGroup.get('Role')?.value,
     };
 
     this.authorizationService.register(newUser)

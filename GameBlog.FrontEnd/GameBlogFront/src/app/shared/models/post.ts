@@ -1,3 +1,4 @@
+import { VideoLink } from './videoLink';
 import { Image } from './image';
 import { Journalist } from './journalist';
 import { PostComment } from './postComment';
@@ -12,4 +13,5 @@ export interface Post {
     comments: PostComment[];
     image: Image;
     createdTime: string;
+    youTubeUrls: VideoLink[];
 }

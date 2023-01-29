@@ -17,12 +17,29 @@
 
     .content {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between;    
+        
+        .videos {
+            width: 40vw;
+            height: 100%;
+            color: rgb(4, 189, 59);
+            background-color: #181c23;
+            padding: 2vh;
+            padding-bottom: 1vh;
 
-        .post-text {
-            width: 100vw;
-            font-size: 17px;
+            iframe {
+                width: 100%;
+                height: 20vh;
+                margin-bottom: 1vh;
+            }
         }
+    }
+
+    .post-text {
+        margin-top: 3vh;
+        text-align: justify;
+        width: 100%;
+        font-size: 17px;
     }
 
     div.img {

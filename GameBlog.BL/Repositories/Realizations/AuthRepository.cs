@@ -70,11 +70,11 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             var user = await _context.Users.FirstOrDefaultAsync(t => t.Email == userCreds.Email, cancellationToken);
 
-            var result = _signInManager.CheckPasswordSignInAsync(user, userCreds.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, userCreds.Password, false);
 
-            if(!result.IsCompleted)
+            if(!result.Succeeded)
             {
-                throw new Exception(result.Exception.Message);
+                throw new Exception("шось не так");
             }
 
             return _authService.GenerateJWT(user, _configuration);
@@ -100,8 +100,15 @@ namespace GameBlog.BL.Repositories.Realizations
                 UserName = newUser.Email.Split('@')[0],
                 FirstName = newUser.FirstName,
                 LastName = newUser.LastName,
-                Email = newUser.Email,
-                Role = Role.User
+                Email = newUser.Email
+            };
+
+            mappedUser.Role = newUser.Role switch
+            {
+                Role.User => Role.User,
+                Role.Journalist => Role.Journalist,
+                Role.Admin => Role.User,
+                _ => Role.User
             };
 
             var result = await _userManager.CreateAsync(mappedUser, newUser.Password);

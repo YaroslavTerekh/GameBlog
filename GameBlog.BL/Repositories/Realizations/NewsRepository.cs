@@ -84,7 +84,13 @@ namespace GameBlog.BL.Repositories.Realizations
                 Description = newPost.Description,
                 JournalistId = journalist.Id,
                 TopicId = newPost.TopicId,
-                ImageId = imgId
+                ImageId = imgId,
+                YouTubeUrls = newPost.YouTubeLinks is not null ? newPost.YouTubeLinks
+                .Select(t => new YouTubeLink
+                {
+                    YouTubeUrl = t
+                })
+                .ToList() : null,
             };            
 
             await _context.GamePosts.AddAsync(mappedPost, cancellationToken);
@@ -207,6 +213,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Image)
                 .Include(t => t.Comments)
                     .ThenInclude(t => t.CommentAuthor)
+                .Include(t => t.YouTubeUrls)
                 .FirstOrDefaultAsync(t => t.Id == postId, cancellationToken);
 
             return post;

@@ -5,6 +5,7 @@ import { Post } from './../../../../shared/models/post';
 import { NewsService } from './../../../../core/services/news.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-page',
@@ -17,13 +18,15 @@ export class PostPageComponent implements OnInit {
   public postImage!: string | ArrayBuffer | null;
   public addComment!: FormGroup;
   public isAuthorized!: boolean;
+  public links: SafeUrl[] = [];
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly newsService: NewsService,
     private readonly authService: AuthorizationService,
     private readonly fb: FormBuilder,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +39,10 @@ export class PostPageComponent implements OnInit {
     this.newsService.getPost(this.route.snapshot.params['id'])
       .subscribe({
         next: res => {
-          this.post = res;          
+          this.post = res;
+          this.post.youTubeUrls.forEach(element => {
+            this.links.push(this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${element.youTubeUrl}`));            
+          });
 
           this.newsService.getImage(res.image.id)
             .subscribe({

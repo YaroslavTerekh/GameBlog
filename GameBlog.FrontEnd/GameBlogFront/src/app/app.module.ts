@@ -16,6 +16,7 @@ import { AccountOptionsNotLoggedInComponent } from './shared/modals/account-opti
 import { NotificationsComponent } from './shared/modals/notifications/notifications.component';
 import { NotificationComponent } from './shared/modals/notification/notification.component';
 import { SendNotificationAdminComponent } from './shared/modals/send-notification-admin/send-notification-admin.component';
+import { InputDirective } from './core/input.directive';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SendNotificationAdminComponent } from './shared/modals/send-notificatio
     NotificationsComponent,
     NotificationComponent,
     SendNotificationAdminComponent,
+    InputDirective,
   ],
   imports: [    
     BrowserModule,

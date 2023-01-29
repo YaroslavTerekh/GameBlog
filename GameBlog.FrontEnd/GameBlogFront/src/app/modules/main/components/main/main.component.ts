@@ -23,14 +23,14 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.newsService.getNewPosts()
+    this.newsService.getAllPosts()
       .subscribe({
         next: res => {
-          this.newPosts = res.slice(res.length - 6, res.length-2);          
-          this.lastPost = res[res.length-1];
+          this.newPosts = res.slice(res.length - 6, res.length - 2);
+          this.lastPost = res[res.length - 1];
 
           console.log(this.lastPost);
-          
+
           this.newsService.getImage(this.lastPost.image.id)
             .subscribe({
               next: res => {
@@ -47,7 +47,7 @@ export class MainComponent implements OnInit {
         }
       });
 
-    if(!localStorage.getItem("Token")) {
+    if (!localStorage.getItem("Token")) {
       this.router.navigate(['/welcome']);
     }
   }

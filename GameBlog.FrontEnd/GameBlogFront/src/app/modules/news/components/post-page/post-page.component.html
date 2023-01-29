@@ -4,9 +4,12 @@
     <div class="content">
         <div class="img">
             <img [src]="postImage" alt="">
+        </div>        
+        <div class="videos">
+            <iframe *ngFor="let video of links" [src]="video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
-        <p class="post-text">{{post.description}}</p>
     </div>
+    <p class="post-text">{{post.description}}</p>
 
     <button class="delete-post" (click)="deletePost(post.id)" *ngIf="isAuthorized">Видалити пост</button>
 
