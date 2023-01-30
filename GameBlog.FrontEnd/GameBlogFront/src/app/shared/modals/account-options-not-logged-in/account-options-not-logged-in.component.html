@@ -7,7 +7,8 @@
             <input type="password" placeholder="Ваш пароль..." formControlName="password">
             <input type="submit" value="Увійти">
         </form>
-        <p (click)="register = true; login = false;">Не маєте акаунту? Зареєструватися</p>
+        <p (click)="register = true; login = false; forgotPassword = false">Не маєте акаунту? Зареєструватися</p>
+        <p (click)="register = false; login = false; forgotPassword = true">Відновити пароль</p>
     </div>
     <div class="info">
         <p>Для того, щоб переглядати, або публікувати свої пости, залишати під ними коментарі, спочатку потрібно увійти в свій акаунт</p>
@@ -32,5 +33,18 @@
     </div>
     <div class="info">
         <p>Для того, щоб переглядати, або публікувати свої пости, залишати під ними коментарі, спочатку потрібно створити власний акаунт</p>
+    </div>
+</div>
+
+<div class="login-form" *ngIf="forgotPassword">
+    <div class="services">
+        <h4><span>Відновлення</span> паролю</h4>
+        <form action="" [formGroup]="forgotPasswordGroup" (submit)="onForgotPassword()">
+            <input type="text" placeholder="Ваш email..." formControlName="Email">
+            <input type="submit" placeholder="Зареєструватися">
+        </form>
+    </div>
+    <div class="info">
+        <p>На пошту прийде лист-підтвердження вашого акаунту.</p>
     </div>
 </div>

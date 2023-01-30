@@ -2,9 +2,12 @@
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.Domain.Constants;
 using GameBlog.Domain.Enums;
+using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
 
 namespace GameBlog.Controllers
@@ -15,11 +18,15 @@ namespace GameBlog.Controllers
     {
         private readonly IAuthRepository _authRepository;
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<User> _userManager;
+        private readonly IEmailSender _emailSender;
 
-        public AuthController(IAuthRepository authRepository, IWebHostEnvironment env)
+        public AuthController(IAuthRepository authRepository, IWebHostEnvironment env, UserManager<User> userManager, IEmailSender emailSender)
         {
             _authRepository = authRepository;
             _env = env;
+            _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         [Authorize]
@@ -32,6 +39,44 @@ namespace GameBlog.Controllers
             await _authRepository.SubscribeAsync(id, Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
 
             return NoContent();
+        }
+
+        [HttpPost("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel forgotPasswordDto, CancellationToken cancellationToken = default)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+            if (user == null)
+                return BadRequest("Invalid Request");
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var param = new Dictionary<string, string?>
+                {
+                    {"token", token },
+                    {"email", forgotPasswordDto.Email }
+                };
+            var callback = QueryHelpers.AddQueryString(forgotPasswordDto.ClientURI, param);
+            var message = new Message(new string[] { user.Email }, "Відновлення паролю", callback);
+            _emailSender.SendEmail(message, "Відновлення паролю");
+
+            return Ok();
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel resetPasswordDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+            if (user == null)
+                return BadRequest("Invalid Request");
+            var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                var errors = resetPassResult.Errors.Select(e => e.Description);
+                return BadRequest(new { Errors = errors });
+            }
+            return Ok();
         }
 
         [Authorize]
@@ -91,14 +136,15 @@ namespace GameBlog.Controllers
         }
 
         [Authorize]
-        [HttpGet("avatar")]
+        [HttpGet("avatar/{id:guid}")]
         public async Task<IActionResult> GetAvatarAsync(
+            [FromRoute] Guid id,
             CancellationToken token = default
         )
         {
-            var img = await _authRepository.GetAvatarAsync(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), token);
+            var img = await _authRepository.GetAvatarAsync(id, token);
 
-            if(img is null)
+            if (img is null)
             {
                 return NoContent();
             }

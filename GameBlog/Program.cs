@@ -32,6 +32,9 @@ builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+    opt.TokenLifespan = TimeSpan.FromHours(2));
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo

@@ -8,7 +8,7 @@
       <a routerLink="/topics">Теми <i class="fa fa-plus"></i></a>
     </nav>
     <div class="acc">
-      <i class="fa fa-bell" (click)="showNotificationModal(true)"></i>
+      <i class="fa fa-bell" *ngIf="isAuthorized" (click)="showNotificationModal(true)"></i>
     </div>
     <a (click)="showAccountModal(true)" (click)="checkLoginModal()" class="img"><img [src]="avatar ? avatar : '../assets/default-avatar.png'" alt="user"></a>
   </header>

@@ -1,3 +1,4 @@
+import { ForgotPassword } from './../../../core/interfaces/forgotPassword';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,6 +14,7 @@ import { Register } from 'src/app/core/interfaces/register';
 })
 export class AccountOptionsNotLoggedInComponent implements OnInit {
 
+  public forgotPassword!: boolean;
   public register!: boolean;
   public login: boolean = true;
   public loginForm: FormGroup = new FormGroup({
@@ -26,6 +28,9 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
     Password: this.fb.control('', Validators.required),
     Role: this.fb.control('', Validators.required),
   });
+  public forgotPasswordGroup: FormGroup = new FormGroup({
+    Email: this.fb.control('', Validators.required)    
+  })
   private token!: string;
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
@@ -74,13 +79,29 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
     this.authorizationService.logIn(userCreds)
       .subscribe({
         next: res => {
+          this.authorizationService.reloadAvatarSubject.next(true);
           this.token = res.token;
           localStorage.setItem('Token', `bearer ${this.token}`);
           localStorage.setItem('Role', this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+          localStorage.setItem('id', this.jwtHelper.decodeToken(this.token)['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
           this.authorizationService.loginModalSubject.next(false);
           this.showAccountModal(false);
+          this.authorizationService.isAuthorizedSubject.next(true);
           this.router.navigate(['']);
         }
       });
+  }
+
+  onForgotPassword(): void {
+    let forgotPasswordDto: ForgotPassword = {
+      email: this.forgotPasswordGroup.get('Email')?.value,
+      clientURI: 'http://localhost:4200/forgotpassword'
+    }
+
+    console.log(forgotPasswordDto);
+    
+
+    this.authorizationService.forgotPassword('', forgotPasswordDto)
+      .subscribe({});
   }
 }

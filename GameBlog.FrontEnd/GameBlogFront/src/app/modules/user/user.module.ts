@@ -10,6 +10,7 @@ import { MyAccountComponent } from './components/my-account/my-account.component
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AddPostComponent } from './components/add-post/add-post.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AddPostComponent } from './components/add-post/add-post.component';
     MyAccountComponent,
     LoginComponent,
     RegisterComponent,
-    AddPostComponent
+    AddPostComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     CommonModule,

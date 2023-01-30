@@ -27,7 +27,10 @@ export class AccountOptionsModalComponent implements OnInit {
   public onExit(): void {
     localStorage.removeItem('Token');
     localStorage.removeItem('Role');
+    localStorage.removeItem('id');
 
+    this.authoricationService.deleteAvatarSubject.next(true);
+    this.authoricationService.isAuthorizedSubject.next(false);
     this.authoricationService.accountModalSubject.next(false);
     this.authoricationService.loginModalSubject.next(true);
   }

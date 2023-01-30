@@ -58,7 +58,7 @@ export class MyAccountComponent implements OnInit {
         }
       });
 
-    this.userService.getAvatar()
+    this.userService.getAvatar(localStorage.getItem('id')!)
       .subscribe({
         next: (res: Blob) => {
           if (res == null) {

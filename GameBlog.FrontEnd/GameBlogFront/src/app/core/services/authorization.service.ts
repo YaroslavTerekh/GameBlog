@@ -1,3 +1,4 @@
+import { ResetPassword } from './../interfaces/resetPassword';
 import { Register } from './../interfaces/register';
 import { environment } from './../../../environments/environment.prod';
 import { Login } from '../interfaces/login';
@@ -6,17 +7,22 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ForgotPassword } from '../interfaces/forgotPassword';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService implements OnInit {
+  public deleteAvatarSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public reloadAvatarSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public isAuthorizedSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public accountModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public loginModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isAdminSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public isJournalistSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public showNotificationModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public showSendNotificationSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public showForgotPasswordModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private helper: JwtHelperService = new JwtHelperService();
 
   constructor(
@@ -33,6 +39,14 @@ export class AuthorizationService implements OnInit {
 
   public register(user: Register): Observable<any> {
     return this.http.post<any>(`${environment.apiAddress}/auth/register`, user);
+  }
+
+  public forgotPassword(route: string, body: ForgotPassword): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/auth/forgotPassword`, body);
+  }
+
+  public resetPassword(route: string, body: ResetPassword): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/auth/resetPassword`, body);
   }
 
   //logic methods
@@ -53,5 +67,9 @@ export class AuthorizationService implements OnInit {
 
   public triggerForNotificationModal(value: boolean): void {
     this.showNotificationModalSubject.next(value);
+  }
+
+  public triggerForForgotPasswordModal(value: boolean): void {
+    this.showForgotPasswordModalSubject.next(value);
   }
 }

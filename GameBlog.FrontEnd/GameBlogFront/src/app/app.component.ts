@@ -1,3 +1,4 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { SignalrService } from './core/services/signalr.service';
 import { Router } from '@angular/router';
 import { UserService } from './core/services/user.service';
@@ -10,7 +11,8 @@ import { AuthorizationService } from './core/services/authorization.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  
+
+  public isAuthorized!: boolean;
   public title: string = "GameBlog";
   public avatar: any;
   public isOpened: boolean = false;
@@ -27,51 +29,95 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.getNotifications()
-    .subscribe({
-      next: res => {
-        this.notifications = res;
-        console.log(res);
-        
-      }
-    });
     
-    this.signalr.startConnection();
-    this.signalr.addTransferChartDataListener();
-
-    this.userService.getAvatar()
+    this.authoricationService.reloadAvatarSubject
       .subscribe({
-        next: (res: Blob) => {
-          if (res == null) {
-            this.avatar = null
-          } else {
-            this.createImageFromBlob(res);
-          }
+        next: res => {
+          this.userService.getAvatar(localStorage.getItem('id')!)
+          .subscribe({
+            next: (res: Blob) => {
+              if (res == null) {
+                this.avatar = null;
+              } else {
+                this.createImageFromBlob(res);
+              }
+            }
+          });
         }
       });
 
-    this.authoricationService.accountModalSubject.subscribe( res =>
-      {
-        next: {
-          this.isOpened = res;
-        }
-      }
-    )  
+    this.authoricationService.isAuthorizedSubject
+      .subscribe({
+        next: res => {
+          this.isAuthorized = res;
 
-    this.authoricationService.showSendNotificationSubject.subscribe( res =>
-      {
-        next: {
-          this.openSendNotifications = res;
+          this.authoricationService.deleteAvatarSubject
+            .subscribe({
+              next: res => {
+                if (res === true) {
+                  this.avatar = null;
+                }
+              }
+            });
+
+          if (res === true) {
+            this.userService.getNotifications()
+              .subscribe({
+                next: res => {
+                  this.notifications = res;
+                }
+              });
+
+            this.userService.getAvatar(localStorage.getItem('id')!)
+              .subscribe({
+                next: (res: Blob) => {
+                  if (res == null) {
+                    this.avatar = null;
+                  } else {
+                    this.createImageFromBlob(res);
+                  }
+                }
+              });
+          }
         }
+      });
+    this.isAuthorized = this.authoricationService.isAuthorized();
+
+    if (this.isAuthorized) {
+      this.userService.getAvatar(localStorage.getItem('id')!)
+        .subscribe({
+          next: (res: Blob) => {
+            if (res == null) {
+              this.avatar = null;
+            } else {
+              this.createImageFromBlob(res);
+            }
+          }
+        });
+    }
+
+    this.signalr.startConnection();
+    this.signalr.addTransferChartDataListener();
+
+    this.authoricationService.accountModalSubject.subscribe(res => {
+      next: {
+        this.isOpened = res;
       }
-    )  
-    
-    this.authoricationService.loginModalSubject.subscribe( res => 
-      {
-        next: {
-          this.needLogin = res;
-        }
+    }
+    )
+
+    this.authoricationService.showSendNotificationSubject.subscribe(res => {
+      next: {
+        this.openSendNotifications = res;
       }
+    }
+    )
+
+    this.authoricationService.loginModalSubject.subscribe(res => {
+      next: {
+        this.needLogin = res;
+      }
+    }
     )
 
     this.authoricationService.showNotificationModalSubject.subscribe({

@@ -18,6 +18,8 @@ export class PostPageComponent implements OnInit {
   public postImage!: string | ArrayBuffer | null;
   public addComment!: FormGroup;
   public isAuthorized!: boolean;
+  public isAdmin!: boolean;
+  public isAuthor!: boolean;
   public links: SafeUrl[] = [];
 
   constructor(
@@ -30,7 +32,10 @@ export class PostPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isAuthorized = this.authService.isAuthorized();
+    
+    if(localStorage.getItem('Role')){
+      this.isAdmin = localStorage.getItem('Role') == 'Admin';
+    }
 
     this.addComment = this.fb.group({
       text: this.fb.control('', [Validators.required, Validators.maxLength(20)]),
@@ -43,6 +48,11 @@ export class PostPageComponent implements OnInit {
           this.post.youTubeUrls.forEach(element => {
             this.links.push(this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${element.youTubeUrl}`));            
           });
+          if(localStorage.getItem('id')) {
+            this.isAuthor = localStorage.getItem('id') == this.post.journalist.user.id
+          }    
+      
+          this.isAuthorized = this.authService.isAuthorized();
 
           this.newsService.getImage(res.image.id)
             .subscribe({

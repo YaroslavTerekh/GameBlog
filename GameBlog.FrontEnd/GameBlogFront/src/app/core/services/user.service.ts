@@ -18,8 +18,8 @@ export class UserService {
     return this.http.post(`${environment.apiAddress}/auth/avatar`, data);
   }
 
-  public getAvatar(): Observable<any> {
-    return this.http.get(`${environment.apiAddress}/auth/avatar`, {
+  public getAvatar(id: string): Observable<any> {
+    return this.http.get(`${environment.apiAddress}/auth/avatar/${id}`, {
       responseType: 'blob'
     });
   }
