@@ -23,6 +23,7 @@ export class AuthorizationService implements OnInit {
   public showNotificationModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public showSendNotificationSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   public showForgotPasswordModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public showAddTopicModalSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private helper: JwtHelperService = new JwtHelperService();
 
   constructor(
@@ -71,5 +72,9 @@ export class AuthorizationService implements OnInit {
 
   public triggerForForgotPasswordModal(value: boolean): void {
     this.showForgotPasswordModalSubject.next(value);
+  }
+
+  public triggerForAddTopicModal(value: boolean): void {
+    this.showAddTopicModalSubject.next(value);
   }
 }

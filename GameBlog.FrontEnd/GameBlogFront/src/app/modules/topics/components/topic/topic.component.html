@@ -4,7 +4,7 @@
     </div>
     <div class="info">
         <h5>{{topic.title}}</h5>
-        <p>{{topic.description | trimTextForPost: 900}}</p>
+        <p>{{topic.description}}</p>
         <a [routerLink]="['/topic', topic.id]">Переглянути статті, які належать до цієї теми</a>
     </div>
 </div>

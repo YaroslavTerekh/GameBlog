@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   public openNotifications: boolean = false;
   public openSendNotifications: boolean = false;
   public notifications!: any;
+  public addTopic: boolean = false;
 
   constructor(
     private readonly authoricationService: AuthorizationService,
@@ -123,6 +124,12 @@ export class AppComponent implements OnInit {
     this.authoricationService.showNotificationModalSubject.subscribe({
       next: res => {
         this.openNotifications = res;
+      }
+    })
+
+    this.authoricationService.showAddTopicModalSubject.subscribe({
+      next: res => {
+        this.addTopic = res;
       }
     })
   }

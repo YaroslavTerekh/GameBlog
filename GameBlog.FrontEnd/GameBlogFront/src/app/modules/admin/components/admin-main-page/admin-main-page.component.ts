@@ -68,6 +68,10 @@ export class AdminMainPageComponent implements OnInit, AfterViewInit {
       })  
   }
 
+  toggleAddTopic(value: boolean): void {
+    this.authService.showAddTopicModalSubject.next(value);
+  }
+
   search(): void {      
     if (this.input.nativeElement.value.length > 0) {      
       this.allUsers = []

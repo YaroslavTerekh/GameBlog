@@ -18,7 +18,8 @@ export class TopicComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.topic.image) {
+    // console.log(this.topic.image);
+    if(this.topic.image) {      
       this.newsService.getImage(this.topic.image.id)
         .subscribe({
           next: res => {

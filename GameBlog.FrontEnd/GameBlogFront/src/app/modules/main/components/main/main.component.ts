@@ -30,6 +30,8 @@ export class MainComponent implements OnInit {
           this.lastPost = res[res.length - 1];
 
           console.log(this.lastPost);
+          console.log(this.newPosts);
+          
 
           this.newsService.getImage(this.lastPost.image.id)
             .subscribe({

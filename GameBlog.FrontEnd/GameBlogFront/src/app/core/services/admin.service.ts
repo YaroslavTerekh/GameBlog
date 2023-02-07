@@ -1,3 +1,4 @@
+import { AddTopic } from './../interfaces/addTopic';
 import { environment } from './../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -12,6 +13,10 @@ export class AdminService {
   constructor(
     private readonly http: HttpClient
   ) { }
+
+  public addTopic(model: AddTopic): Observable<any> {
+    return this.http.post(`${environment.apiAddress}/posts/topic`, model);
+  }
 
   public getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiAddress}/admin/users`);

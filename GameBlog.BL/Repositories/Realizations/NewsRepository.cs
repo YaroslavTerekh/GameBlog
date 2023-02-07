@@ -64,7 +64,8 @@ namespace GameBlog.BL.Repositories.Realizations
             {
                 Title = topic.Title,
                 Description = topic.Description,
-                TopicAuthorId = topic.AuthorUserId
+                TopicAuthorId = topic.AuthorUserId,
+                ImageId = topic.ImageId
             };
 
             await _context.Topics.AddAsync(mappedTopic, cancellationToken);
@@ -115,8 +116,11 @@ namespace GameBlog.BL.Repositories.Realizations
                 await _notificationService.SendNotification(notification, cancellationToken);                
             }
 
-            var message = new Message(journalist.Subscribers.Select(t => t.User.Email).ToList(), "Опубліковано новий пост", "Журналіст " + journalist.User.FirstName + " " + journalist.User.LastName + " додав пост " + mappedPost.Title);
-            _emailSender.SendEmail(message, "Опубліковано новий пост");
+            if(journalist.Subscribers.Count > 0)
+            {
+                var message = new Message(journalist.Subscribers.Select(t => t.User.Email).ToList(), "Опубліковано новий пост", "Журналіст " + journalist.User.FirstName + " " + journalist.User.LastName + " додав пост " + mappedPost.Title);
+                _emailSender.SendEmail(message, "Опубліковано новий пост");
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
         }
@@ -162,6 +166,7 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             return await _context.Topics
                 .Include(t => t.TopicAuthor)
+                .Include(t => t.Image)
                 .ToListAsync(cancellationToken);
         }
 

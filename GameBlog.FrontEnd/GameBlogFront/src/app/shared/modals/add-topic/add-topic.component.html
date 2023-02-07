@@ -1,0 +1,10 @@
+<div class="background" (click)="toggleAddTopic(false)"></div>
+<div class="modal">
+    <h3>Додати нову тему</h3>
+    <form action="" [formGroup]="addTopicGroup">
+        <input type="text" placeholder="Назва теми..." formControlName="title">
+        <input type="file" (change)="onFileSelected($event)">
+        <textarea name="" id="" cols="30" rows="10" placeholder="Опис теми..." formControlName="description"></textarea>
+        <input type="submit" value="Додати" (click)="onSubmit()">
+    </form>
+</div>

@@ -10,6 +10,7 @@ using GameBlog.Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -146,6 +147,11 @@ var emailConfig = builder.Configuration
 builder.Services.AddSingleton(emailConfig);
 
 var app = builder.Build();
+
+var scope = app.Services.CreateScope();
+
+var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+db.Database.Migrate();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
