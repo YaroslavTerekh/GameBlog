@@ -16,8 +16,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 50px;
-        padding-top: 10px;
+        height: 70%;
+        padding-top: 1vh;
         
     
         nav {
@@ -27,13 +27,13 @@
             width: 50%;
             
             a {
-                font-size: 20px;
+                font-size: 2.5vh;
                 width: fit-content;
                 color: #fff;
                 text-decoration: none;
 
                 i {
-                    font-size: 12px;
+                    font-size: 1.2vh;
                 }
             }
         }
@@ -63,8 +63,15 @@
             left: 80vw;
 
             i {
-                font-size: 20px;
+                font-size: 2.5vh;
             }            
         }
     }
+}
+
+.info-modal {
+    position: fixed;
+    z-index: 9999 !important;
+    top: 90%;
+    left: 5%;
 }

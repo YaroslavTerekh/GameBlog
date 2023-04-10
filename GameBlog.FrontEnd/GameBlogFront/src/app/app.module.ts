@@ -18,6 +18,7 @@ import { NotificationComponent } from './shared/modals/notification/notification
 import { SendNotificationAdminComponent } from './shared/modals/send-notification-admin/send-notification-admin.component';
 import { InputDirective } from './core/input.directive';
 import { AddTopicComponent } from './shared/modals/add-topic/add-topic.component';
+import { InfoModalComponent } from './shared/modals/info-modal/info-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AddTopicComponent } from './shared/modals/add-topic/add-topic.component
     SendNotificationAdminComponent,
     InputDirective,
     AddTopicComponent,
+    InfoModalComponent,
   ],
   imports: [    
     BrowserModule,

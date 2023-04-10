@@ -21,12 +21,12 @@
         h3 {
             text-align: right;
             margin-right: 7vw;
-            font-size: 35px;
+            font-size: 3vh;
             text-transform: uppercase;
             
             span {
                 color: rgb(163, 45, 45);
-                font-weight: 40px;
+                font-weight: 4vh;
             }
         }
     
@@ -42,7 +42,7 @@
 .blocks {
     display: flex;
     justify-content: center;
-    margin-top: 25vh;
+    margin-top: 50vh;
 
     .block {
         display: flex;
@@ -51,7 +51,7 @@
         width: 19vw;
         padding: 3vh;
         margin: 2vh;
-        font-size: 20px;
+        font-size: 2vh;
         border-radius: 4px;
         font-weight: bold;
         
@@ -66,7 +66,7 @@
     
     h2 {
         color: rgb(163, 45, 45);
-        font-size: 40px;
+        font-size: 4vh;
         text-transform: uppercase;
 
         span {

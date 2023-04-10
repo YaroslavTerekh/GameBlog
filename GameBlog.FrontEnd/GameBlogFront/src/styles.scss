@@ -19,6 +19,16 @@ body {
 	border: none;
 }
 
+select {
+    background-color: #181c23;
+    color:#FFF;
+
+    option {
+        background-color: #181c23;
+        color: #fff;
+    }
+}
+
 *,
 *::before,
 *::after {
@@ -78,7 +88,7 @@ address {
 
 /* Form */
 
-input, textarea, button, select {
+input, textarea, button {
 	font-family: inherit;
     font-size: inherit;
     color: inherit;

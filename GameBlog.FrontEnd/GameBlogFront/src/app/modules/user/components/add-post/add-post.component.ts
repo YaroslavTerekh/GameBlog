@@ -1,9 +1,10 @@
 import { InputDirective } from './../../../../core/input.directive';
 import { AddPost } from './../../../../core/interfaces/addPost';
 import { NewsService } from './../../../../core/services/news.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Topic } from 'src/app/shared/models/topic';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-add-post',
@@ -20,14 +21,15 @@ export class AddPostComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
+    private readonly userService: UserService,
     private readonly newsService: NewsService
   ) { }
 
   ngOnInit(): void {
     this.addPostForm = this.fb.group({
-      title: this.fb.control(''),
-      topicId: this.fb.control(''),
-      descr: this.fb.control(''),
+      title: this.fb.control('', Validators.required),
+      topicId: this.fb.control('', Validators.required),
+      descr: this.fb.control('', Validators.required),
     });
 
     this.newsService.getAllTopics()
@@ -43,57 +45,64 @@ export class AddPostComponent implements OnInit {
   }
 
   addField(): void {
-    if(this.fieldsCount < 3) {
+    if (this.fieldsCount < 3) {
       this.fieldsCount++;
     }
   }
 
   removeField(): void {
-    if(this.fieldsCount > 1) {
+    if (this.fieldsCount > 1) {
       this.fieldsCount--;
     }
   }
 
   onFileSelected(event: any): void {
     this.selectedFile = <File>event.target.files[0];
-  }  
+  }
 
   onSubmit(): void {
 
   }
 
   onSubmit1(): void {
-    let formData = new FormData();
-    formData.append("file", this.selectedFile, this.selectedFile.name);   
+    if (!this.addPostForm.valid || !this.selectedFile) {
+      this.userService.showInfoModalMessage$.next("Заповніть всі поля");
+      this.userService.showInfoModal$.next(true);
+    } else {
+      let formData = new FormData();
+      formData.append("file", this.selectedFile, this.selectedFile.name);
 
-    this.newsService.addImage(formData)
-      .subscribe({
-        next: res => {
-          let inputsArray: string[] = [];
+      this.newsService.addImage(formData)
+        .subscribe({
+          next: res => {
+            let inputsArray: string[] = [];
 
-          this.tooltipContainer.forEach(el => {
-            console.log(el.nativeElement.hidden);
-            
-            if(el.nativeElement.value != "" && !el.nativeElement.hidden) {
-              let parts = el.nativeElement.value.split("/");
-              console.log(parts[parts.length - 1]);
-              
-              inputsArray.push(parts[parts.length - 1]);
-            }
-          });  
+            this.tooltipContainer.forEach(el => {
+              if (el.nativeElement.value != "" && !el.nativeElement.hidden) {
+                let parts = el.nativeElement.value.split("/");
+                console.log(parts[parts.length - 1]);
 
-          let request: AddPost = {
-            title: this.addPostForm.get('title')?.value,
-            topicId: this.addPostForm.get('topicId')?.value,
-            description: this.addPostForm.get('descr')?.value,
-            youTubeLinks: inputsArray
-          };
+                inputsArray.push(parts[parts.length - 1]);
+              }
+            });
 
-          this.newsService.addPost(request, res)
-            .subscribe({
-              next: res1 => {}
-            })
-        }
-      });
+            let request: AddPost = {
+              title: this.addPostForm.get('title')?.value,
+              topicId: this.addPostForm.get('topicId')?.value,
+              description: this.addPostForm.get('descr')?.value,
+              youTubeLinks: inputsArray
+            };
+
+            this.newsService.addPost(request, res)
+              .subscribe({
+                next: res1 => { 
+                  this.userService.showInfoModalMessage$.next("Пост успішно створено");
+                  this.userService.showInfoModal$.next(false);
+                  this.userService.showInfoModal$.next(true);
+                }
+              })
+          }
+        });
+    }
   }
 }

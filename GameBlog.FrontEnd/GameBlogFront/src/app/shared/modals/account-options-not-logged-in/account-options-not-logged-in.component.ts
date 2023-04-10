@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Login } from 'src/app/core/interfaces/login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Register } from 'src/app/core/interfaces/register';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-account-options-not-logged-in',
@@ -29,13 +30,14 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
     Role: this.fb.control('', Validators.required),
   });
   public forgotPasswordGroup: FormGroup = new FormGroup({
-    Email: this.fb.control('', Validators.required)    
+    Email: this.fb.control('', Validators.required)
   })
   private token!: string;
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
   constructor(
     private readonly authorizationService: AuthorizationService,
+    private readonly userService: UserService,
     private readonly fb: FormBuilder,
     private readonly router: Router
   ) { }
@@ -48,48 +50,58 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
   }
 
   public onRegister(): void {
-    let newUser: Register = {
-      firstname: this.registerGroup.get('Firstname')?.value,
-      lastname: this.registerGroup.get('Lastname')?.value,
-      email: this.registerGroup.get('Email')?.value,
-      password: this.registerGroup.get('Password')?.value,
-      role : parseInt(this.registerGroup.get('Role')?.value),
-    };
-    
+    if (!this.registerGroup.valid) {
+      this.userService.showInfoModalMessage$.next("Заповніть всі поля");
+      this.userService.showInfoModal$.next(true);
+    } else {
+      let newUser: Register = {
+        firstname: this.registerGroup.get('Firstname')?.value,
+        lastname: this.registerGroup.get('Lastname')?.value,
+        email: this.registerGroup.get('Email')?.value,
+        password: this.registerGroup.get('Password')?.value,
+        role: parseInt(this.registerGroup.get('Role')?.value),
+      };
 
-    this.authorizationService.register(newUser)
-      .subscribe({
-        next: res => {
-          this.showAccountModal(false);
-          this.router.navigate(['welcome']);
-        },
-        error: res => {
-          console.error(res);
-          
-        }
-      });
+
+      this.authorizationService.register(newUser)
+        .subscribe({
+          next: res => {
+            this.showAccountModal(false);
+            this.router.navigate(['welcome']);
+          },
+          error: res => {
+            console.error(res);
+
+          }
+        });
+    }
   }
 
   onSubmit(): void {
-    let userCreds: Login = {
-      email: this.loginForm.get('email')?.value,
-      password: this.loginForm.get('password')?.value,
-    };
+    if (!this.loginForm.valid) {
+      this.userService.showInfoModalMessage$.next("Заповніть всі поля");
+      this.userService.showInfoModal$.next(true);
+    } else {
+      let userCreds: Login = {
+        email: this.loginForm.get('email')?.value,
+        password: this.loginForm.get('password')?.value,
+      };
 
-    this.authorizationService.logIn(userCreds)
-      .subscribe({
-        next: res => {
-          this.authorizationService.reloadAvatarSubject.next(true);
-          this.token = res.token;
-          localStorage.setItem('Token', `bearer ${this.token}`);
-          localStorage.setItem('Role', this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
-          localStorage.setItem('id', this.jwtHelper.decodeToken(this.token)['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-          this.authorizationService.loginModalSubject.next(false);
-          this.showAccountModal(false);
-          this.authorizationService.isAuthorizedSubject.next(true);
-          this.router.navigate(['']);
-        }
-      });
+      this.authorizationService.logIn(userCreds)
+        .subscribe({
+          next: res => {
+            this.authorizationService.reloadAvatarSubject.next(true);
+            this.token = res.token;
+            localStorage.setItem('Token', `bearer ${this.token}`);
+            localStorage.setItem('Role', this.jwtHelper.decodeToken(this.token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+            localStorage.setItem('id', this.jwtHelper.decodeToken(this.token)['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
+            this.authorizationService.loginModalSubject.next(false);
+            this.showAccountModal(false);
+            this.authorizationService.isAuthorizedSubject.next(true);
+            this.router.navigate(['']);
+          }
+        });
+    }
   }
 
   onForgotPassword(): void {
@@ -97,9 +109,6 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
       email: this.forgotPasswordGroup.get('Email')?.value,
       clientURI: 'http://localhost:4200/forgotpassword'
     }
-
-    console.log(forgotPasswordDto);
-    
 
     this.authorizationService.forgotPassword('', forgotPasswordDto)
       .subscribe({});

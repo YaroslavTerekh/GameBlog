@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   public openSendNotifications: boolean = false;
   public notifications!: any;
   public addTopic: boolean = false;
+  public showInfoModal: boolean = false;
 
   constructor(
     private readonly authoricationService: AuthorizationService,
@@ -30,6 +31,13 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.userService.showInfoModal$
+      .subscribe({
+        next: res => {
+          this.showInfoModal = res;
+        }
+      })
     
     this.authoricationService.reloadAvatarSubject
       .subscribe({

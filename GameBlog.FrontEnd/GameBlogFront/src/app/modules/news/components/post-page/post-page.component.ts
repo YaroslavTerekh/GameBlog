@@ -6,6 +6,7 @@ import { NewsService } from './../../../../core/services/news.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-post-page',
@@ -26,14 +27,15 @@ export class PostPageComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly newsService: NewsService,
     private readonly authService: AuthorizationService,
+    private readonly userService: UserService,
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
-    
-    if(localStorage.getItem('Role')){
+
+    if (localStorage.getItem('Role')) {
       this.isAdmin = localStorage.getItem('Role') == 'Admin';
     }
 
@@ -46,12 +48,12 @@ export class PostPageComponent implements OnInit {
         next: res => {
           this.post = res;
           this.post.youTubeUrls.forEach(element => {
-            this.links.push(this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${element.youTubeUrl}`));            
+            this.links.push(this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${element.youTubeUrl}`));
           });
-          if(localStorage.getItem('id')) {
+          if (localStorage.getItem('id')) {
             this.isAuthor = localStorage.getItem('id') == this.post.journalist.user.id
-          }    
-      
+          }
+
           this.isAuthorized = this.authService.isAuthorized();
 
           this.newsService.getImage(res.image.id)
@@ -73,23 +75,34 @@ export class PostPageComponent implements OnInit {
   }
 
   onCommentSend(): void {
-    let addCommentReq: addComment = {
-      postId: this.post.id,
-      description: this.addComment.get('text')?.value
-    };
+    if (!this.addComment.valid) {
+      this.userService.showInfoModalMessage$.next("Напишіть Ваш коментар");
+      this.userService.showInfoModal$.next(true);
+    } else {
+      let addCommentReq: addComment = {
+        postId: this.post.id,
+        description: this.addComment.get('text')?.value
+      };
 
-    this.newsService.addComment(addCommentReq)
-      .subscribe({});
+      this.newsService.addComment(addCommentReq)
+        .subscribe({
+          next: res => {
+            this.userService.showInfoModalMessage$.next("Коментар успішно додано");
+            this.userService.showInfoModal$.next(false);
+            this.userService.showInfoModal$.next(true);
+          }
+        });
+    }
   }
 
   createImageFromBlob(image: Blob): void {
     let reader = new FileReader();
     reader.addEventListener("load", () => {
-      this.postImage = reader.result;      
+      this.postImage = reader.result;
     }, false);
- 
+
     if (image) {
-       reader.readAsDataURL(image);
+      reader.readAsDataURL(image);
     }
   }
 

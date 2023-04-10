@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/shared/models/user';
@@ -9,6 +9,9 @@ import { ModifyUser } from '../interfaces/modifyUser';
   providedIn: 'root'
 })
 export class UserService {
+
+  public showInfoModal$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showInfoModalMessage$: ReplaySubject<string> = new ReplaySubject<string>(1);
 
   constructor(
     private readonly http: HttpClient

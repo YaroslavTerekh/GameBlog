@@ -4,6 +4,7 @@ import { AdminService } from './../../../core/services/admin.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthorizationService } from 'src/app/core/services/authorization.service';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-add-topic',
@@ -22,6 +23,7 @@ export class AddTopicComponent implements OnInit {
     private readonly authService: AuthorizationService,
     private readonly adminService: AdminService,
     private readonly newsService: NewsService,
+    private readonly userService: UserService,
     private readonly fb: FormBuilder
   ) { }
 
@@ -30,30 +32,34 @@ export class AddTopicComponent implements OnInit {
 
   onFileSelected(event: any): void {
     this.selectedFile = <File>event.target.files[0];
-  }  
+  }
 
   toggleAddTopic(value: boolean): void {
     this.authService.showAddTopicModalSubject.next(value);
   }
 
   onSubmit(): void {
-    let formData = new FormData();
-    console.log(this.selectedFile);
-    
-    formData.append("file", this.selectedFile, this.selectedFile.name);   
+    if (!this.selectedFile || !this.addTopicGroup.valid) {
+      this.userService.showInfoModalMessage$.next("Заповніть всі поля!");
+      this.userService.showInfoModal$.next(true);
+    } else {
+      let formData = new FormData();
 
-    this.newsService.addImage(formData)
-      .subscribe({
-        next: res => {
-          let model: AddTopic = {
-            title: this.addTopicGroup.get('title')?.value,
-            description: this.addTopicGroup.get('description')?.value,
-            imageId: res
+      formData.append("file", this.selectedFile, this.selectedFile.name);
+
+      this.newsService.addImage(formData)
+        .subscribe({
+          next: res => {
+            let model: AddTopic = {
+              title: this.addTopicGroup.get('title')?.value,
+              description: this.addTopicGroup.get('description')?.value,
+              imageId: res
+            }
+
+            this.adminService.addTopic(model)
+              .subscribe({});
           }
-      
-          this.adminService.addTopic(model)
-            .subscribe({});
-        }
-      });
+        });
+    }
   }
 }

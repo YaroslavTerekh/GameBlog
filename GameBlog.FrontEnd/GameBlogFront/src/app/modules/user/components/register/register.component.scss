@@ -68,15 +68,6 @@
                 margin-top: 1vh;            
             }
 
-            select {
-                margin-top: 1vh;
-                padding: 1vh;
-
-                option {
-                    background-color: #181c23;
-                }
-            }
-
             select:focus {
                 outline: none;
             }
@@ -90,5 +81,17 @@
         p {
             font-weight: 10;
         }
+    }
+}
+
+
+.role-select {
+    margin-top: 1vh;
+    padding: 1vh;
+    background-color: #181c23;
+
+    option {
+        color: #fff;
+        background-color: #181c23 !important;
     }
 }
