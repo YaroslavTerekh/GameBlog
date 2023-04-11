@@ -32,6 +32,15 @@ export class MyAccountComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let input: HTMLInputElement | null = document.querySelector(".file-upload-field");
+    let wrapper = document.querySelector(".file-upload-wrapper");
+
+    input?.addEventListener("change", function(event){ 
+      if(input!.files) {
+        wrapper?.setAttribute("data-text", input!.files[0].name.toString());
+      }
+    });
+    
     this.newsService.getLastComments()
       .subscribe({
         next: res => {

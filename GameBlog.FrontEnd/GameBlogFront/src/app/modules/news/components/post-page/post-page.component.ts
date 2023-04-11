@@ -90,6 +90,12 @@ export class PostPageComponent implements OnInit {
             this.userService.showInfoModalMessage$.next("Коментар успішно додано");
             this.userService.showInfoModal$.next(false);
             this.userService.showInfoModal$.next(true);
+            this.newsService.getPost(this.route.snapshot.params['id'])
+              .subscribe({
+                next: res => {
+                  this.post.comments = res.comments;
+                }
+              })
           }
         });
     }

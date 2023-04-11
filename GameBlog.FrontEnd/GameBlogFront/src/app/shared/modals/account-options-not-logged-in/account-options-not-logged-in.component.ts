@@ -66,6 +66,8 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
       this.authorizationService.register(newUser)
         .subscribe({
           next: res => {
+            this.userService.showInfoModalMessage$.next("Користувача успішно зареєстровано");
+            this.userService.showInfoModal$.next(true);
             this.showAccountModal(false);
             this.router.navigate(['welcome']);
           },
@@ -90,6 +92,8 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
       this.authorizationService.logIn(userCreds)
         .subscribe({
           next: res => {
+            this.userService.showInfoModalMessage$.next("Вхід успішно виконано");
+            this.userService.showInfoModal$.next(true);
             this.authorizationService.reloadAvatarSubject.next(true);
             this.token = res.token;
             localStorage.setItem('Token', `bearer ${this.token}`);

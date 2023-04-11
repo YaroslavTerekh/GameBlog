@@ -2,7 +2,7 @@ import { InputDirective } from './../../../../core/input.directive';
 import { AddPost } from './../../../../core/interfaces/addPost';
 import { NewsService } from './../../../../core/services/news.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, Input } from '@angular/core';
 import { Topic } from 'src/app/shared/models/topic';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -26,6 +26,15 @@ export class AddPostComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let input: HTMLInputElement | null = document.querySelector(".file-upload-field");
+    let wrapper = document.querySelector(".file-upload-wrapper");
+
+    input?.addEventListener("change", function(event){ 
+      if(input!.files) {
+        wrapper?.setAttribute("data-text", input!.files[0].name.toString());
+      }
+    });
+
     this.addPostForm = this.fb.group({
       title: this.fb.control('', Validators.required),
       topicId: this.fb.control('', Validators.required),
@@ -97,6 +106,11 @@ export class AddPostComponent implements OnInit {
               .subscribe({
                 next: res1 => { 
                   this.userService.showInfoModalMessage$.next("Пост успішно створено");
+                  this.userService.showInfoModal$.next(false);
+                  this.userService.showInfoModal$.next(true);
+                },
+                error: err => {
+                  this.userService.showInfoModalMessage$.next(err.error.response ? err.error.response : err.error);
                   this.userService.showInfoModal$.next(false);
                   this.userService.showInfoModal$.next(true);
                 }

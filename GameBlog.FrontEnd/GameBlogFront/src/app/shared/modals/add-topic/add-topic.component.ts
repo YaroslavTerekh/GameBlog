@@ -57,7 +57,12 @@ export class AddTopicComponent implements OnInit {
             }
 
             this.adminService.addTopic(model)
-              .subscribe({});
+              .subscribe({
+                next: res => {
+                  this.userService.showInfoModalMessage$.next("Тему успішно створено");
+                  this.userService.showInfoModal$.next(true); 
+                }
+              });
           }
         });
     }
