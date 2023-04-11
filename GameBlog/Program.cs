@@ -7,6 +7,7 @@ using GameBlog.BL.SHub;
 using GameBlog.Domain;
 using GameBlog.Domain.Enums;
 using GameBlog.Domain.Models;
+using GameBlog.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -127,6 +128,16 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 4;
+    options.Password.RequiredUniqueChars = 0;
+});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy =>
@@ -160,6 +171,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<CustomExceptionHandler>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

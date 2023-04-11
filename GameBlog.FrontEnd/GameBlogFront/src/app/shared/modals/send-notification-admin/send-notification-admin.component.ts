@@ -35,7 +35,12 @@ export class SendNotificationAdminComponent implements OnInit {
       this.userService.showInfoModal$.next(true);
     } else {
       this.adminService.sendToAll(this.sendNotificationGroup.get('message')?.value)
-        .subscribe({})
+        .subscribe({
+          next: res => {
+            this.userService.showInfoModalMessage$.next("Успішно надіслано");
+            this.userService.showInfoModal$.next(true);
+          }
+        })
     }
   }
 }

@@ -20,10 +20,18 @@ export class UserComponent implements OnInit {
   }
 
   banUser(id: string): void {
-    this.adminService.banUsers(id).subscribe({});
+    this.adminService.banUsers(id).subscribe({
+      next: res => {
+        this.user.isBanned = true;
+      }
+    });
   }
 
   unbanUser(id: string): void {
-    this.adminService.unbanUsers(id).subscribe({});
+    this.adminService.unbanUsers(id).subscribe({
+      next: res => {
+        this.user.isBanned = false;
+      }
+    });
   }
 }

@@ -1,13 +1,13 @@
-<h2 class="title">{{journalist!.user!.firstName}} {{journalist!.user!.lastName}}</h2>
+<h2 class="title" *ngIf="journalist">{{journalist!.user!.firstName}} {{journalist!.user!.lastName}}</h2>
 
-<div class="info">
+<div class="info" *ngIf="journalist">
     <div class="img">
         <img [src]="journalistAvatar ? journalistAvatar : '../../../../../assets/default-user.png'" alt="">
     </div>
     <p>{{journalist!.user!.aboutMe}}</p>
 </div>
 
-<div class="subs" >
+<div class="subs" *ngIf="journalist">
     <div class="buttons" *ngIf="isReader">
         <button *ngIf="!issub" class="subscribe" (click)="onSubscribe()">Підписатися</button>
         <button *ngIf="issub" class="unsubscribe" (click)="onUnsubscribe()">Відписатися</button>
@@ -18,6 +18,6 @@
 
 <h2 class="title">Всі пости цього журналіста</h2>
 
-<div class="all-posts">
+<div class="all-posts" *ngIf="journalist">
     <app-post *ngFor="let post of journalist.posts" [post]="post"></app-post>
 </div>

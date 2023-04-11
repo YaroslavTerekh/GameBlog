@@ -3,7 +3,7 @@
 
 <h2 class="title"><i class="fa  fa-folder-open-o"></i> Нові пости</h2>
 
-<div class="last-posts">
+<div class="last-posts" *ngIf="newPosts">
     <div class="four-posts">        
         <app-main-post *ngFor="let post of newPosts" [post]="post"></app-main-post>  
     </div>

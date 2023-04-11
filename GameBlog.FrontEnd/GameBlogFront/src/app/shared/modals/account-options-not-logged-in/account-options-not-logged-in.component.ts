@@ -70,8 +70,8 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
             this.router.navigate(['welcome']);
           },
           error: res => {
-            console.error(res);
-
+            this.userService.showInfoModalMessage$.next(res.error.response);
+            this.userService.showInfoModal$.next(true);
           }
         });
     }
@@ -99,6 +99,10 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
             this.showAccountModal(false);
             this.authorizationService.isAuthorizedSubject.next(true);
             this.router.navigate(['']);
+          },
+          error: err => {
+            this.userService.showInfoModalMessage$.next(err.error.response);
+            this.userService.showInfoModal$.next(true);
           }
         });
     }
@@ -111,6 +115,11 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
     }
 
     this.authorizationService.forgotPassword('', forgotPasswordDto)
-      .subscribe({});
+      .subscribe({
+        error: err => {
+          this.userService.showInfoModalMessage$.next(err.error);
+          this.userService.showInfoModal$.next(true);
+        }
+      });
   }
 }

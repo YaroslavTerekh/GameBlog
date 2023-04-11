@@ -70,11 +70,16 @@ namespace GameBlog.BL.Repositories.Realizations
         {
             var user = await _context.Users.FirstOrDefaultAsync(t => t.Email == userCreds.Email, cancellationToken);
 
+            if(user is null)
+            {
+                throw new Exception("Користувача не знайдено");
+            }
+
             var result = await _signInManager.CheckPasswordSignInAsync(user, userCreds.Password, false);
 
             if(!result.Succeeded)
             {
-                throw new Exception("шось не так");
+                throw new Exception("Пароль неправильний");
             }
 
             return _authService.GenerateJWT(user, _configuration);
@@ -115,7 +120,7 @@ namespace GameBlog.BL.Repositories.Realizations
 
             if (!result.Succeeded)
             {
-                throw new Exception(result.Errors.ToString());
+                throw new Exception("Користувач з таким email уже присутній, або ви неправильно вказали пароль");
             }
 
             var newRoleUser = newUser.Role switch

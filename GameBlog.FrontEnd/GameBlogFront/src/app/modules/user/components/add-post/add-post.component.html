@@ -7,7 +7,7 @@
             </div>
             <div>
                 <h5>Тема</h5>
-                <select formControlName="topicId">
+                <select formControlName="topicId" *ngIf="topics">
                     <option *ngFor="let topic of topics" value="{{topic.id}}">{{topic.title}}</option>
                 </select>
             </div>

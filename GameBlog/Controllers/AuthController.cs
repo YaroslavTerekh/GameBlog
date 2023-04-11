@@ -48,7 +48,7 @@ namespace GameBlog.Controllers
                 return BadRequest();
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
             if (user == null)
-                return BadRequest("Invalid Request");
+                return BadRequest("Користувача не знайденo");
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var param = new Dictionary<string, string?>
                 {
@@ -69,7 +69,7 @@ namespace GameBlog.Controllers
                 return BadRequest();
             var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
             if (user == null)
-                return BadRequest("Invalid Request");
+                throw new Exception("Користувача не знайденo");
             var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
             if (!resetPassResult.Succeeded)
             {
