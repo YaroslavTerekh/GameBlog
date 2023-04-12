@@ -24,6 +24,13 @@ namespace GameBlog.BL.Repositories.Realizations
             _notificationsService = notificationsService;
         }
 
+        public async Task<int> CountNewNotifications(Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var notifications = await _context.Notification.Where(t => t.ReceiverId == currentUserId && !t.IsRead).CountAsync(cancellationToken);
+
+            return notifications;
+        }
+
         public async Task DeleteNotificationAsync(Guid id, CancellationToken cancellationToken)
         {
             var notification = await _context.Notification.FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
@@ -43,6 +50,18 @@ namespace GameBlog.BL.Repositories.Realizations
                 .ToListAsync(token);
 
             return notifications;
+        }
+
+        public async Task ReadAllNotifications(Guid currentUserId, CancellationToken cancellationToken)
+        {
+            var notifications = await _context.Notification.Where(t => t.ReceiverId == currentUserId && !t.IsRead).ToListAsync(cancellationToken);
+
+            notifications.ForEach(el =>
+            {
+                el.IsRead = true;
+            });
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task SendToAllUsers(AdminSendNotification model, Guid currentUserId, CancellationToken cancellationToken)

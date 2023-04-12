@@ -12,6 +12,7 @@ import { AuthorizationService } from './core/services/authorization.service';
 })
 export class AppComponent implements OnInit {
 
+  public newNotificationsCount!: number;
   public isAuthorized!: boolean;
   public title: string = "GameBlog";
   public avatar: any;
@@ -31,6 +32,65 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.signalr.addedPostSubject
+      .subscribe({
+        next: res => {
+          this.userService.countNewNotifications()
+            .subscribe({
+              next: res => {
+                this.newNotificationsCount = res;
+              }
+            });
+        }
+      });
+
+    this.signalr.commentedSubject
+      .subscribe({
+        next: res => {
+          this.userService.countNewNotifications()
+            .subscribe({
+              next: res => {
+                this.newNotificationsCount = res;
+              }
+            });
+        }
+      });
+
+    this.signalr.bannedSubject
+      .subscribe({
+        next: res => {
+          this.userService.countNewNotifications()
+            .subscribe({
+              next: res => {
+                this.newNotificationsCount = res;
+              }
+            });
+        }
+      });
+
+      this.signalr.unBannedSubject
+      .subscribe({
+        next: res => {
+          this.userService.countNewNotifications()
+            .subscribe({
+              next: res => {
+                this.newNotificationsCount = res;
+              }
+            });          
+        }
+      });
+
+      this.signalr.toAllUsersSubject
+      .subscribe({
+        next: res => {
+          this.userService.countNewNotifications()
+            .subscribe({
+              next: res => {
+                this.newNotificationsCount = res;
+              }
+            });
+        }
+      });
 
     this.userService.showInfoModal$
       .subscribe({
@@ -38,20 +98,20 @@ export class AppComponent implements OnInit {
           this.showInfoModal = res;
         }
       })
-    
+
     this.authoricationService.reloadAvatarSubject
       .subscribe({
         next: res => {
           this.userService.getAvatar(localStorage.getItem('id')!)
-          .subscribe({
-            next: (res: Blob) => {
-              if (res == null) {
-                this.avatar = null;
-              } else {
-                this.createImageFromBlob(res);
+            .subscribe({
+              next: (res: Blob) => {
+                if (res == null) {
+                  this.avatar = null;
+                } else {
+                  this.createImageFromBlob(res);
+                }
               }
-            }
-          });
+            });
         }
       });
 
@@ -77,6 +137,13 @@ export class AppComponent implements OnInit {
                 }
               });
 
+            this.userService.countNewNotifications()
+              .subscribe({
+                next: res => {
+                  this.newNotificationsCount = res;
+                }
+              });
+
             this.userService.getAvatar(localStorage.getItem('id')!)
               .subscribe({
                 next: (res: Blob) => {
@@ -93,6 +160,20 @@ export class AppComponent implements OnInit {
     this.isAuthorized = this.authoricationService.isAuthorized();
 
     if (this.isAuthorized) {
+      this.userService.getNotifications()
+        .subscribe({
+          next: res => {
+            this.notifications = res;
+          }
+        });
+
+      this.userService.countNewNotifications()
+        .subscribe({
+          next: res => {
+            this.newNotificationsCount = res;
+          }
+        });
+
       this.userService.getAvatar(localStorage.getItem('id')!)
         .subscribe({
           next: (res: Blob) => {
@@ -148,6 +229,17 @@ export class AppComponent implements OnInit {
 
   public showNotificationModal(value: boolean): void {
     this.authoricationService.triggerForNotificationModal(value);
+    this.userService.readAllNotifications()
+      .subscribe({
+        next: res => {
+          this.userService.countNewNotifications()
+            .subscribe({
+              next: res => {
+                this.newNotificationsCount = res;
+              }
+            });
+        }
+      })
   }
 
   public checkLoginModal(): void {

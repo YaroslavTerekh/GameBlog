@@ -58,4 +58,12 @@ export class UserService {
   public deleteNotification(id: string): Observable<any> {
     return this.http.delete(`${environment.apiAddress}/notifications/${id}`);
   }
+
+  public countNewNotifications(): Observable<number> {
+    return this.http.get<number>(`${environment.apiAddress}/notifications/count-new`);
+  }
+
+  public readAllNotifications(): Observable<any> {
+    return this.http.patch(`${environment.apiAddress}/notifications/read-all`, null);
+  }
 }

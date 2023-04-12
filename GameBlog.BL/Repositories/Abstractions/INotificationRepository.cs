@@ -12,6 +12,10 @@ namespace GameBlog.BL.Repositories.Abstractions
     {
         public Task<List<Notification>> GetAllNotifications(Guid CurrentUserId, CancellationToken token);
 
+        public Task<int> CountNewNotifications(Guid currentUserId, CancellationToken cancellationToken);
+
+        public Task ReadAllNotifications(Guid currentUserId, CancellationToken cancellationToken);
+
         public Task DeleteNotificationAsync(Guid id, CancellationToken cancellationToken);
 
         public Task SendToAllUsers(AdminSendNotification model, Guid currentUserId, CancellationToken cancellationToken);        

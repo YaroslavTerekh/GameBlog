@@ -31,5 +31,19 @@ namespace GameBlog.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("count-new")]
+        public async Task<IActionResult> CountNewNotificationAsync(CancellationToken cancellationToken = default)
+        {
+            return Ok(await _notificationRepository.CountNewNotifications(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken));
+        }
+
+        [HttpPatch("read-all")]
+        public async Task<IActionResult> ReadAllAsync(CancellationToken cancellationToken = default)
+        {
+            await _notificationRepository.ReadAllNotifications(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value), cancellationToken);
+
+            return Ok();
+        }
     }
 }

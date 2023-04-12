@@ -8,6 +8,7 @@ import * as signalR from "@microsoft/signalr"
 export class SignalrService {
 
   constructor() { }
+  public triggerForRefreshSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public addedPostSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public commentedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public bannedSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
@@ -29,8 +30,7 @@ export class SignalrService {
 
   public addTransferChartDataListener = () => {
     this.hubConnection.on('AddedPost', (data: any) => {
-      this.addedPostSubject.next(data);
-      
+      this.addedPostSubject.next(data);      
     });
     this.hubConnection.on('PostCommented', (data: any) => {
       this.commentedSubject.next(data);
@@ -43,6 +43,9 @@ export class SignalrService {
     });
     this.hubConnection.on('ToAllUsers', (data: any) => {
       this.toAllUsersSubject.next(data);
+    });
+    this.hubConnection.on('*', () => {
+      this.triggerForRefreshSubject.next("");
     });
   }
 }
