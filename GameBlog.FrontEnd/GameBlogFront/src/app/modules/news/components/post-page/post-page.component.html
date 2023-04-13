@@ -13,13 +13,13 @@
 
     <button class="delete-post" (click)="deletePost(post.id)" *ngIf="isAdmin || isAuthor">Видалити пост</button>
 
-    <h2>Коментарі</h2>
+    <h2>Коментарі</h2>  
+    <form *ngIf="isAuthorized" class="add-comment" action="" [formGroup]="addComment" (submit)="onCommentSend()">
+        <textarea placeholder="Ваш коментар..." name="" id="" formControlName="text" #area></textarea>
+        <input type="submit" (click)="area.value = ''" value="Опублікувати">
+    </form>
+
     <div class="comments">
         <app-post-comment *ngFor="let comment of post.comments" [comment]="comment"></app-post-comment>
     </div>
-
-    <form *ngIf="isAuthorized" class="add-comment" action="" [formGroup]="addComment" (submit)="onCommentSend()">
-        <textarea placeholder="Ваш коментар..." name="" id="" formControlName="text"></textarea>
-        <input type="submit" value="Опублікувати">
-    </form>
 </div>

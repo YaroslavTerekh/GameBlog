@@ -7,6 +7,7 @@ import { Login } from 'src/app/core/interfaces/login';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Register } from 'src/app/core/interfaces/register';
 import { UserService } from 'src/app/core/services/user.service';
+import { SignalrService } from 'src/app/core/services/signalr.service';
 
 @Component({
   selector: 'app-account-options-not-logged-in',
@@ -38,6 +39,7 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
   constructor(
     private readonly authorizationService: AuthorizationService,
     private readonly userService: UserService,
+    private readonly signalr: SignalrService,
     private readonly fb: FormBuilder,
     private readonly router: Router
   ) { }
@@ -92,6 +94,8 @@ export class AccountOptionsNotLoggedInComponent implements OnInit {
       this.authorizationService.logIn(userCreds)
         .subscribe({
           next: res => {
+            this.signalr.startConnection();
+            this.signalr.addTransferChartDataListener();
             this.userService.showInfoModalMessage$.next("Вхід успішно виконано");
             this.userService.showInfoModal$.next(true);
             this.authorizationService.reloadAvatarSubject.next(true);

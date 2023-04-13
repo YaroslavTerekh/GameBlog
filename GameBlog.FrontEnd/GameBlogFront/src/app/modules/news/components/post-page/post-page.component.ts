@@ -77,6 +77,7 @@ export class PostPageComponent implements OnInit {
   onCommentSend(): void {
     if (!this.addComment.valid) {
       this.userService.showInfoModalMessage$.next("Напишіть Ваш коментар");
+      this.userService.showInfoModal$.next(false);
       this.userService.showInfoModal$.next(true);
     } else {
       let addCommentReq: addComment = {
@@ -87,6 +88,7 @@ export class PostPageComponent implements OnInit {
       this.newsService.addComment(addCommentReq)
         .subscribe({
           next: res => {
+            this.addComment.setControl('text', null);
             this.userService.showInfoModalMessage$.next("Коментар успішно додано");
             this.userService.showInfoModal$.next(false);
             this.userService.showInfoModal$.next(true);

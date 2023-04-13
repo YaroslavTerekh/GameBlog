@@ -11,7 +11,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NotificationsComponent implements OnInit {
 
-  @Input()
   public notifications!: any;
   public newNotifications: any[] = [];
 
@@ -66,6 +65,13 @@ export class NotificationsComponent implements OnInit {
           }
         }
       });
+
+      this.userService.getNotifications()
+        .subscribe({
+          next: res => {
+            this.notifications =  res;
+          }
+        })
   }
 
   public showNotificationModal(value: boolean): void {

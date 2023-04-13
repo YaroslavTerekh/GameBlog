@@ -17,7 +17,7 @@
 <router-outlet></router-outlet>
 <app-account-options-modal *ngIf="isOpened && !needLogin"></app-account-options-modal>
 <app-account-options-not-logged-in *ngIf="isOpened && needLogin"></app-account-options-not-logged-in>
-<app-notifications *ngIf="openNotifications" [notifications]="notifications"></app-notifications>
+<app-notifications *ngIf="openNotifications"></app-notifications>
 <app-send-notification-admin *ngIf="openSendNotifications"></app-send-notification-admin>
 <app-add-topic *ngIf="addTopic"></app-add-topic>
 <app-info-modal class="info-modal" *ngIf="showInfoModal"></app-info-modal>

@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   public needLogin: boolean = localStorage.getItem("Token") == null;
   public openNotifications: boolean = false;
   public openSendNotifications: boolean = false;
-  public notifications!: any;
   public addTopic: boolean = false;
   public showInfoModal: boolean = false;
 
@@ -130,12 +129,6 @@ export class AppComponent implements OnInit {
             });
 
           if (res === true) {
-            this.userService.getNotifications()
-              .subscribe({
-                next: res => {
-                  this.notifications = res;
-                }
-              });
 
             this.userService.countNewNotifications()
               .subscribe({
@@ -160,12 +153,6 @@ export class AppComponent implements OnInit {
     this.isAuthorized = this.authoricationService.isAuthorized();
 
     if (this.isAuthorized) {
-      this.userService.getNotifications()
-        .subscribe({
-          next: res => {
-            this.notifications = res;
-          }
-        });
 
       this.userService.countNewNotifications()
         .subscribe({
