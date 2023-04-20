@@ -25,16 +25,6 @@ namespace GameBlog.Controllers
             _emailSender = emailSender;
         }
 
-        [AllowAnonymous]
-        [HttpGet("email")]
-        public async Task<IActionResult> GetEmailTest()
-        {
-            var message = new Message(new string[] { "yarolslavterekh@gmail.com" }, "Test email", "This is the content from our email.");
-            _emailSender.SendEmail(message, "Новий пост");
-
-            return NoContent();
-        }
-
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeletePostAsync(
             [FromRoute] Guid id,

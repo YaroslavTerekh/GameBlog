@@ -4,28 +4,28 @@
     height: 8vh;
     position: fixed;
     left: 0;
-    top: 0;    
+    top: 0;
     z-index: 9;
 
-    header {           
-        z-index: 10; 
+    header {
+        z-index: 10;
         max-width: 70vw;
         margin: 0 auto;
         margin-top: .7vh;
-        width: 100%;  
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         height: 70%;
         padding-top: 1vh;
-        
-    
+
+
         nav {
             display: flex;
             justify-content: space-between;
-            align-items: center;        
+            align-items: center;
             width: 50%;
-            
+
             a {
                 font-size: 2.5vh;
                 width: fit-content;
@@ -37,14 +37,14 @@
                 }
             }
         }
-    
+
         .img {
             width: 3vw;
-            height: 3vw;        
+            height: 3vw;
             border-radius: 100PX;
             position: relative;
             overflow: hidden;
-    
+
             img {
                 position: absolute;
                 top: 50%;
@@ -78,7 +78,7 @@
 
             i {
                 font-size: 2.5vh;
-            }            
+            }
         }
     }
 }
@@ -87,5 +87,6 @@
     position: fixed;
     z-index: 9999 !important;
     top: 90%;
-    left: 5%;
+    transform: translateX(-50%);
+    left: 50%;
 }

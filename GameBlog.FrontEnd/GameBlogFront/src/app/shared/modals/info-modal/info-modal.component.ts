@@ -16,7 +16,7 @@ export class InfoModalComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("init");
-    
+
 
     this.userService.showInfoModalMessage$
       .subscribe({

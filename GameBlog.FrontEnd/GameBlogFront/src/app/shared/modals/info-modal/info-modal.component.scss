@@ -1,11 +1,12 @@
 .modal {
-    width: fit-content;
     padding: 2vh;
     border-radius: 4px;
     background-color: #202736;
+    width: 500px;
+    text-align: center;
 
     p {
-        font-size: 1.5vh;
+        font-size: 20px;
         color: #fff;
     }
 }
