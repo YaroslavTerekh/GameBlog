@@ -1,3 +1,7 @@
 <div class="journalists">
-    <app-journalist *ngFor="let journalist of journalists" [journalist]="journalist"></app-journalist>
+    <app-journalist *ngFor="let journalist of journalists" [journalist]="journalist"></app-journalist>    
+</div>
+
+<div *ngIf="journalists.length < 1">
+    Нічого не знайдено
 </div>

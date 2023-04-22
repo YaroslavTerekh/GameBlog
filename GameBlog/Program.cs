@@ -1,6 +1,7 @@
 using GameBlog.BL.DBConnection;
 using GameBlog.BL.Repositories.Abstractions;
 using GameBlog.BL.Repositories.Realizations;
+using GameBlog.BL.Seed;
 using GameBlog.BL.Services.Abstractions;
 using GameBlog.BL.Services.Realizations;
 using GameBlog.BL.SHub;
@@ -84,6 +85,7 @@ builder.Services.AddCors(opts =>
 });
 
 // Add DI
+builder.Services.AddScoped<IContextInitializer, ContextInitializer>();
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<INewsRepository, NewsRepository>();
@@ -163,6 +165,9 @@ var scope = app.Services.CreateScope();
 
 var db = scope.ServiceProvider.GetRequiredService<DataContext>();
 db.Database.Migrate();
+
+var contextInitializer = scope.ServiceProvider.GetRequiredService<IContextInitializer>();
+contextInitializer.Initialize();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

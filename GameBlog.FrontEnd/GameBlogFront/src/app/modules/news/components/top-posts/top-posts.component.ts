@@ -10,6 +10,7 @@ import { debounceTime, fromEvent, tap } from 'rxjs';
 })
 export class TopPostsComponent implements OnInit, AfterViewInit {
 
+  public show!: boolean;
   public posts!: Post[];
   public oldPosts!: Post[];
   @ViewChild('input') input!: ElementRef;
@@ -31,6 +32,9 @@ export class TopPostsComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: res => {
           this.posts = res;
+          if(res.length > 0) {
+            this.show = true;
+          }
           this.oldPosts = this.posts;
         }
       })

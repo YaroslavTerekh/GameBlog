@@ -19,8 +19,8 @@ export class AccountOptionsModalComponent implements OnInit {
     this.isAdmin = localStorage.getItem('Role') == "Admin";
     this.isJournalist = localStorage.getItem('Role') == "Journalist";
     
-    console.log(this.isJournalist);
-    
+    console.log(this.isJournalist + " JOUR");
+    console.log(this.isAdmin + " ADMIN");
   }
 
   public showAccountModal(value: boolean): void {

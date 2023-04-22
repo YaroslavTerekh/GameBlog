@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class MainComponent implements OnInit {
 
   public needLogin!: boolean;
-  public newPosts!: Post[];
+  public newPosts: Post[] = [];
   public lastPost!: Post;
   public image!: any;
 
@@ -28,9 +28,6 @@ export class MainComponent implements OnInit {
         next: res => {
           this.newPosts = res.slice(res.length - 6, res.length - 2);
           this.lastPost = res[res.length - 1];
-
-          console.log(this.lastPost);
-          console.log(this.newPosts);
           
 
           this.newsService.getImage(this.lastPost.image.id)

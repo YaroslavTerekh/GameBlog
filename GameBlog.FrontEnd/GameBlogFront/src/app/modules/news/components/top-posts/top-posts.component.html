@@ -1,9 +1,11 @@
-<div class="search">
-    <input type="text" placeholder="Пошук..." #input >
-</div>
-<div class="not-found" *ngIf="!posts">
-    <p>На жаль, за таким запитом нічого не знайдено.</p>
-</div>
-<div class="all-posts" *ngIf="posts">    
-    <app-post *ngFor="let post of posts" [post]="post"></app-post>
-</div>
+<ng-container *ngIf="show">
+    <div class="search">
+        <input type="text" placeholder="Пошук..." #input >
+    </div>
+    <div class="not-found" *ngIf="!posts">
+        <p>На жаль, за таким запитом нічого не знайдено.</p>
+    </div>
+    <div class="all-posts" *ngIf="posts">    
+        <app-post *ngFor="let post of posts" [post]="post"></app-post>
+    </div>
+</ng-container>

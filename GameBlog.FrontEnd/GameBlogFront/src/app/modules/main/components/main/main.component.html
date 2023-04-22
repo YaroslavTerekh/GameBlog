@@ -3,7 +3,7 @@
 
 <h2 class="title"><i class="fa  fa-folder-open-o"></i> Нові пости</h2>
 
-<div class="last-posts" *ngIf="newPosts">
+<div class="last-posts" *ngIf="newPosts.length > 0">
     <div class="four-posts">        
         <app-main-post *ngFor="let post of newPosts" [post]="post"></app-main-post>  
     </div>
@@ -14,6 +14,10 @@
         <h3>{{lastPost.title}}</h3>
         <p>{{lastPost.description | trimTextForPost: 500}}</p>
     </div>
+</div>
+
+<div *ngIf="newPosts.length < 1">
+    Нічого не знайдено
 </div>
 
 <app-top-posts></app-top-posts>

@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopJournalistsComponent implements OnInit {
 
-  public journalists!: Journalist[];
+  public journalists: Journalist[] = [];
 
   constructor(
     private readonly newsService: NewsService
