@@ -123,6 +123,8 @@ export class MyAccountComponent implements OnInit {
       bio: this.bioGroup.get('aboutMe')?.value
     };
 
+      if(!this.bioGroup.get('aboutMe')?.value) return;
+
     this.userService.modifyUserBio(req).subscribe({});
   }
 }

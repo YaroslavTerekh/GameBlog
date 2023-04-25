@@ -65,6 +65,9 @@ export class AddTopicComponent implements OnInit {
               });
           }
         });
+
     }
+
+    this.authService.showAddTopicModalSubject.next(false);
   }
 }

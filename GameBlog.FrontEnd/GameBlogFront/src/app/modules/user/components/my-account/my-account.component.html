@@ -16,7 +16,7 @@
         </div>    
     </div>
     
-    <form action="" [formGroup]="bioGroup" (submit)="modifyUserBio()" class="change-bio">
+    <form action="" [formGroup]="bioGroup" (submit)="modifyUserBio()" class="change-bio" *ngif="user.role === 1">
         <p>Ваша біографія</p>
         <textarea name="aboutme" id="" cols="30" rows="10" formControlName="aboutMe"></textarea>
         <input type="submit" value="Зберегти">

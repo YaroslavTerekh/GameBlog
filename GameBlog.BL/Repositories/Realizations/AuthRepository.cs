@@ -46,7 +46,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(t => t.UserId == CurrentUserId, cancellationToken);
 
-            journalist.User.AboutMe = bio.Bio;
+            journalist.User.AboutMe = bio != null ? bio.Bio : "";
             await _context.SaveChangesAsync(cancellationToken);
         }
 
@@ -56,7 +56,7 @@ namespace GameBlog.BL.Repositories.Realizations
                 .Include(t => t.Avatar)
                 .FirstOrDefaultAsync(t => t.Id == CurrentUserId, token);
 
-            return userImg.Avatar;
+            return userImg != null ?  userImg.Avatar : default;
         }
 
         public async Task<User> GetUserInfoAsync(Guid currentUserId, CancellationToken cancellationToken)
